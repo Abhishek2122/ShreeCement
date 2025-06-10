@@ -21,49 +21,48 @@ export class DashboardPageComponent implements OnInit {
     public ToolTipsService: CustomToolTipsService) {
     this.SESSION_DATA = this.serviceService.getSessionLogin();
     this.menuList = [{
-        name: "Inward Sheet",
-        route: "menulink2",
-        subMenu: [
-          { label: "View Report", route: "submenulink1" },
-          { label: "Add Entry", route: "submenulink2" }
-        ]
-      },
-      {
-        name: "Outward Sheet",
-        route: "menulink2",
-        subMenu: [
-          { label: "View Report", route: "submenulink1" },
-          { label: "Add Entry", route: "submenulink2" }
-        ]
-      },
-      {
-        name: "Stock Report",
-        route: "menulink2",
-        subMenu: [
-          { label: "View Report", route: "submenulink1" },
-        ]
-      },
-      {
-        name: "File Upload Details and Deletion",
-        route: "menulink2",
-        subMenu: [
-          { label: "View Report", route: "submenulink1" },
-        ]
-      },
-      {
-        name: "Upload : Inward | Outward",
-        route: "menulink2",
-        subMenu: [
-          { label: "View Report", route: "submenulink1" },
-          { label: "Add Entry", route: "submenulink2" }
-        ]
-      }
+      name: "Inward Sheet",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+        { label: "Add Entry", route: "submenulink2" }
+      ]
+    },
+    {
+      name: "Outward Sheet",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+        { label: "Add Entry", route: "submenulink2" }
+      ]
+    },
+    {
+      name: "Stock Report",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "File Upload Details and Deletion",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Upload : Inward | Outward",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+        { label: "Add Entry", route: "submenulink2" }
+      ]
+    }
     ]
   }
 
   select(type: string | number, item: any, $event: { stopPropagation: () => any; }) {
     this.selected[type] = (this.selected[type] === item ? null : item);
-    console.log('Item: ', item);
     $event ? $event.stopPropagation() : null;
   }
 
@@ -91,6 +90,8 @@ export class DashboardPageComponent implements OnInit {
       }
     });
     const allSideMenu = document.querySelectorAll("#sidebar .side-menu.top li a");
+    const leftMenu = document.querySelector("#sidebar .side-menu.top .left-menu");
+    const SideMenu = document.querySelectorAll("#sidebar .side-menu");
     allSideMenu.forEach((item) => {
       const li: any = item.parentElement;
       item.addEventListener("click", function () {
@@ -108,6 +109,13 @@ export class DashboardPageComponent implements OnInit {
     // Sidebar toggle işlemi
     menuBar.addEventListener("click", function () {
       sidebar.classList.toggle("hide");
+      if (sidebar.classList.value.indexOf("hide") != -1) {
+        leftMenu?.setAttribute("style", "display:none");
+        SideMenu.forEach((item)=>item?.setAttribute("style", "display:none"))
+      } else {
+        leftMenu?.setAttribute("style", "display:block")
+        SideMenu.forEach((item)=>item?.setAttribute("style", "display:block"))
+      }
     });
 
     // Sayfa yüklendiğinde ve boyut değişimlerinde sidebar durumunu ayarlama
@@ -162,6 +170,7 @@ export class DashboardPageComponent implements OnInit {
       allMenus.forEach(function (menu: any) {
         menu.style.display = "none";
       });
+      console.log(allMenus);
     });
   }
 

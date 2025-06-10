@@ -93,7 +93,7 @@ body {
 }
 
 #sidebar .side-menu {
-     width: 100%;
+    width: 100%;
     background: #533691;
     height: calc(100vh - 370px);
     overflow: auto;
@@ -1094,4 +1094,20 @@ input:-webkit-autofill:active {
 
 .nav-item.active .subMenu {
     display: block;
+}
+
+.menu-icon {
+    font-size: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: white;
+}
+
+.nav-item {
+    position: relative;
+}
+
+span.text{
+    font-size: 22px;
 }

@@ -11,6 +11,8 @@
                     <li class="nav-item" *ngFor="let n of menuList" (click)="select('main', n.name,$event);"
                         [ngClass]="{active: isActive('main', n.name)}">
                         <a class="text-white">{{n.name}}</a>
+                        <i *ngIf="isActive('main', n.name)==false" class='bx bx-caret-right menu-icon'></i>
+                        <i *ngIf="isActive('main', n.name)" class='bx bx-caret-down menu-icon'></i>
                         <ul class="subMenu">
                             <li class="nav-item" *ngFor="let child of n.subMenu"
                                 (click)="select('sub', child.label, $event);">
@@ -28,7 +30,7 @@
             <li>
                 <a routerLink="/" class="logout">
                     <i class='bx bx-power-off bx-sm bx-burst-hover'></i>
-                    <span class="text">Logout</span>
+                    <span class="text text-size-2">Logout</span>
                 </a>
             </li>
         </ul>
@@ -69,14 +71,14 @@
             </div>
 
             <!-- Profile Menu -->
-            <a href="#" class="profile" id="profileIcon">
+            <a class="profile" id="profileIcon">
                 <img src="https://placehold.co/600x400/png" alt="Profile">
             </a>
             <div class="profile-menu" id="profileMenu">
                 <ul>
                     <li><a href="#">My Profile</a></li>
                     <li><a href="#">Settings</a></li>
-                    <li><a href="#">Log Out</a></li>
+                    <li><a routerLink="/">Log Out</a></li>
                 </ul>
             </div>
         </nav>
