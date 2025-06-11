@@ -205,6 +205,7 @@ export class DashboardPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.serviceService.TITLE_OF_PAGE = ''
     $('#sidebarToggle').click(() => {
       if ($('.side-nav-bar').hasClass('active-class')) {
         $('.side-nav-bar').removeClass('active-class');
@@ -263,5 +264,13 @@ export class DashboardPageComponent implements OnInit {
     } else {
       menu.style.display = "none";
     }
+  }
+
+  historyBack(){
+    window.history.back()
+  }
+
+  historyNext(){
+    window.history.forward()
   }
 }

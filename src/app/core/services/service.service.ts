@@ -66,14 +66,14 @@ export class ServiceService {
   ];
   DEALER_NAME_LIST: any = [];
   environment = environment;
-
+  TITLE_OF_PAGE:string=''
+  
   constructor(private http: HttpClient,
     public router: Router,
     public cookieService: CookiesService,
     public notifyService: NotificationService,
     public animation_loader: CustomToolTipsService) {
     this.islogged = false;
-    console.log(this.isToken,"this.isToken")
     if (this.isToken) {
       this.getGradeList();
       this.ALLDepotCode().then((res: any) => {

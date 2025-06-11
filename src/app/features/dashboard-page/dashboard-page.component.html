@@ -40,6 +40,9 @@
     <section id="content">
         <nav>
             <span class="change-menu"><i class="fa-solid fa-bars"></i></span>
+            <div class="title-of-page">
+                {{this.serviceService.TITLE_OF_PAGE}}
+            </div>
             <a class="profile" matButton [matMenuTriggerFor]="menu" id="profileIcon">
                 <i class="fa-solid fa-circle-user"></i>
             </a>
@@ -57,8 +60,8 @@
             <mat-toolbar color="primary">
                 <div class="head-title">
                     <div class="left mx-4">
-                        <i class='bx bx-arrow-left'></i>
-                        <i class='bx bx-arrow-right'></i>
+                        <span (click)="historyBack()"> <i class="fa-solid fa-arrow-left"></i></span>
+                        <span (click)="historyNext()"><i class="fa-solid fa-arrow-right"></i></span>
                         <h1>Dashboard</h1>
                     </div>
                     <div class="sb-sidenav-footer">

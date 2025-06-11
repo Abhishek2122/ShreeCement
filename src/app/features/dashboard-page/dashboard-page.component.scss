@@ -1143,3 +1143,23 @@ span.text {
     top: 0;
     z-index: 99;
 }
+
+.title-of-page {
+    margin: auto;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.left{
+        display: flex
+;
+    gap: 10px;
+    align-items: center;
+}
+
+.left h1{
+    margin: 0 !important;
+}
+.left span{
+    cursor: pointer;
+}
