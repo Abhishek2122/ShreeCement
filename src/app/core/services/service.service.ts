@@ -73,6 +73,7 @@ export class ServiceService {
     public notifyService: NotificationService,
     public animation_loader: CustomToolTipsService) {
     this.islogged = false;
+    console.log(this.isToken,"this.isToken")
     if (this.isToken) {
       this.getGradeList();
       this.ALLDepotCode().then((res: any) => {

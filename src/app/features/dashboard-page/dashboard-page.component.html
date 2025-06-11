@@ -1,7 +1,7 @@
 <div class="dashboard-main-page">
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="#" class="brand">
+        <a routerLink="/home" class="brand">
             <i class='bx bxs-smile  bx-lg'></i>
             <span class="text">Shree Cement</span>
         </a>
@@ -10,13 +10,13 @@
                 <ul class="nav flex-column flex-nowrap text-truncate left-menu">
                     <li class="nav-item" *ngFor="let n of menuList" (click)="select('main', n.name,$event);"
                         [ngClass]="{active: isActive('main', n.name)}">
-                        <a class="text-white">{{n.name}}</a>
-                        <i *ngIf="isActive('main', n.name)==false" class='bx bx-caret-right menu-icon'></i>
-                        <i *ngIf="isActive('main', n.name)" class='bx bx-caret-down menu-icon'></i>
-                        <ul class="subMenu">
-                            <li class="nav-item" *ngFor="let child of n.subMenu"
+                        <a class="text-black"><i *ngIf="n?.icon!=undefined" [class]="n?.icon"></i> {{n.name}}</a>
+                        <i *ngIf="isActive('main', n.name)==false" class='bx bx-caret-right menu-icon text-black'></i>
+                        <i *ngIf="isActive('main', n.name)" class='bx bx-caret-down menu-icon text-black'></i>
+                        <ul class="subMenu p-2">
+                            <li class="nav-item p-0" *ngFor="let child of n.subMenu;let i=index"
                                 (click)="select('sub', child.label, $event);">
-                                <a class="text-white">{{child.label}}</a>
+                                <a class="text-black link">{{(i+1)}}. {{child.label}}</a>
                             </li>
                         </ul>
                     </li>
@@ -86,23 +86,25 @@
 
         <main>
             <div class="head-title">
-                <div class="left">
+                <div class="left mx-4">
                     <h1>Dashboard</h1>
                 </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    <h4 class="logged-name"> Deepa </h4>
+                </div>
             </div>
-            <div class="container">
-                <div class="col-xl-4 col-md-6">
-                    <div class="card mb-4 dasboard-card">
-                        <div class="card-body">
-                            <h5>Inward Sheet</h5>
+            <div class="item-container">
+                <div class="col-12" *ngFor="let n of menuList">
+                    <div class="card dasboard-card">
+                        <div class="card-body p-2">
+                            <h5>{{n.name}}</h5>
                         </div>
-                        <div class="card-footer">
-                            <div class="margin-left"><a routerlinkactive="active"
-                                    routerlink="/InwardSheet/ViewInwardSheet" class="nav-link"
-                                    href="/InwardSheet/ViewInwardSheet">View Report</a></div>
-                            <div class="margin-right"><a routerlinkactive="active"
-                                    routerlink="/InwardSheet/AddInwardSheet" class="nav-link"
-                                    href="/InwardSheet/AddInwardSheet">Add Entry</a></div>
+                        <div class="card-footer p-4">
+                            <div class="margin-left" *ngFor="let child of n.subMenu">
+                                <a routerlinkactive="active" [routerLink]="child?.route"
+                                    class="nav-link">{{child.label}}</a>
+                            </div>
                         </div>
                     </div>
                 </div>

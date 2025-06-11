@@ -57,8 +57,133 @@ export class DashboardPageComponent implements OnInit {
         { label: "View Report", route: "submenulink1" },
         { label: "Add Entry", route: "submenulink2" }
       ]
-    }
-    ]
+    },
+    {
+      name: "Depot and Employees Details",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+        { label: "Add Entry", route: "submenulink2" }
+      ]
+    },
+    {
+      name: "All Depots Stock Summary Sheet",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Inward | Outward Correction Report",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Dealer Sheet",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+        { label: "Add Entry", route: "submenulink2" }
+      ]
+    },
+    {
+      name: "DSR Report",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Labour Report",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+        { label: "Download All Depot", route: "submenulink2" }
+      ]
+    },
+    {
+      name: "Visitor Report",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+        { label: "Add Entry", route: "submenulink2" }
+      ]
+    },
+    {
+      name: "Outward Transport",
+      route: "menulink2",
+      subMenu: [
+        { label: "Calculate Freight", route: "submenulink1" },
+        { label: "Freight Report", route: "submenulink2" }
+      ]
+    },
+    {
+      name: "Damage Report",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Upload Factory Arrival",
+      route: "menulink2",
+      subMenu: [
+        { label: "Upload", route: "submenulink1" },
+        { label: "View Report", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Damage Report",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Attendance Report",
+      route: "menulink2",
+      subMenu: [
+        { label: "View Report", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Swap Data",
+      route: "menulink2",
+      subMenu: [
+        { label: "Inward", route: "submenulink1" },
+        { label: "Outward", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Transshipment Difference",
+      route: "menulink2",
+      subMenu: [
+        { label: "Difference", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Upload File List",
+      route: "menulink2",
+      subMenu: [
+        { label: "Download", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Eway Bill",
+      route: "menulink2",
+      subMenu: [
+        { label: "Eway Bill", route: "submenulink1" },
+      ]
+    },
+    {
+      name: "Upload",
+      route: "menulink2",
+      subMenu: [
+        { label: "Upload Documents", route: "submenulink1" },
+      ]
+    }]
   }
 
   select(type: string | number, item: any, $event: { stopPropagation: () => any; }) {
@@ -111,10 +236,10 @@ export class DashboardPageComponent implements OnInit {
       sidebar.classList.toggle("hide");
       if (sidebar.classList.value.indexOf("hide") != -1) {
         leftMenu?.setAttribute("style", "display:none");
-        SideMenu.forEach((item)=>item?.setAttribute("style", "display:none"))
+        SideMenu.forEach((item) => item?.setAttribute("style", "display:none"))
       } else {
         leftMenu?.setAttribute("style", "display:block")
-        SideMenu.forEach((item)=>item?.setAttribute("style", "display:block"))
+        SideMenu.forEach((item) => item?.setAttribute("style", "display:block"))
       }
     });
 
@@ -170,7 +295,6 @@ export class DashboardPageComponent implements OnInit {
       allMenus.forEach(function (menu: any) {
         menu.style.display = "none";
       });
-      console.log(allMenus);
     });
   }
 
