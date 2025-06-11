@@ -24,23 +24,23 @@ export class DashboardPageComponent implements OnInit {
       name: "Inward Sheet",
       route: "menulink2",
       subMenu: [
-        { label: "View Report", route: "submenulink1" },
-        { label: "Add Entry", route: "submenulink2" }
+        { label: "View Report", route: "/home/Inward/View" },
+        { label: "Add Entry", route: "/home/Inward/Add" }
       ]
     },
     {
       name: "Outward Sheet",
       route: "menulink2",
       subMenu: [
-        { label: "View Report", route: "submenulink1" },
-        { label: "Add Entry", route: "submenulink2" }
+        { label: "View Report", route: "/home/Outward/View" },
+        { label: "Add Entry", route: "/home/Outward/Add" }
       ]
     },
     {
       name: "Stock Report",
       route: "menulink2",
       subMenu: [
-        { label: "View Report", route: "submenulink1" },
+        { label: "View Report", route: "/home/StockReport" },
       ]
     },
     {
@@ -228,7 +228,7 @@ export class DashboardPageComponent implements OnInit {
     });
 
     // TOGGLE SIDEBAR
-    const menuBar: any = document.querySelector("#content nav .bx.bx-menu");
+    const menuBar: any = document.querySelector(".change-menu");
     const sidebar: any = document.getElementById("sidebar");
 
     // Sidebar toggle işlemi
@@ -241,60 +241,6 @@ export class DashboardPageComponent implements OnInit {
         leftMenu?.setAttribute("style", "display:block")
         SideMenu.forEach((item) => item?.setAttribute("style", "display:block"))
       }
-    });
-
-    // Sayfa yüklendiğinde ve boyut değişimlerinde sidebar durumunu ayarlama
-    function adjustSidebar() {
-      if (window.innerWidth <= 576) {
-        sidebar.classList.add("hide"); // 576px ve altı için sidebar gizli
-        sidebar.classList.remove("show");
-      } else {
-        sidebar.classList.remove("hide"); // 576px'den büyükse sidebar görünür
-        sidebar.classList.add("show");
-      }
-    }
-
-    // Sayfa yüklendiğinde ve pencere boyutu değiştiğinde sidebar durumunu ayarlama
-    window.addEventListener("load", adjustSidebar);
-    window.addEventListener("resize", adjustSidebar);
-
-    // Dark Mode Switch
-    const switchMode: any = document.getElementById("switch-mode");
-
-    switchMode.addEventListener("change", function (e: any) {
-      if (e.target?.checked) {
-        document.body.classList.add("dark");
-      } else {
-        document.body.classList.remove("dark");
-      }
-    });
-
-    // Notification Menu Toggle
-    document.querySelector(".notification")?.addEventListener("click", function () {
-      document.querySelector(".notification-menu")?.classList.toggle("show");
-      document.querySelector(".profile-menu")?.classList.remove("show"); // Close profile menu if open
-    });
-
-    // Profile Menu Toggle
-    document.querySelector(".profile")?.addEventListener("click", function () {
-      document.querySelector(".profile-menu")?.classList.toggle("show");
-      document.querySelector(".notification-menu")?.classList.remove("show"); // Close notification menu if open
-    });
-
-    // Close menus if clicked outside
-    window.addEventListener("click", function (e: any) {
-      if (!e.target.closest(".notification") && !e.target.closest(".profile")) {
-        document.querySelector(".notification-menu")?.classList.remove("show");
-        document.querySelector(".profile-menu")?.classList.remove("show");
-      }
-    });
-
-    // Başlangıçta tüm menüleri kapalı tut
-    document.addEventListener("DOMContentLoaded", function () {
-      var allMenus = document.querySelectorAll(".menu");
-      allMenus.forEach(function (menu: any) {
-        menu.style.display = "none";
-      });
     });
   }
 

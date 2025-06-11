@@ -1,0 +1,66 @@
+<mat-toolbar color="primary">
+    This is Inward Report sheet : Select Options to navigate
+</mat-toolbar>
+
+<div class="filter-section">
+    <mat-form-field appearance="fill">
+        <mat-label>Select Start Date</mat-label>
+        <input matInput [matDatepicker]="picker1" [(ngModel)]="startDate">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Select End Date</mat-label>
+        <input matInput [matDatepicker]="picker2" [(ngModel)]="endDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Select Option BAG/TON</mat-label>
+        <mat-select [(ngModel)]="option">
+            <mat-option value="Ton">Ton</mat-option>
+            <mat-option value="Bag">Bag</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Depot Name</mat-label>
+        <mat-select [(ngModel)]="depotName">
+            <mat-option *ngFor="let depot of depots" [value]="depot">{{depot}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" (click)="applyFilter()">Show</button>
+</div>
+
+<div class="summary-cards">
+    <mat-card>Selected Start Date is {{ startDate | date }}</mat-card>
+    <mat-card>Selected End Date is {{ endDate | date }}</mat-card>
+    <mat-card>Selected Depot Name is {{ depotName }}</mat-card>
+    <mat-card>Selected Depot Code is {{ depotCode }}</mat-card>
+</div>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef> ACTION </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <mat-icon>edit</mat-icon>
+            <mat-icon>content_copy</mat-icon>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="srno">
+        <mat-header-cell *matHeaderCellDef> SR.NO. </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.srno}} </mat-cell>
+    </ng-container>
+
+    <ng-container [matColumnDef]="item" *ngFor="let item of displayedColumns">
+        <mat-header-cell *matHeaderCellDef> {{item}} </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element[item]}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

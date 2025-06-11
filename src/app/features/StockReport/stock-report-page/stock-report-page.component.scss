@@ -1,0 +1,19 @@
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+}
+
+.summary-cards {
+  display: flex;
+  gap: 16px;
+  margin: 16px;
+}
+
+mat-card {
+  padding: 16px;
+  background-color: #2d4f4f;
+  color: white;
+  font-weight: bold;
+}

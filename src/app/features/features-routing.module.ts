@@ -1,22 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginPageComponent } from './login-page/login-page.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
+import { StockReportPageComponent } from './StockReport/stock-report-page/stock-report-page.component';
 
 const routes: Routes = [
     {
-        path: "", component: LoginPageComponent, pathMatch: "full",
+        path: "", component: DashboardPageComponent,
+        children: [
+            { path: "Inward", loadChildren: () => import("./Inward/inward.module").then(m => m.InwardModule) },
+            { path: "Outward", loadChildren: () => import("./Outward/outward.module").then(m => m.OutwardModule) },
+            { path: "StockReport", component: StockReportPageComponent },
+        ]
     },
-     {
-        path: "home", component: DashboardPageComponent, pathMatch: "full",
-    },
-    {
-        path: "**", redirectTo: "",
-    }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
 })
 export class FeaturesRoutingModule { }
