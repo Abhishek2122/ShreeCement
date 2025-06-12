@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: FTP Deploy
-      uses: SamKirkland/FTP-Deploy-Action@v4
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ftp://217.21.85.163
         username: u139672595
