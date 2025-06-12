@@ -19,10 +19,13 @@ import { CookiesService } from '../core/services/cookies.service';
 import { MainService } from '../core/services/service.service';
 import { AvatarModule } from 'ngx-avatars';
 import { ModalPopUpModule, ModalService } from 'modal-popup-angular-18';
+import { MatTableResuableComponent } from './components/mat-table-resuable/mat-table-resuable.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
     declarations: [
-
+        MatTableResuableComponent,
+        PaginationComponent
     ],
     imports: [
         FormsModule,
@@ -60,7 +63,9 @@ import { ModalPopUpModule, ModalService } from 'modal-popup-angular-18';
         MatMenuModule,
         NgSelectModule,
         AvatarModule,
-        ModalPopUpModule
+        ModalPopUpModule,
+        MatTableResuableComponent,
+        PaginationComponent
     ],
     providers: [
         CookiesService,

@@ -1,0 +1,49 @@
+.page-link {
+    color: #022831 !important;
+}
+
+.page-item.active .page-link {
+    background-color: #022831 !important;
+    border-color: #022831 !important;
+    color: #fff !important;
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.pagination {
+    display: grid;
+    padding-left: 0;
+    list-style: none;
+    border-radius: .25rem;
+    margin: auto 0 auto auto;
+    grid-template-columns: 40px auto 40px;
+    max-width: 80%;
+    padding-bottom: 10px;
+}
+
+.add-extra {
+    grid-template-columns: 100px auto 100px 140px;
+}
+
+.scroll-bar-pagination {
+    display: flex;
+    overflow: auto;
+    width: 98%;
+    margin-left: 10px;
+}
+
+.Total-Rows {
+    margin-left: 20px;
+    width: 170px;
+}
+
+.extra-button {
+    margin: auto;
+    margin-left: 10px;
+}

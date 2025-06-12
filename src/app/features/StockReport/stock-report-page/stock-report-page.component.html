@@ -1,33 +1,28 @@
-<div class="filter-section">
-    <div appearance="fill">
-        <mat-label>Select Start Date</mat-label>
-        <input matInput [matDatepicker]="picker1" [(ngModel)]="startDate">
-        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-    </div>
+<div>
+    <form #filterForm="ngForm" class="form-group-stock" (ngSubmit)="applyFilter(filterForm.form)">
+        <mat-form-field>
+            <mat-label>Select Start Date</mat-label>
+            <input matInput [matDatepicker]="picker1" [(ngModel)]="startDate" name="startDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
 
-    <div appearance="fill">
-        <mat-label>Select End Date</mat-label>
-        <input matInput [matDatepicker]="picker2" [(ngModel)]="endDate">
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
-    </div>
+        <mat-form-field appearance="fill">
+            <mat-label>Select Option BAG/TON</mat-label>
+            <mat-select [(ngModel)]="option" name="bagton">
+                <mat-option value="Ton">Ton</mat-option>
+                <mat-option value="Bag">Bag</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-    <div appearance="fill">
-        <mat-label>Select Option BAG/TON</mat-label>
-        <mat-select [(ngModel)]="option">
-            <mat-option value="Ton">Ton</mat-option>
-            <mat-option value="Bag">Bag</mat-option>
-        </mat-select>
-    </div>
-
-    <div appearance="fill">
-        <mat-label>Depot Name</mat-label>
-        <ng-select [items]="depots" bindLabel="" placeholder="Select depot" [(ngModel)]="depotName" [searchable]="true">
-        </ng-select>
-    </div>
-
-    <button mat-raised-button color="accent" (click)="applyFilter()">Show</button>
+        <div appearance="fill">
+            <mat-label>Depot Name</mat-label>
+            <ng-select required="true" style="width: 210px;" name="depotCode" [items]="depots" bindLabel="label" ngModel
+                [searchable]="true">
+            </ng-select>
+        </div>
+        <button mat-raised-button color="accent" [disabled]="!filterForm.form.valid" type="submit">Show</button>
+    </form>
 </div>
 
 <div class="summary-cards">
@@ -36,26 +31,6 @@
     <mat-card>Selected Depot Name is {{ depotName }}</mat-card>
     <mat-card>Selected Depot Code is {{ depotCode }}</mat-card>
 </div>
-
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="action">
-        <mat-header-cell *matHeaderCellDef> ACTION </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <mat-icon>edit</mat-icon>
-            <mat-icon>content_copy</mat-icon>
-        </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="srno">
-        <mat-header-cell *matHeaderCellDef> SR.NO. </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.srno}} </mat-cell>
-    </ng-container>
-
-    <ng-container [matColumnDef]="item" *ngFor="let item of displayedColumns">
-        <mat-header-cell *matHeaderCellDef> {{item}} </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element[item]}} </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
+<mat-table-resuable [displayedColumns]="displayColumnNewStock" [dataSource]="dataSourceNewStock"></mat-table-resuable>
+<mat-table-resuable (event)="pageChanges($event)" [ActionRequired]="true" [displayedColumns]="displayedColumns"
+    [dataSource]="dataSourceStock"></mat-table-resuable>

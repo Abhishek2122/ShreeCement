@@ -1,0 +1,21 @@
+<div class="mat-table-controller">
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container [matColumnDef]="item" *ngFor="let item of displayedColumns">
+            @if (item==="Action") {
+            <mat-header-cell *matHeaderCellDef> {{item}} </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button class="action-btn" color="accent"><mat-icon>edit</mat-icon>
+                </button>
+                <button class="action-btn" color="accent"><mat-icon>delete</mat-icon>
+                </button>
+            </mat-cell>
+            }@else{
+            <mat-header-cell *matHeaderCellDef> {{item}} </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element[item]}} </mat-cell>
+            }
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-table-pagination (onPageChange)="this.event.emit($event)" [totalRecords]="totalRecords" [recordsPerPage]="recordsPerPage"></mat-table-pagination>
+</div>

@@ -378,10 +378,9 @@ export class MainService {
 
   getStockTableData(DATA: any) {
     this.animation_loader.LoadingAnimation();
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       if (DATA != null && DATA != '') {
         this.http.post<any>(`${environment.NewBaseUrl + 'common/stock-report'}`, DATA, { 'headers': this.headers }).subscribe((res) => {
-          console.log(res)
           if (res['Status'] == true) {
             this.STOCK_SHEET_DATA = { 'data': (res['data']) };
             resolve(res);
@@ -414,7 +413,7 @@ export class MainService {
 
   getNewStockTableData(DATA: any) {
     this.animation_loader.LoadingAnimation();
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       if (DATA != null && DATA != '') {
         this.http.post<any>(`${environment.NewBaseUrl + 'NewStockSheet/get-stock-records'}`, DATA, { 'headers': this.headers }).pipe(delay(2000)).subscribe((res) => {
           if (res['Status'] == true) {
@@ -531,13 +530,13 @@ export class MainService {
     });
   }
 
-  getSessionLogin() {    
+  getSessionLogin() {
     return this.getLoginData();
   }
 
   LogoutSession() {
     this.islogged = false;
-        localStorage.removeItem("token")
+    localStorage.removeItem("token")
     this.router.navigate(['/Login']);
   }
   capitalizeFirstLetter(str: any) {
