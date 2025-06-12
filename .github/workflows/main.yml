@@ -17,7 +17,7 @@ jobs:
     - name: FTP Deploy
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        server: ftp://217.21.85.163
-        username: u139672595
-        password: J4g^q[1+~l9|FXz/
+        server: 217.21.85.163
+        username: u139672595.ShreeCement
+        password: T7g/7+Nx6hGUv?(89lJ'
         local-dir: ./dist/s/  # or your build output folder
