@@ -1,0 +1,23 @@
+name: FTP Deploy
+
+on:
+  push:
+    branches:
+      - main  # or 'production' or your deployment branch
+
+jobs:
+  ftp-deploy:
+    name: Upload to FTP Server
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: 217.21.85.163
+        username: u139672595.ShreeCement
+        password: T7g/7+Nx6hGUv?(89lJ'
+        local-dir: ./dist/s/  # or your build output folder
