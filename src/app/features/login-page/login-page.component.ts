@@ -38,7 +38,7 @@ export class LoginPageComponent {
         }
       }, (err: any) => {
         console.log(err, "Asdasdsadasdasdasd")
-        this.serviceService.notifyService.showError(err?.error?.msg, "Error Login")
+        this.serviceService.notifyService.showError(err?.error?.msg??JSON.stringify(this.loginForm.value), "Error Login")
       })
     } else {
       console.log('Form is invalid');
