@@ -2,6 +2,8 @@
 
 @import url("../node_modules/@angular/material/prebuilt-themes/indigo-pink.css");
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url("../node_modules/@ng-select/ng-select/themes/material.theme.css");
+@import url("../node_modules/ngx-toastr/toastr.css");
 
 body,
 html {
@@ -40,4 +42,13 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.cdk-overlay-container {
+    position: fixed;
+    z-index: 9999999;
+}
+
+.bg-hide{
+    box-shadow: none !important;
 }

@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { delay, first, Observable, shareReplay } from 'rxjs';
-declare var $: any;
+import { BehaviorSubject, delay, first, Observable, shareReplay, Subject } from 'rxjs';
 import moment from 'moment';
 import { CookiesService } from './cookies.service';
 import { CustomToolTipsService } from './custom-tool-tips.service';
@@ -12,12 +11,12 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ServiceService {
+export class MainService {
   InwardShow: boolean = false;
   OutwardShow: boolean = false;
   islogged: boolean = false;
   CUSTOM_POPUP_SHOW_HIDE: boolean = false;
-  isConnectionAvailable: boolean = navigator.onLine;
+  isConnectionAvailable: boolean = false;
   INWARD_DATA: any = [];
   OUTWARD_DATA: any = [];
   DAMAGE_OUTWARD_DATA: any = [];
@@ -36,15 +35,12 @@ export class ServiceService {
   CORRECTION_REPORT_DATA: any = [];
   OUTWARD_TRANSPORTER_REPORT_DATA: any = [];
   ALL_OUTWARD_TRANSPORTER_REPORT_DATA: any = [];
-
   DhandhaniaTransporter_REPORT_DATA: any = [];
   DhandhaniaTransporterRoute_REPORT_DATA: any = [];
-
   DSR_REPORT_DATA: any = [];
   DSR_REPORT_DATA_2: any = [];
   DSR_REPORT_DATA_3: any = [];
   INWARD_OUTWARD_DIFF: any = [];
-
   PASSWORD_SHOW_HIDE: boolean = true;
   LABOUR_DATA: any = [];
   depot_validation: any = [
@@ -66,28 +62,27 @@ export class ServiceService {
   ];
   DEALER_NAME_LIST: any = [];
   environment = environment;
-  TITLE_OF_PAGE:string=''
-  
+  TITLE_OF_PAGE: string = ''
+  USER_DATA: BehaviorSubject<any> = new BehaviorSubject(undefined);
+  USER_DATA_OBJECT: any;
+
   constructor(private http: HttpClient,
     public router: Router,
     public cookieService: CookiesService,
     public notifyService: NotificationService,
     public animation_loader: CustomToolTipsService) {
     this.islogged = false;
-    if (this.isToken) {
-      this.getGradeList();
-      this.ALLDepotCode().then((res: any) => {
-        this.depot_validation = [];
-        res?.data.forEach((element: any) => {
-          this.depot_validation.push(element?.depot_code)
-        });
-      })
-    }
   }
 
   get isToken() {
     const token = localStorage.getItem("token");
     return (token != "" && token != undefined && token != null) ? true : false
+  }
+
+  getLoginData() {
+    const data = localStorage.getItem("UserData") ?? "";
+    this.USER_DATA_OBJECT = (data != undefined && data != "") ? JSON.parse(data) : {}
+    return new BehaviorSubject(this.USER_DATA_OBJECT)
   }
 
   uploadApiCheck() {
@@ -212,9 +207,11 @@ export class ServiceService {
   DepotInsert(formdata: any): Observable<any> {
     return this.http.post<any>(`${environment.baseUrl + 'Sheet/Admin/DepotInsert.php'}`, formdata, { 'headers': this.headers });
   }
+
   AttendanceInsert(formdata: any): Observable<any> {
     return this.http.post<any>(`${environment.baseUrl + 'Sheet/Admin/AttendanceInsert.php'}`, formdata, { 'headers': this.headers });
   }
+
   getInwardTableData(DATA: any) {
     this.animation_loader.LoadingAnimation();
     return new Promise((resolve, reject) => {
@@ -406,12 +403,15 @@ export class ServiceService {
       }
     });
   }
+
   getLabourTable(DATA: any) {
     return this.http.post<any>(`${environment.baseUrl + 'Sheet/Admin/getLabourTable.php'}`, DATA, { 'headers': this.headers }).toPromise();
   }
+
   getLabourTableAllDepot(DATA: any) {
     return this.http.post<any>(`${environment.baseUrl + 'Sheet/Labour_Report/Labour_reportAllDepot.php'}`, DATA, { 'headers': this.headers }).toPromise();
   }
+
   getNewStockTableData(DATA: any) {
     this.animation_loader.LoadingAnimation();
     new Promise((resolve, reject) => {
@@ -508,6 +508,7 @@ export class ServiceService {
       });
     });
   }
+
   EmpList() {
     this.animation_loader.LoadingAnimation();
     return new Promise((resolve, reject) => {
@@ -519,6 +520,7 @@ export class ServiceService {
       });
     });
   }
+
   ALLDealer_Details() {
     return new Promise((resolve, reject) => {
       this.http.get<any>(`${environment.baseUrl + 'Depot_Data/ALL_DEALER_DETAILS.php'}`).subscribe((res) => {
@@ -528,44 +530,14 @@ export class ServiceService {
       });
     });
   }
-  getSessionLogin() {
-    let User_Login: any = {};
-    if (this.cookieService.getCookie('LoginDepotCode') != '' && this.cookieService.getCookie('LoginDepotCode') != undefined) {
-      const DUMP_DATA = JSON.parse(this.cookieService.deocde(this.cookieService.getCookie('LoginUser')));
-      User_Login = {
-        Password: DUMP_DATA['Password'],
-        LoginStatus: DUMP_DATA['LoginStatus'],
-        Role: DUMP_DATA['Login_Type'],
-        Emp_Id: DUMP_DATA['Emp_Id'],
-        User_Name: this.capitalizeFirstLetter(DUMP_DATA['User_Name']),
-        Depot_Name: DUMP_DATA['Depot_Name'],
-        Depot_Code: DUMP_DATA['Depot_Code']
-      }
-    } else {
-      User_Login = {
-        Password: '',
-        LoginStatus: '',
-        Role: '',
-        Emp_Id: '',
-        User_Name: '',
-        Depot_Name: '',
-        Depot_Code: ''
-      };
-    }
-    return User_Login;
+
+  getSessionLogin() {    
+    return this.getLoginData();
   }
 
   LogoutSession() {
     this.islogged = false;
-    var depot_code = this.getSessionLogin()['Depot_Code']
-    this.cookieService.deleteAllCookies('LoginUser_' + depot_code);
-    this.cookieService.deleteAllCookies('LoginUser');
-    this.cookieService.deleteAllCookies('LoginDepotCode');
-    this.cookieService.deleteAllCookies('AttendanceSheet');
-    this.cookieService.deleteAllCookies('TokenExpire');
-    this.cookieService.deleteAllCookies('TokenExpiredTime');
-    this.cookieService.deleteAllCookies('RefreshTokenTime');
-    localStorage.removeItem("token")
+        localStorage.removeItem("token")
     this.router.navigate(['/Login']);
   }
   capitalizeFirstLetter(str: any) {
@@ -580,43 +552,21 @@ export class ServiceService {
       return !isNaN(num1) ? num1 : 0;
     }
   }
-  TDate(INPUT_CLASS_ID_1: string, INPUT_CLASS_ID_2: string) {
-    var UserDate = $(INPUT_CLASS_ID_1).val();
-    var UserDate2 = $(INPUT_CLASS_ID_2).val();
-    var ToDate = new Date();
-    if (new Date(UserDate).getTime() > ToDate.getTime()) {
-      $(INPUT_CLASS_ID_1).val('');
-      $(INPUT_CLASS_ID_2).val('');
-      alert("The Date must be less or Equal to today date");
-      return false;
-    } else if (new Date(UserDate2).getTime() > ToDate.getTime()) {
-      $(INPUT_CLASS_ID_1).val('');
-      $(INPUT_CLASS_ID_2).val('');
-      alert("The Date must be less or Equal to today date");
-      return false;
-    } else if (new Date(UserDate2).getTime() < new Date(UserDate).getTime()) {
-      alert("The Star Date must be less or Equal to end date");
-      $(INPUT_CLASS_ID_1).val('');
-      $(INPUT_CLASS_ID_2).val('');
-      return false;
-    }
-    return true;
-  }
 
   isLoginCheck() {
-    if (this.getSessionLogin()?.LoginStatus == true) {
-      if (this.cookieService.getCookie('AttendanceSheet') == '' ||
-        this.getSessionLogin()['Depot_Code'] != this._getAttendancelogin()['Depot_Code'] ||
-        this.cookieService.getCookie('AttendanceSheet') == undefined) {
-        this.router.navigate(['/AttendanceSheet']);
-        this.islogged = false;
-      } else {
-        this.islogged = true;
-      }
-    } else {
-      this.islogged = false;
-      this.router.navigate(['/Login']);
-    }
+    // if (this.getSessionLogin()?.LoginStatus == true) {
+    //   if (this.cookieService.getCookie('AttendanceSheet') == '' ||
+    //     this.getSessionLogin()['Depot_Code'] != this._getAttendancelogin()['Depot_Code'] ||
+    //     this.cookieService.getCookie('AttendanceSheet') == undefined) {
+    //     this.router.navigate(['/AttendanceSheet']);
+    //     this.islogged = false;
+    //   } else {
+    //     this.islogged = true;
+    //   }
+    // } else {
+    //   this.islogged = false;
+    //   this.router.navigate(['/Login']);
+    // }
     return this.islogged;
   }
 
@@ -930,22 +880,17 @@ export class ServiceService {
   }
 
   sortAssocObject(list: any) {
-    var sortable = [];
-    for (var key in list) {
+    let sortable = [];
+    for (let key in list) {
       sortable.push([key, list[key]]);
     }
-    // [["you",100],["me",75],["foo",116],["bar",15]]
-
     sortable.sort(function (a, b) {
       return (a[1] < b[1] ? -1 : (a[1] > b[1] ? 1 : 0));
     });
-    // [["bar",15],["me",75],["you",100],["foo",116]]
-
-    var orderedList: any = {};
-    for (var idx in sortable) {
+    let orderedList: any = {};
+    for (let idx in sortable) {
       orderedList[sortable[idx][0]] = sortable[idx][1];
     }
-
     return orderedList;
   }
 

@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CookiesService {
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
   /**
     * delete cookie
     * @param name
@@ -20,15 +21,17 @@ export class CookiesService {
    * @returns {string}
    */
   public getCookie(name: string) {
-    const ca: Array<string> = decodeURIComponent(document.cookie).split(';');
-    const caLen: number = ca.length;
-    const cookieName = `${name}=`;
-    let c: string;
+    if (isPlatformBrowser(this.platformId)) {
+      const ca: Array<string> = decodeURIComponent(document?.cookie).split(';');
+      const caLen: number = ca.length;
+      const cookieName = `${name}=`;
+      let c: string;
 
-    for (let i = 0; i < caLen; i += 1) {
-      c = ca[i].replace(/^\s+/g, '');
-      if (c.indexOf(cookieName) === 0) {
-        return c.substring(cookieName.length, c.length);
+      for (let i = 0; i < caLen; i += 1) {
+        c = ca[i].replace(/^\s+/g, '');
+        if (c.indexOf(cookieName) === 0) {
+          return c.substring(cookieName.length, c.length);
+        }
       }
     }
     return '';
@@ -42,37 +45,26 @@ export class CookiesService {
    * @param {string} path
    */
   public setCookie(name: string, value: string, expireDays: number, path: string = '') {
-    const d: Date = new Date();
-    d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
-    const expires = `expires=${d.toUTCString()}`;
-    const cpath = path ? `; path=${path}` : '';
-    document.cookie = `${name}=${value}; ${expires}${cpath}; SameSite=Lax`;
+    if (isPlatformBrowser(this.platformId)) {
+      const d: Date = new Date();
+      d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
+      const expires = `expires=${d.toUTCString()}`;
+      const cpath = path ? `; path=${path}` : '';
+      document.cookie = `${name}=${value}; ${expires}${cpath}; SameSite=Lax`;
+    }
   }
 
-  /**
-   * consent
-   * @param {boolean} isConsent
-   * @param e
-   * @param {string} COOKIE
-   * @param {string} EXPIRE_DAYS
-   * @returns {boolean}
-   */
-  // public consent(isConsent: boolean, e: any, COOKIE: string, EXPIRE_DAYS: number) {
-  //     if (!isConsent) {
-  //         return this.isConsented;
-  //     } else if (isConsent) {
-  //         this.setCookie(COOKIE, '1', EXPIRE_DAYS);
-  //         this.isConsented = true;
-  //         e.preventDefault();
-  //     }
-  // }
   encode(string: any) {
     return btoa(string); // encode a string        
   }
+
   deocde(string: any) {
     return atob(string); // decode the string
   }
+
   deleteAllCookies(name: string) {
-    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    if (isPlatformBrowser(this.platformId)) {
+      document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
   }
 }

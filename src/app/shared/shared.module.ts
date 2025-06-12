@@ -12,7 +12,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NotificationService } from '../core/services/notification.service';
+import { CookiesService } from '../core/services/cookies.service';
+import { MainService } from '../core/services/service.service';
+import { AvatarModule } from 'ngx-avatars';
+import { ModalPopUpModule, ModalService } from 'modal-popup-angular-18';
 
 @NgModule({
     declarations: [
@@ -20,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     ],
     imports: [
         FormsModule,
+        ReactiveFormsModule,
         CommonModule,
         RouterModule,
         MatToolbarModule,
@@ -32,10 +39,14 @@ import { FormsModule } from '@angular/forms';
         MatCardModule,
         MatIconModule,
         MatTableModule,
-        MatMenuModule
+        MatMenuModule,
+        NgSelectModule,
+        AvatarModule,
+        ModalPopUpModule
     ],
     exports: [
         FormsModule,
+        ReactiveFormsModule,
         MatToolbarModule,
         MatFormFieldModule,
         MatInputModule,
@@ -46,7 +57,16 @@ import { FormsModule } from '@angular/forms';
         MatCardModule,
         MatIconModule,
         MatTableModule,
-        MatMenuModule
+        MatMenuModule,
+        NgSelectModule,
+        AvatarModule,
+        ModalPopUpModule
+    ],
+    providers: [
+        CookiesService,
+        MainService,
+        NotificationService,
+        ModalService
     ]
 })
 export class SharedModule { }

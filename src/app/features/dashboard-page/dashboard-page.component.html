@@ -27,7 +27,7 @@
         </ul>
         <ul class="side-menu bottom">
             <li>
-                <a routerLink="/" class="logout">
+                <a (click)="logout()" class="logout">
                     <i class="fa fa-sign-out"></i>
                     <span class="text text-size-2">Logout</span>
                 </a>
@@ -44,14 +44,14 @@
                 {{this.serviceService.TITLE_OF_PAGE}}
             </div>
             <a class="profile" matButton [matMenuTriggerFor]="menu" id="profileIcon">
-                <i class="fa-solid fa-circle-user"></i>
+                <ngx-avatars [name]="this.SESSION_DATA?.emp_name"></ngx-avatars>
             </a>
             <mat-menu #menu="matMenu">
                 <div class="profile-menu">
                     <ul>
-                        <li><a href="#"><i class="fa-solid fa-user"></i> My Profile</a></li>
+                        <li><a (click)="UserInfoView()"><i class="fa-solid fa-user"></i> My Profile</a></li>
                         <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
-                        <li><a routerLink="/"><i class="fa fa-sign-out"></i> Log Out</a></li>
+                        <li><a (click)="logout()"><i class="fa fa-sign-out"></i> Log Out</a></li>
                     </ul>
                 </div>
             </mat-menu>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        <h4 class="logged-name"> Deepa </h4>
+                        <h4 class="logged-name"> {{this.SESSION_DATA?.emp_name}} </h4>
                     </div>
                 </div>
             </mat-toolbar>
@@ -92,3 +92,47 @@
         </main>
     </section>
 </div>
+
+<ng-template #UserPopup>
+    <div class="profile-container">
+        <!-- Premium Profile Card -->
+        <div class="profile-card">
+            <div class="card-content">
+                <!-- Avatar Circle -->
+                <div class="avatar-wrapper">
+                    <div class="avatar">
+                        <div class="avatar-inner"></div>
+                        <div class="avatar-glow"></div>
+                        <div class="avatar-border"></div>
+                    </div>
+                </div>
+
+                <!-- Profile Info -->
+                <div class="profile-info">
+                    <h2 class="name">{{SESSION_DATA?.emp_name}}</h2>
+                    <p class="title">{{SESSION_DATA?.Role_Type}}</p>
+
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="stat-value">{{SESSION_DATA?.contact_number}}</span>
+                            <span class="stat-label">Contact Number</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">{{SESSION_DATA?.email_id}}</span>
+                            <span class="stat-label">Email Id</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">{{SESSION_DATA?.Emp_Id}}</span>
+                            <span class="stat-label">Emp Id</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Effects -->
+            <div class="card-shine"></div>
+            <div class="card-border"></div>
+            <div class="card-glow"></div>
+        </div>
+    </div>
+</ng-template>

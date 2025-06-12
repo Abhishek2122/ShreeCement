@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ServiceService } from './service.service';
 
 @Injectable({
     providedIn: 'root'
@@ -23,8 +22,9 @@ export class ApiServiceService {
     SUB_TITLE_DATA: Array<string> = new Array();
     isStartingAmount: boolean = false;
 
-    constructor(private serviceService: ServiceService) {
+    constructor() {
     }
+    
     ContentShow(content: string) {
         this.content = content;
     }

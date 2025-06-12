@@ -1,32 +1,31 @@
 <div class="filter-section">
-    <mat-form-field appearance="fill">
+    <div appearance="fill">
         <mat-label>Select Start Date</mat-label>
         <input matInput [matDatepicker]="picker1" [(ngModel)]="startDate">
         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
-    </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="fill">
+    <div appearance="fill">
         <mat-label>Select End Date</mat-label>
         <input matInput [matDatepicker]="picker2" [(ngModel)]="endDate">
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="fill">
+    <div appearance="fill">
         <mat-label>Select Option BAG/TON</mat-label>
         <mat-select [(ngModel)]="option">
             <mat-option value="Ton">Ton</mat-option>
             <mat-option value="Bag">Bag</mat-option>
         </mat-select>
-    </mat-form-field>
+    </div>
 
-    <mat-form-field appearance="fill">
+    <div appearance="fill">
         <mat-label>Depot Name</mat-label>
-        <mat-select [(ngModel)]="depotName">
-            <mat-option *ngFor="let depot of depots" [value]="depot">{{depot}}</mat-option>
-        </mat-select>
-    </mat-form-field>
+        <ng-select [items]="depots" bindLabel="" placeholder="Select depot" [(ngModel)]="depotName" [searchable]="true">
+        </ng-select>
+    </div>
 
     <button mat-raised-button color="accent" (click)="applyFilter()">Show</button>
 </div>
