@@ -10,6 +10,8 @@ import { MainService } from '../../core/services/service.service';
 })
 export class LoginPageComponent {
   loginForm: FormGroup;
+  PasswordShowHide:boolean=false;
+
   constructor(
     public serviceService: MainService,
     private fb: FormBuilder,

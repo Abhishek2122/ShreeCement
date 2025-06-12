@@ -49,6 +49,8 @@
 .input-box {
     position: relative;
     margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
 }
 
 .input-box input {
@@ -63,20 +65,10 @@
 }
 
 .input-box label {
-    position: absolute;
-    left: 10px;
-    top: 10px;
     color: white;
     pointer-events: none;
     transition: 0.3s ease;
-}
-
-.input-box input:focus~label,
-.input-box input:valid~label {
-    top: -12px;
-    left: 5px;
-    font-size: 0.8rem;
-    color: #00ffe5;
+    text-align: left;
 }
 
 button {
@@ -101,4 +93,16 @@ button:disabled {
 button.enabled {
     background: #00ffe5;
     box-shadow: 0 0 10px #00ffe5, 0 0 40px #00ffe5;
+}
+
+.password-icon-controller {
+    position: relative;
+}
+
+.password-icon {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    right: 0;
+    cursor: pointer;
 }

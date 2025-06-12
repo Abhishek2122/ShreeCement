@@ -4,13 +4,22 @@
         <div id="face">😐</div>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="input-box">
-                <input type="text" formControlName="username" required />
                 <label>Username</label>
+                <input type="text" formControlName="username" required />
             </div>
 
             <div class="input-box">
-                <input type="password" formControlName="password" required />
                 <label>Password</label>
+                <div class="password-icon-controller">
+                    <input [type]="this.PasswordShowHide==false?'password':'text'" formControlName="password"
+                        required />
+                    <span class="password-icon" *ngIf="this.PasswordShowHide==true"
+                        (click)="this.PasswordShowHide=!this.PasswordShowHide"> <i class="fa fa-eye"
+                            aria-hidden="true"></i></span>
+                    <span class="password-icon" *ngIf="this.PasswordShowHide==false"
+                        (click)="this.PasswordShowHide=!this.PasswordShowHide"><i
+                            class="fa-solid fa-eye-slash"></i></span>
+                </div>
             </div>
 
             <button type="submit" [disabled]="loginForm.invalid">Login</button>
