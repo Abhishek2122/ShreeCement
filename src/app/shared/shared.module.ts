@@ -14,13 +14,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NotificationService } from '../core/services/notification.service';
-import { CookiesService } from '../core/services/cookies.service';
-import { MainService } from '../core/services/service.service';
 import { AvatarModule } from 'ngx-avatars';
 import { ModalPopUpModule, ModalService } from 'modal-popup-angular-18';
 import { MatTableResuableComponent } from './components/mat-table-resuable/mat-table-resuable.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { CoreModule } from '../core/core.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoaderInterceptor } from '../core/interceptors/loader.interceptor';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
     declarations: [
@@ -45,7 +46,9 @@ import { PaginationComponent } from './components/pagination/pagination.componen
         MatMenuModule,
         NgSelectModule,
         AvatarModule,
-        ModalPopUpModule
+        ModalPopUpModule,
+        MatProgressBarModule,
+        CoreModule
     ],
     exports: [
         FormsModule,
@@ -65,13 +68,16 @@ import { PaginationComponent } from './components/pagination/pagination.componen
         AvatarModule,
         ModalPopUpModule,
         MatTableResuableComponent,
-        PaginationComponent
+        PaginationComponent,
+        MatProgressBarModule
     ],
     providers: [
-        CookiesService,
-        MainService,
-        NotificationService,
-        ModalService
+        ModalService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoaderInterceptor,
+            multi: true,
+        },
     ]
 })
 export class SharedModule { }

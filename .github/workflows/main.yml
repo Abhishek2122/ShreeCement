@@ -3,21 +3,32 @@ name: FTP Deploy
 on:
   push:
     branches:
-      - main  # or 'production' or your deployment branch
+      - main  # change if needed
 
 jobs:
   ftp-deploy:
-    name: Upload to FTP Server
+    name: Build & Upload Angular App to FTP Server
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: FTP Deploy
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'  # or your Angular Node version
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build Angular project
+      run: npm run build -- --configuration dev
+
+    - name: Upload via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: 217.21.85.163
         username: u139672595.ShreeCement
         password: T7g/7+Nx6hGUv?(89lJ'
-        local-dir: ./dist/s/  # or your build output folder
+        local-dir: ./dist/s/  # adjust this if your Angular project name is different

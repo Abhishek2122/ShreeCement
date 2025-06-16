@@ -217,226 +217,226 @@ export class CustomToolTipsService  {
     });
   }
   LoadingAnimation():void {
-    $('.style-loading,.loading').remove();
-    var APPEND_ANIMATION_DIV = `<div class="loading">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>`;
-    var APPEND_ANIMATION_CSS = `
-    .loading {
-      display: flex;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #4d545130;
-      align-items: center;
-      justify-content: center;
-      margin: auto;
-      gap:10px;
-    }
+  //   $('.style-loading,.loading').remove();
+  //   var APPEND_ANIMATION_DIV = `<div class="loading">
+  //   <div></div>
+  //   <div></div>
+  //   <div></div>
+  //   <div></div>
+  //   <div></div>
+  // </div>`;
+  //   var APPEND_ANIMATION_CSS = `
+  //   .loading {
+  //     display: flex;
+  //     position: absolute;
+  //     top: 0;
+  //     left: 0;
+  //     width: 100vw;
+  //     height: 100vh;
+  //     background-color: #4d545130;
+  //     align-items: center;
+  //     justify-content: center;
+  //     margin: auto;
+  //     gap:10px;
+  //   }
 
-    .loading div {
-      background-color: #fff;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      animation: loading-effect 1s cubic-bezier(.77, .8, .58, 1) infinite
-        var(--delay, .2s) alternate-reverse;
-    }
+  //   .loading div {
+  //     background-color: #fff;
+  //     border-radius: 50%;
+  //     width: 20px;
+  //     height: 20px;
+  //     animation: loading-effect 1s cubic-bezier(.77, .8, .58, 1) infinite
+  //       var(--delay, .2s) alternate-reverse;
+  //   }
 
-    .loading div:nth-child(2) {
-      --delay: .2s;
-    }
-    .loading div:nth-child(3) {
-      --delay: .4s;
-    }
-    .loading div:nth-child(4) {
-      --delay: .6s;
-    }
-    .loading div:nth-child(5) {
-      --delay: .8s;
-    }
+  //   .loading div:nth-child(2) {
+  //     --delay: .2s;
+  //   }
+  //   .loading div:nth-child(3) {
+  //     --delay: .4s;
+  //   }
+  //   .loading div:nth-child(4) {
+  //     --delay: .6s;
+  //   }
+  //   .loading div:nth-child(5) {
+  //     --delay: .8s;
+  //   }
 
-    @keyframes loading-effect {
-      0% {
-        box-shadow: 0 0 4px 1px #fff3;
-        opacity: .2;
-        transform: translateY(3px) scale(1.1);
-      }
+  //   @keyframes loading-effect {
+  //     0% {
+  //       box-shadow: 0 0 4px 1px #fff3;
+  //       opacity: .2;
+  //       transform: translateY(3px) scale(1.1);
+  //     }
 
-      100% {
-        opacity: .8;
-        transform: translateY(-3px);
-      }
-    }
-   `;
-    $('body').append(APPEND_ANIMATION_DIV);
-    $(`<style class="style-loading">${APPEND_ANIMATION_CSS}</style>`).appendTo('head');
+  //     100% {
+  //       opacity: .8;
+  //       transform: translateY(-3px);
+  //     }
+  //   }
+  //  `;
+  //   $('body').append(APPEND_ANIMATION_DIV);
+  //   $(`<style class="style-loading">${APPEND_ANIMATION_CSS}</style>`).appendTo('head');
   }
 
   LoadingAnimationRouter(bol: boolean) {
-    if (bol==true) {
-    $('.style-loading,.loading').remove();
-    var APPEND_ANIMATION_DIV = `<div class="loading">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>`;
-    var APPEND_ANIMATION_CSS = `
-    .loading {
-      display: flex;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #4d545130;
-      align-items: center;
-      justify-content: center;
-      margin: auto;
-      gap:10px;
-    }
+  //   if (bol==true) {
+  //   $('.style-loading,.loading').remove();
+  //   var APPEND_ANIMATION_DIV = `<div class="loading">
+  //   <div></div>
+  //   <div></div>
+  //   <div></div>
+  //   <div></div>
+  //   <div></div>
+  // </div>`;
+  //   var APPEND_ANIMATION_CSS = `
+  //   .loading {
+  //     display: flex;
+  //     position: absolute;
+  //     top: 0;
+  //     left: 0;
+  //     width: 100vw;
+  //     height: 100vh;
+  //     background-color: #4d545130;
+  //     align-items: center;
+  //     justify-content: center;
+  //     margin: auto;
+  //     gap:10px;
+  //   }
 
-    .loading div {
-      background-color: #fff;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      animation: loading-effect 1s cubic-bezier(.77, .8, .58, 1) infinite
-        var(--delay, .2s) alternate-reverse;
-    }
+  //   .loading div {
+  //     background-color: #fff;
+  //     border-radius: 50%;
+  //     width: 20px;
+  //     height: 20px;
+  //     animation: loading-effect 1s cubic-bezier(.77, .8, .58, 1) infinite
+  //       var(--delay, .2s) alternate-reverse;
+  //   }
 
-    .loading div:nth-child(2) {
-      --delay: .2s;
-    }
-    .loading div:nth-child(3) {
-      --delay: .4s;
-    }
-    .loading div:nth-child(4) {
-      --delay: .6s;
-    }
-    .loading div:nth-child(5) {
-      --delay: .8s;
-    }
+  //   .loading div:nth-child(2) {
+  //     --delay: .2s;
+  //   }
+  //   .loading div:nth-child(3) {
+  //     --delay: .4s;
+  //   }
+  //   .loading div:nth-child(4) {
+  //     --delay: .6s;
+  //   }
+  //   .loading div:nth-child(5) {
+  //     --delay: .8s;
+  //   }
 
-    @keyframes loading-effect {
-      0% {
-        box-shadow: 0 0 4px 1px #fff3;
-        opacity: .2;
-        transform: translateY(3px) scale(1.1);
-      }
+  //   @keyframes loading-effect {
+  //     0% {
+  //       box-shadow: 0 0 4px 1px #fff3;
+  //       opacity: .2;
+  //       transform: translateY(3px) scale(1.1);
+  //     }
 
-      100% {
-        opacity: .8;
-        transform: translateY(-3px);
-      }
-    }
-   `;
-    $('body').append(APPEND_ANIMATION_DIV);
-    $(`<style class="style-loading">${APPEND_ANIMATION_CSS}</style>`).appendTo('head');
-    } else {
-      $('.style-loading,.loading').remove();
-    }
+  //     100% {
+  //       opacity: .8;
+  //       transform: translateY(-3px);
+  //     }
+  //   }
+  //  `;
+  //   $('body').append(APPEND_ANIMATION_DIV);
+  //   $(`<style class="style-loading">${APPEND_ANIMATION_CSS}</style>`).appendTo('head');
+  //   } else {
+  //     $('.style-loading,.loading').remove();
+  //   }
   }
   public removeAnimation() {
     $('.style-loading,.loading').remove();
   }
 
   ToolTips_Mini_Load() {
-    $('.style-remove-2,.Tool-tips-mini').remove();
-   var TEMPLATE_TOST_CLASS = `
-    <div class="Tool-tips-mini" id="Tool-tips-mini-popup"></div>`;
-  var TEMPLATE_TOST_CLASS_CSS = `
-  .Tool-tips-mini{
-    display: none;
-    flex-direction: column;
-    min-width: 300px;
-    max-width: 50%;
-    min-height: 30px;
-    max-height: 89%;
-    position: absolute;
-    top: 45px;
-    right: 10px;
-    padding: 15px;
-    background-color: #0b131a;
-    align-items: center;
-    justify-content: left;
-    border-radius: 5px;
-    box-shadow: 0px 0px 3px 2px #9d9999;
-    color: white;
-    text-align: left;
-    gap: 10px;
-    overflow:auto;
-    z-index: 99999;
-  }
-  .Tool-tips-mini h3{
-    font-size: .9rem;
-    margin: auto;
-    text-align: left;
-    margin-left: 0;
-    box-shadow: 0px 0px 2px 2px #fffbfb;
-    padding: 5px;
-    width: 100%;
-    border-radius: 5px;
-    padding-left: 10px;
-  }
-  .Tool-tips-mini .border-bottom{
-    width: 95%;
-    position: absolute;
-    top: 3px;
-    left: 9px;
-    border-bottom: 5px solid white !important;
-    border-radius: 5px;
-  }
-  @keyframes animation-border-bottom{
-    from{
-      width:95%;
-    }
-    to{
-      width:0%;
-    }
-  }
-  `;
-    $('body').append(TEMPLATE_TOST_CLASS);
-    $(`<style class="style-remove-2">${TEMPLATE_TOST_CLASS_CSS}</style>`).appendTo('head');
+  //   $('.style-remove-2,.Tool-tips-mini').remove();
+  //  var TEMPLATE_TOST_CLASS = `
+  //   <div class="Tool-tips-mini" id="Tool-tips-mini-popup"></div>`;
+  // var TEMPLATE_TOST_CLASS_CSS = `
+  // .Tool-tips-mini{
+  //   display: none;
+  //   flex-direction: column;
+  //   min-width: 300px;
+  //   max-width: 50%;
+  //   min-height: 30px;
+  //   max-height: 89%;
+  //   position: absolute;
+  //   top: 45px;
+  //   right: 10px;
+  //   padding: 15px;
+  //   background-color: #0b131a;
+  //   align-items: center;
+  //   justify-content: left;
+  //   border-radius: 5px;
+  //   box-shadow: 0px 0px 3px 2px #9d9999;
+  //   color: white;
+  //   text-align: left;
+  //   gap: 10px;
+  //   overflow:auto;
+  //   z-index: 99999;
+  // }
+  // .Tool-tips-mini h3{
+  //   font-size: .9rem;
+  //   margin: auto;
+  //   text-align: left;
+  //   margin-left: 0;
+  //   box-shadow: 0px 0px 2px 2px #fffbfb;
+  //   padding: 5px;
+  //   width: 100%;
+  //   border-radius: 5px;
+  //   padding-left: 10px;
+  // }
+  // .Tool-tips-mini .border-bottom{
+  //   width: 95%;
+  //   position: absolute;
+  //   top: 3px;
+  //   left: 9px;
+  //   border-bottom: 5px solid white !important;
+  //   border-radius: 5px;
+  // }
+  // @keyframes animation-border-bottom{
+  //   from{
+  //     width:95%;
+  //   }
+  //   to{
+  //     width:0%;
+  //   }
+  // }
+  // `;
+  //   $('body').append(TEMPLATE_TOST_CLASS);
+  //   $(`<style class="style-remove-2">${TEMPLATE_TOST_CLASS_CSS}</style>`).appendTo('head');
   }
   ToolTips_AnimationStart(Timer: any, Message: any, buttonId: any) {
-    if (buttonId!=null) {
-      $("." + buttonId.target.className).css({ 'pointer-events': 'none', 'cursor': 'default' });
-    }
-    clearTimeout(this.TIMER);
-    $('.Tool-tips-mini').empty();
-    if (Object.keys(Message).length!=0) {
-      $('.Tool-tips-mini').css('display', 'grid');
-    } else {
-      $('.Tool-tips-mini').css('display', 'none');
-      return;
-    }
-    var INDEX = 1;
-    for (const key in Message) {
-      if (Message.length == 1) {
-        $('.Tool-tips-mini').append(`<h3 class="Text-Append">${Message[key]}</h3>`)
-      } else {
-        $('.Tool-tips-mini').append(`<h3 class="Text-Append">${INDEX} : ${Message[key]}</h3>`)
-      }
-      INDEX++;
-    }
-    $('.Tool-tips-mini').append('<div class="border-bottom"></div>');
-    $('.Tool-tips-mini .border-bottom').css({'animation': `animation-border-bottom ${Timer}s ease-in-out`})
-   this.TIMER=setTimeout(() => {
-      $('.Tool-tips-mini').empty();
-     $('.Tool-tips-mini').hide();
-     if (buttonId != null) {
-       $("." + buttonId.target.className).css({ 'pointer-events': 'auto', 'cursor': 'pointer' });
-     }
-    }, Timer*1040);
+  //   if (buttonId!=null) {
+  //     $("." + buttonId.target.className).css({ 'pointer-events': 'none', 'cursor': 'default' });
+  //   }
+  //   clearTimeout(this.TIMER);
+  //   $('.Tool-tips-mini').empty();
+  //   if (Object.keys(Message).length!=0) {
+  //     $('.Tool-tips-mini').css('display', 'grid');
+  //   } else {
+  //     $('.Tool-tips-mini').css('display', 'none');
+  //     return;
+  //   }
+  //   var INDEX = 1;
+  //   for (const key in Message) {
+  //     if (Message.length == 1) {
+  //       $('.Tool-tips-mini').append(`<h3 class="Text-Append">${Message[key]}</h3>`)
+  //     } else {
+  //       $('.Tool-tips-mini').append(`<h3 class="Text-Append">${INDEX} : ${Message[key]}</h3>`)
+  //     }
+  //     INDEX++;
+  //   }
+  //   $('.Tool-tips-mini').append('<div class="border-bottom"></div>');
+  //   $('.Tool-tips-mini .border-bottom').css({'animation': `animation-border-bottom ${Timer}s ease-in-out`})
+  //  this.TIMER=setTimeout(() => {
+  //     $('.Tool-tips-mini').empty();
+  //    $('.Tool-tips-mini').hide();
+  //    if (buttonId != null) {
+  //      $("." + buttonId.target.className).css({ 'pointer-events': 'auto', 'cursor': 'pointer' });
+  //    }
+  //   }, Timer*1040);
   }
   LogoutSessionCallback(callback: any) {
     setTimeout(() => {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MainService } from './core/services/service.service';
 import { filter } from 'rxjs';
+import { LoaderService } from './core/services/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,12 @@ import { filter } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'Shree Cement';
   isToken: any = ''
-  constructor(private mainSerivce: MainService, public router: Router) { }
-  ngOnInit(): void {
+  isLoading: any = false;
 
+  constructor(private mainSerivce: MainService, public router: Router, private loaderService: LoaderService) { }
+  
+  ngOnInit(): void {
+    this.isLoading = this.loaderService.isLoading$;
     this.mainSerivce.isConnectionAvailable = navigator.onLine;
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

@@ -3,9 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --configuration local",
+    "local": "ng build --configuration local",
+    "dev": "ng build --configuration local",
+    "stage": "ng build --configuration local",
+    "prod": "ng build --configuration local",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "watch": "ng build --watch --configuration dev",
     "test": "ng test",
     "serve:ssr:S": "node dist/s/server/server.mjs"
   },
