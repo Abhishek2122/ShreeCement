@@ -20,7 +20,7 @@ jobs:
         node-version: '18'  # or your Angular Node version
 
     - name: Install dependencies
-      run: npm ci
+      run: npm ci --force
 
     - name: Build Angular project
       run: npm run build -- --configuration dev
