@@ -41,7 +41,7 @@ li {
     z-index: 2000;
     font-family: var(--lato);
     transition: 0.3s ease;
-    overflow-x: hidden;
+    overflow: hidden;
     scrollbar-width: none;
 }
 
@@ -1463,4 +1463,9 @@ span.text {
     .skills {
         flex-wrap: wrap;
     }
+}
+
+.text {
+    display: flex;
+    flex-direction: row;
 }

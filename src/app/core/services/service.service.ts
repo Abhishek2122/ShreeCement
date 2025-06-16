@@ -65,6 +65,7 @@ export class MainService {
   TITLE_OF_PAGE: string = ''
   USER_DATA: BehaviorSubject<any> = new BehaviorSubject(undefined);
   USER_DATA_OBJECT: any;
+  ENV_TYPE: string = environment.envType;
 
   constructor(private http: HttpClient,
     public router: Router,
