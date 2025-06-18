@@ -9,6 +9,7 @@ const routes: Routes = [
         children: [
             { path: "Inward", loadChildren: () => import("./Inward/inward.module").then(m => m.InwardModule) },
             { path: "Outward", loadChildren: () => import("./Outward/outward.module").then(m => m.OutwardModule) },
+            { path: "Upload", loadChildren: () => import("./upload/upload.module").then(m => m.UploadModule) },
             { path: "StockReport", component: StockReportPageComponent },
         ]
     },

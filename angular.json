@@ -27,9 +27,16 @@
             "outputPath": "dist/s",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
             "assets": [
               {
                 "glob": "**/*",
@@ -63,7 +70,7 @@
                   "maximumError": "50mb"
                 }
               ],
-               "fileReplacements": [
+              "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
@@ -75,14 +82,14 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
-               "fileReplacements": [
+              "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.dev.ts"
                 }
               ]
             },
-             "local": {
+            "local": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
@@ -91,7 +98,7 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
-               "fileReplacements": [
+              "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.stage.ts"
@@ -113,10 +120,10 @@
             "dev": {
               "browserTarget": "S:build:dev"
             },
-             "stage": {
+            "stage": {
               "browserTarget": "S:build:stage"
             },
-             "local": {
+            "local": {
               "browserTarget": "S:build:local"
             }
           },

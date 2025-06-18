@@ -14,8 +14,7 @@ export class MatTableResuableComponent implements OnChanges {
   @Output() event: EventEmitter<any> = new EventEmitter();
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes,"sdsldkslj")
-    if (changes['displayedColumns']) {
+    if (changes['displayedColumns'] && changes['displayedColumns']['currentValue']?.length!=0) {
       if (this.ActionRequired == true) {
         this.displayedColumns = ['Action', 'SrNo.', ...changes['displayedColumns']['currentValue']]
       } else {

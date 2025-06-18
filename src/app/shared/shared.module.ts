@@ -22,11 +22,14 @@ import { CoreModule } from '../core/core.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoaderInterceptor } from '../core/interceptors/loader.interceptor';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { UploadUIComponent } from './components/upload-ui/upload-ui.component';
+import { UploadUtilsUIModule } from 'upload-utils-ui';
 
 @NgModule({
     declarations: [
         MatTableResuableComponent,
-        PaginationComponent
+        PaginationComponent,
+        UploadUIComponent
     ],
     imports: [
         FormsModule,
@@ -48,7 +51,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
         AvatarModule,
         ModalPopUpModule,
         MatProgressBarModule,
-        CoreModule
+        CoreModule,
+        UploadUtilsUIModule,
     ],
     exports: [
         FormsModule,
@@ -69,7 +73,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
         ModalPopUpModule,
         MatTableResuableComponent,
         PaginationComponent,
-        MatProgressBarModule
+        MatProgressBarModule,
+        UploadUIComponent,
+        UploadUtilsUIModule,
     ],
     providers: [
         ModalService,

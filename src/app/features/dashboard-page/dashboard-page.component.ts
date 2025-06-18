@@ -49,8 +49,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     name: "Upload : Inward | Outward",
     route: "menulink2",
     subMenu: [
-      { label: "View Report", route: "submenulink1" },
-      { label: "Add Entry", route: "submenulink2" }
+      { label: "Inward Upload", route: "/home/Upload/Inward" },
+      { label: "Outward Upload", route: "/home/Upload/Outward" }
     ]
   },
   {

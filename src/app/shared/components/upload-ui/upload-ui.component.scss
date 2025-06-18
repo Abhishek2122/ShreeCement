@@ -1,0 +1,30 @@
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+}
+
+.summary-cards {
+  display: flex;
+  gap: 16px;
+  margin: 16px;
+}
+
+mat-card {
+  padding: 16px;
+  background-color: #2d4f4f;
+  color: white;
+  font-weight: bold;
+}
+
+.form-group-stock {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.mdc-button {
+    margin: auto;
+    margin-left: 0;
+}

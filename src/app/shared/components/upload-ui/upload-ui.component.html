@@ -1,0 +1,13 @@
+<div>
+    <form #filterForm="ngForm" class="form-group-stock" (ngSubmit)="applyFilter(filterForm.form)">
+        <ng-select required="true" placeholder="Depot Name" style="width: 210px;" name="depotCode" [items]="depots"
+            bindLabel="label" ngModel [searchable]="true">
+        </ng-select>
+        <button mat-raised-button color="accent" [disabled]="!filterForm.form.valid" type="submit">Upload</button>
+    </form>
+</div>
+<batch-upload-manager [allowedFileTypes]="['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']" titleHeader="Upload" [uploadUrl]="'https://api.escuelajs.co/api/v1/files/upload'"
+    (eventCompleted)="completed($event)">
+    <mat-table-resuable (event)="pageChanges($event)" [displayedColumns]="this.TableColumns"
+        [dataSource]="this.TableData"></mat-table-resuable>
+</batch-upload-manager>
