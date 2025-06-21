@@ -14,6 +14,9 @@
 
 <div class="div">
     <nz-empty *ngIf="TableData.length==0"></nz-empty>
+    <br>
+     <mat-table-pagination *ngIf="TableData.length!=0" (onPageChange)="onChangeEvent($event)"
+        [totalRecords]="totalRecords" [recordsPerPage]="10"></mat-table-pagination>
     <nz-table *ngIf="TableData.length!=0">
         <thead>
             <tr>
@@ -75,4 +78,5 @@
             </tr>
         </tbody>
     </nz-table>
+   
 </div>

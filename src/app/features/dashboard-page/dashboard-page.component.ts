@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@a
 import { MainService } from '../../core/services/service.service';
 import { CustomToolTipsService } from '../../core/services/custom-tool-tips.service';
 import { ApiServiceService } from '../../core/services/api-service.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { ModalService } from 'modal-popup-angular-18';
 
@@ -40,9 +40,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   },
   {
     name: "File Upload Details and Deletion",
-    route: "menulink2",
+    route: "FileUploadDeletionPanel",
     subMenu: [
-      { label: "View Report", route: "submenulink1" },
+      { label: "View Report", route: "FileUploadDeletionPanel" },
     ]
   },
   {
@@ -183,10 +183,16 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     public serviceService: MainService,
     public router: Router,
     public loginservice: ApiServiceService,
+    private activatedRoute: ActivatedRoute,
     public ToolTipsService: CustomToolTipsService,
     public modal: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object) {
-
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const routeData = this.getCurrentRouteData(this.activatedRoute);
+        this.serviceService.TITLE_OF_PAGE=(routeData?.title)
+      }
+    })
   }
 
   select(type: string | number, item: any, $event: { stopPropagation: () => any; }) {
@@ -208,10 +214,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.serviceService.TITLE_OF_PAGE = '';
     this.serviceService.getSessionLogin().subscribe((res: any) => {
       this.SESSION_DATA = { ...res, ...res?.data }
-      console.log(this.SESSION_DATA, "getLoginData")
     })
     if (isPlatformBrowser(this.platformId)) {
       const allSideMenu = document.querySelectorAll("#sidebar .side-menu.top li a");
@@ -291,9 +295,16 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
         title: "User Details",
         body: "",
         data: { name: "Helloo" },
-        bghide:true,
-        headerhide:true,
-        
+        bghide: true,
+        headerhide: true,
+
       })
+  }
+
+  private getCurrentRouteData(route: ActivatedRoute): any {
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    return route.snapshot.data;
   }
 }

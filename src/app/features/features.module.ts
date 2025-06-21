@@ -6,12 +6,14 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { StockReportPageComponent } from './StockReport/stock-report-page/stock-report-page.component';
 import { SharedModule } from '../shared/shared.module';
+import { FileUploadDetailsandDeletionComponent } from './file-upload-detailsand-deletion/file-upload-detailsand-deletion.component';
 
 @NgModule({
     declarations: [
         LoginPageComponent,
         DashboardPageComponent,
-        StockReportPageComponent
+        StockReportPageComponent,
+        FileUploadDetailsandDeletionComponent
     ],
     imports: [
         CommonModule,

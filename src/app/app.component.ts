@@ -14,8 +14,11 @@ export class AppComponent implements OnInit {
   isToken: any = ''
   isLoading: any = false;
 
-  constructor(private mainSerivce: MainService, public router: Router, private loaderService: LoaderService) { }
-  
+  constructor(
+    private mainSerivce: MainService,
+    public router: Router,
+    private loaderService: LoaderService) { }
+
   ngOnInit(): void {
     this.isLoading = this.loaderService.isLoading$;
     this.mainSerivce.isConnectionAvailable = navigator.onLine;
@@ -32,4 +35,5 @@ export class AppComponent implements OnInit {
       }
     })
   }
+
 }

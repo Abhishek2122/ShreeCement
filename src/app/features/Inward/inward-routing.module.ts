@@ -4,8 +4,16 @@ import { InwardViewPageComponent } from './inward-view-page/inward-view-page.com
 import { InwardAddPageComponent } from './inward-add-page/inward-add-page.component';
 
 const routes: Routes = [
-    { path: "View", component: InwardViewPageComponent },
-    { path: "Add", component: InwardAddPageComponent },
+    {
+        path: "View", component: InwardViewPageComponent, data: {
+            title: "This is Inward Report sheet : Select Options to navigate"
+        }
+    },
+    {
+        path: "Add", component: InwardAddPageComponent, data: {
+            title: "This is Inward Entry Sheet"
+        }
+    },
 ];
 
 @NgModule({

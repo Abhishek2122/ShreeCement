@@ -25,12 +25,14 @@ export class InwardViewPageComponent implements OnInit {
   });
   BAGTONData = ['Ton', 'Bag'];
   TableData: any = [];
+  PAGE_LIMIT: number = 10;
+  PAGE_INDEX: number = 1;
+  totalRecords: number = 0;
 
-  constructor(public service: MainService) {
-    service.TITLE_OF_PAGE = "This is Inward Report sheet : Select Options to navigate"
-  }
+  constructor(public service: MainService) {}
 
   ngOnInit(): void {
+    console.log(this.service.TITLE_OF_PAGE,"this.mainSerivce.TITLE_OF_PAGE")
     this.service.ALLDepotCode().then((res: any) => {
       console.log(res);
       this.depots = res?.data?.map((items: any) => {
@@ -43,7 +45,7 @@ export class InwardViewPageComponent implements OnInit {
       this.filteredDepots = this.depots
     });
   }
- 
+
 
   isLoadingOne = false;
   loadData(): void {
@@ -54,12 +56,20 @@ export class InwardViewPageComponent implements OnInit {
       "End_Date": moment(this.filterForm.value.Start_End_Date[1]).format("YYYY-MM-DD"),
       "Depot_Name": this.filterForm.value.depotDetails?.depot_name,
       "Bag_Ton": "Ton",
-      "Depot_Code": this.filterForm.value.depotDetails?.depot_code
+      "Depot_Code": this.filterForm.value.depotDetails?.depot_code,
+      limit: this.PAGE_LIMIT,
+      page: this.PAGE_INDEX
     }).then(async (res: any) => {
       this.isLoadingOne = false;
-      this.TableData = res;
+      this.TableData = res?.data;
+      this.totalRecords = res?.totalCount
     })
   }
 
+  onChangeEvent(event: any) {
+    console.log(event, "onChangeEvent")
+    this.PAGE_INDEX = event?.pageIndex + 1;
+    this.loadData();
+  }
 
 }

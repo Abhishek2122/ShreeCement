@@ -66,7 +66,8 @@ export class MainService {
   USER_DATA: BehaviorSubject<any> = new BehaviorSubject(undefined);
   USER_DATA_OBJECT: any;
   ENV_TYPE: string = environment.envType;
-
+  TITLE_OF_PAGE_BehaviorSubject:BehaviorSubject<any> = new BehaviorSubject('');
+  
   constructor(private http: HttpClient,
     public router: Router,
     public cookieService: CookiesService,
@@ -220,7 +221,7 @@ export class MainService {
         this.http.post<any>(`${environment.NewBaseUrl + 'InwardSheet/in-table-data'}`, DATA).subscribe((res) => {
           if (res['response']['status']) {
             this.INWARD_DATA = res['data'];
-            resolve(this.INWARD_DATA);
+            resolve(res);
           } else {
             this.INWARD_DATA = [];
             resolve(null);
@@ -266,17 +267,17 @@ export class MainService {
   }
 
   getOutwardTableData(DATA: any) {
-    this.animation_loader.LoadingAnimation();
+   this.animation_loader.LoadingAnimation();
     return new Promise((resolve, reject) => {
       if (DATA != null && DATA != '') {
-        this.http.post<any>(`${environment.baseUrl + 'OutwardSheet/OutWarddisplayData.php'}`, DATA, { 'headers': this.headers }).pipe(delay(2000)).subscribe((res) => {
+        this.http.post<any>(`${environment.NewBaseUrl + 'OutwardSheet/get'}`, DATA).subscribe((res) => {
           if (res['response']['status']) {
-            this.OUTWARD_DATA = res['data'];
-            resolve(this.OUTWARD_DATA);
+            this.INWARD_DATA = res['data'];
+            resolve(res);
           } else {
-            this.OUTWARD_DATA = [];
+            this.INWARD_DATA = [];
             resolve(null);
-            this.animation_loader.ToolTips_AnimationStart(5, { Outward_Table: res['response']['message'] }, null);
+            this.animation_loader.ToolTips_AnimationStart(5, { Inward_Table: res['response']['message'] }, null);
           }
           this.animation_loader.removeAnimation();
         }, error => {
@@ -284,7 +285,7 @@ export class MainService {
           this.animation_loader.removeAnimation();
         });
       } else {
-        this.OUTWARD_DATA = [];
+        this.INWARD_DATA = [];
         resolve(null);
         this.animation_loader.removeAnimation();
       }

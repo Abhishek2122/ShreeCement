@@ -4,8 +4,18 @@ import { OutwardViewPageComponent } from './outward-view-page/outward-view-page.
 import { OutwardAddPageComponent } from './outward-add-page/outward-add-page.component';
 
 const routes: Routes = [
-    { path: "View", component: OutwardViewPageComponent },
-    { path: "Add", component: OutwardAddPageComponent },
+    {
+        path: "View", component: OutwardViewPageComponent,
+        data: {
+            title: "This is Outward Report sheet : Select Options to navigate"
+        }
+    },
+    {
+        path: "Add", component: OutwardAddPageComponent,
+        data: {
+            title: "This is Outward Entry Sheet"
+        }
+    },
 ];
 
 @NgModule({

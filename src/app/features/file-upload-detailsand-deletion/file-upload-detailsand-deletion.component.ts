@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { MainService } from '../../../core/services/service.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import moment from 'moment';
+import { MainService } from '../../core/services/service.service';
 
 @Component({
-  selector: 'app-outward-view-page',
-  templateUrl: './outward-view-page.component.html',
-  styleUrl: './outward-view-page.component.scss'
+  selector: 'app-file-upload-detailsand-deletion',
+  templateUrl: './file-upload-detailsand-deletion.component.html',
+  styleUrl: './file-upload-detailsand-deletion.component.scss'
 })
-export class OutwardViewPageComponent {
+export class FileUploadDetailsandDeletionComponent implements OnInit {
   listOfData: any[] = [];
   date = null;
   searchChange$ = new BehaviorSubject('');
@@ -27,9 +27,10 @@ export class OutwardViewPageComponent {
   TableData: any = [];
   PAGE_LIMIT: number = 10;
   PAGE_INDEX: number = 1;
+  totalRecords: number = 0;
 
   constructor(public service: MainService) {
-    service.TITLE_OF_PAGE = "This is Inward Report sheet : Select Options to navigate"
+    service.TITLE_OF_PAGE = "This is File Upload Sheet"
   }
 
   ngOnInit(): void {
@@ -46,12 +47,12 @@ export class OutwardViewPageComponent {
     });
   }
 
+
   isLoadingOne = false;
-  totalRecords: number = 0;
   loadData(): void {
     console.log(this.filterForm.value, "depotDetails")
     this.isLoadingOne = true;
-    this.service.getOutwardTableData({
+    this.service.getInwardTableData({
       "Start_Date": moment(this.filterForm.value.Start_End_Date[0]).format("YYYY-MM-DD"),
       "End_Date": moment(this.filterForm.value.Start_End_Date[1]).format("YYYY-MM-DD"),
       "Depot_Name": this.filterForm.value.depotDetails?.depot_name,
@@ -60,7 +61,6 @@ export class OutwardViewPageComponent {
       limit: this.PAGE_LIMIT,
       page: this.PAGE_INDEX
     }).then(async (res: any) => {
-      console.log(res, "asdasdasdsad")
       this.isLoadingOne = false;
       this.TableData = res?.data;
       this.totalRecords = res?.totalCount
@@ -72,4 +72,6 @@ export class OutwardViewPageComponent {
     this.PAGE_INDEX = event?.pageIndex + 1;
     this.loadData();
   }
+
 }
+
