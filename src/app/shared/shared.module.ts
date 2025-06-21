@@ -24,6 +24,15 @@ import { LoaderInterceptor } from '../core/interceptors/loader.interceptor';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UploadUIComponent } from './components/upload-ui/upload-ui.component';
 import { UploadUtilsUIModule } from 'upload-utils-ui';
+import { NgZorroAntdModule } from './ng-zorro-antd.module';
+import { NZ_ICONS } from 'ng-zorro-antd/icon';
+import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { IconDefinition } from '@ant-design/icons-angular';
+import * as AllIcons from '@ant-design/icons-angular/icons';
+const antDesignIcons = AllIcons as {
+  [key: string]: IconDefinition;
+};
+const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
 
 @NgModule({
     declarations: [
@@ -53,6 +62,7 @@ import { UploadUtilsUIModule } from 'upload-utils-ui';
         MatProgressBarModule,
         CoreModule,
         UploadUtilsUIModule,
+       NgZorroAntdModule
     ],
     exports: [
         FormsModule,
@@ -76,6 +86,7 @@ import { UploadUtilsUIModule } from 'upload-utils-ui';
         MatProgressBarModule,
         UploadUIComponent,
         UploadUtilsUIModule,
+        NgZorroAntdModule
     ],
     providers: [
         ModalService,
@@ -84,6 +95,7 @@ import { UploadUtilsUIModule } from 'upload-utils-ui';
             useClass: LoaderInterceptor,
             multi: true,
         },
+         { provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons }
     ]
 })
 export class SharedModule { }

@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { OutwardViewPageComponent } from './outward-view-page/outward-view-page.component';
 import { OutwardAddPageComponent } from './outward-add-page/outward-add-page.component';
 import { OutwardRoutingModule } from './outward-routing.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -13,8 +14,8 @@ import { OutwardRoutingModule } from './outward-routing.module';
     imports: [
         CommonModule,
         RouterModule,
-        OutwardRoutingModule
-        ,
+        OutwardRoutingModule,
+        SharedModule,
     ]
 })
 export class OutwardModule { }

@@ -1,1 +1,78 @@
-<p>outward-view-page works!</p>
+<div class="card">
+    <form class="form-card" [formGroup]="filterForm">
+        <nz-range-picker formControlName="Start_End_Date" ngModel></nz-range-picker>
+        <ng-select formControlName="depotDetails" required="true" style="height: auto !important;padding: 0;"
+            name="depotCode" [items]="depots" bindLabel="label" ngModel [searchable]="true">
+        </ng-select>
+        <ng-select formControlName="BAGTON" required="true" style="height: auto !important;padding: 0;" name="depotCode"
+            [items]="BAGTONData" ngModel [searchable]="true">
+        </ng-select>
+        <button class="show-data-btn" [disabled]="filterForm.invalid" nz-button nzType="primary" (click)="loadData()"
+            [nzLoading]="isLoadingOne">Show</button>
+    </form>
+</div>
+
+<div class="div">
+    <nz-empty *ngIf="TableData.length==0"></nz-empty>
+    <nz-table *ngIf="TableData.length!=0">
+        <thead>
+            <tr>
+                <!-- <th class="col1">Action</th> -->
+                <th class="col1">Sr.No.</th>
+                <th class="col1">Entry_Date</th>
+                <th class="col1">Dealer Name</th>
+                <th class="col1">Dealer Code</th>
+                <th class="col1">Invoice_No.</th>
+                <th class="col1">Invoice_Date</th>
+                <th class="col1">InvoiceQty (Ton)</th>
+                <th class="col1">Grade</th>
+                <th class="col1">Loading (Ton)</th>
+                <th class="col1">Transhipment (Ton)</th>
+                <th class="col1">diversion (Ton)</th>
+                <th class="col1">TRUCK_ARRENGED_BY</th>
+                <th class="col1">VehicleNo.</th>
+                <th class="col1">DriveName</th>
+                <th class="col1">DriverMob.</th>
+                <th class="col1">InTime</th>
+                <th class="col1">OutTime</th>
+                <th class="col1">Depot Code</th>
+                <th class="col1">Invoice Value</th>
+                <th class="col1">Eway Date</th>
+                <th class="col1">Eway no.</th>
+                <th class="col1">Emp ID</th>
+                <th class="col1">Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of TableData;let i=index">
+                <!-- <td class="col1 color-black gap">
+                    <a><i class="fa fa-edit" title="Edit of Table : row : "></i></a>
+                    <a><i class="fa fa-trash" title="Delete of Table : row : "></i></a>
+                </td> -->
+                <td class="col1 color-black">{{(i+1)}}</td>
+                <td class="col1 color-black">{{data['entryDate']}}</td>
+                <td class="col1 color-black">{{data['dealerName']}}</td>
+                <td class="col1 color-black">{{data['dealercode']}}</td>
+                <td class="col1 color-black">{{data['invoiceNumber']}}</td>
+                <td class="col1 color-black">{{data['invoiceDate']}}</td>
+                <td class="col1 color-black">{{this.service.ParseFloat(data['invoiceQt'])}}</td>
+                <td class="col1 color-black">{{(data['grade'])}}</td>
+                <td class="col1 color-black">{{this.service.ParseFloat(data['loading'])}}</td>
+                <td class="col1 color-black">{{this.service.ParseFloat(data['transphipment'])}}</td>
+                <td class="col1 color-black">{{this.service.ParseFloat(data['diversion'])}}</td>
+                <td class="col1 color-black">{{data['truckArrangedBy']}}</td>
+                <td class="col1 color-black">{{data['vehicleNumber']}}</td>
+                <td class="col1 color-black">{{data['driverName']}}</td>
+                <td class="col1 color-black">{{data['driverMobileNumber']}}</td>
+                <td class="col1 color-black">{{data['inTimeOfTruck']}}</td>
+                <td class="col1 color-black">{{data['outTimeOfTruck']}}</td>
+                <td class="col1 color-black">{{data['depot_code']}}</td>
+                <td class="col1 color-black">{{data['InvoiceValue']}}</td>
+                <td class="col1 color-black">{{data['EwayDate']}}</td>
+                <td class="col1 color-black">{{data['EwayNo']}}</td>
+                <td class="col1 color-black">{{data['emp_id']}}</td>
+                <td class="col1 color-black">{{data['comments']}}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

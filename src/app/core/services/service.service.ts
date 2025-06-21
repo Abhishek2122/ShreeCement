@@ -272,7 +272,7 @@ export class MainService {
         this.http.post<any>(`${environment.baseUrl + 'OutwardSheet/OutWarddisplayData.php'}`, DATA, { 'headers': this.headers }).pipe(delay(2000)).subscribe((res) => {
           if (res['response']['status']) {
             this.OUTWARD_DATA = res['data'];
-            resolve(res);
+            resolve(this.OUTWARD_DATA);
           } else {
             this.OUTWARD_DATA = [];
             resolve(null);
