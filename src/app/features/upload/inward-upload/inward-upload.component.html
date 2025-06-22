@@ -1,1 +1,12 @@
-<custom-upload-ui [TableColumns]="this.Tabelheader"></custom-upload-ui>
+<div class="card">
+    <form class="form-card" [formGroup]="filterForm">
+        <ng-select formControlName="depotDetails" required="true" style="height: auto !important;padding: 0;"
+            name="depotCode" [items]="depots" bindLabel="label" ngModel [searchable]="true">
+        </ng-select>
+        <button class="show-data-btn" [disabled]="filterForm.invalid" nz-button nzType="primary" (click)="loadData()"
+            [nzLoading]="isLoadingOne">Upload</button>
+    </form>
+</div>
+<ng-template #UploadUIOpen>
+    <custom-upload-ui [TableColumns]="this.Tabelheader"></custom-upload-ui>
+</ng-template>

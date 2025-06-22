@@ -9,7 +9,7 @@
 
 /* Your custom styles below (optional) */
 body {
-  font-family: 'Arial', sans-serif;
+    font-family: 'Arial', sans-serif;
 }
 
 body,
@@ -56,15 +56,38 @@ body {
     z-index: 9999999;
 }
 
-.bg-hide{
+.bg-hide {
     box-shadow: none !important;
 }
 
 
-.sup-env-type{
+.sup-env-type {
     color: red;
 }
 
-h1, h2, h3, h4, h5, h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: white !important;
+}
+
+.cdk-overlay-container {
+    position: fixed;
+    z-index: 2222 !important;
+}
+
+.batch-upload-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    background-color: var(--neutral-50);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-md);
+    height: 500px;
+    overflow: auto;
+    width: 70vw;
 }
