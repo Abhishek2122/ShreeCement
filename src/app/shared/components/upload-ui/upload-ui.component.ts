@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MainService } from '../../../core/services/service.service';
-import moment from 'moment';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -19,9 +18,9 @@ export class UploadUIComponent implements OnInit, OnDestroy {
   depots = ['Tumkur', 'Hubli', 'Bangalore'];
   @Input() TableColumns: string[] = [];
   @Input() TableData: any = [];
-
+  uploadUrl: string = ""
   constructor(public service: MainService) {
-    service.TITLE_OF_PAGE = "This is Inward Report sheet : Select Options to navigate"
+    this.uploadUrl = service.environment.NewBaseUrl + "common/upload-xlsx"
   }
 
   completed(event: any): void {

@@ -30,7 +30,7 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 const antDesignIcons = AllIcons as {
-  [key: string]: IconDefinition;
+    [key: string]: IconDefinition;
 };
 const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
 
@@ -62,7 +62,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         MatProgressBarModule,
         CoreModule,
         UploadUtilsUIModule,
-       NgZorroAntdModule
+        NgZorroAntdModule
     ],
     exports: [
         FormsModule,
@@ -95,7 +95,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
             useClass: LoaderInterceptor,
             multi: true,
         },
-         { provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons }
+        { provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons }
     ]
 })
 export class SharedModule { }

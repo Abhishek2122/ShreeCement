@@ -6,8 +6,6 @@
         <button mat-raised-button color="accent" [disabled]="!filterForm.form.valid" type="submit">Upload</button>
     </form>
 </div>
-<batch-upload-manager [allowedFileTypes]="['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']" titleHeader="Upload" [uploadUrl]="'https://api.escuelajs.co/api/v1/files/upload'"
-    (eventCompleted)="completed($event)">
-    <mat-table-resuable (event)="pageChanges($event)" [displayedColumns]="this.TableColumns"
-        [dataSource]="this.TableData"></mat-table-resuable>
+<batch-upload-manager [allowedFileTypes]="['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']"
+    titleHeader="Upload" [uploadUrl]="this.uploadUrl" (eventCompleted)="completed($event)">
 </batch-upload-manager>

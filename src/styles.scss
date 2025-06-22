@@ -4,11 +4,8 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url("../node_modules/@ng-select/ng-select/themes/material.theme.css");
 @import url("../node_modules/ngx-toastr/toastr.css");
-@import '../node_modules/upload-utils-ui/src/lib/styles/global.common.scss';
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('../node_modules/upload-utils-ui/src/lib/styles/global.common.css');
+@import url('../node_modules/upload-utils-ui/src/lib/styles/batch-upload-manager.component.css');
 
 /* Your custom styles below (optional) */
 body {
