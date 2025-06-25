@@ -6,12 +6,12 @@ import { OutwardUploadComponent } from './outward-upload/outward-upload.componen
 const routes: Routes = [
     {
         path: "Inward", component: InwardUploadComponent, data: {
-            title: "This is File Upload Inward Sheet"
+            title: `<strong>This is File Upload Inward Sheet</strong>`
         }
     },
     {
         path: "Outward", component: OutwardUploadComponent, data: {
-            title: "This is File Upload Outward Sheet"
+            title: `<strong>This is File Upload Outward Sheet</strong>`
         }
     },
 ];

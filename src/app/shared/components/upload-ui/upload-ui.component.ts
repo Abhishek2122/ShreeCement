@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MainService } from '../../../core/services/service.service';
 import { FormGroup } from '@angular/forms';
 
@@ -18,14 +18,14 @@ export class UploadUIComponent implements OnInit, OnDestroy {
   depots = ['Tumkur', 'Hubli', 'Bangalore'];
   @Input() TableColumns: string[] = [];
   @Input() TableData: any = [];
+  @Output() eventCompleted: EventEmitter<any> = new EventEmitter();
   uploadUrl: string = ""
   constructor(public service: MainService) {
     this.uploadUrl = service.environment.NewBaseUrl + "common/upload-xlsx"
   }
 
   completed(event: any): void {
-    console.log('Upload Completed:', event);
-    // You can perform additional actions here
+    this.eventCompleted.emit(event)
   }
 
   ngOnInit(): void {

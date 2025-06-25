@@ -1,12 +1,88 @@
 <div class="card">
     <form class="form-card" [formGroup]="filterForm">
-        <ng-select formControlName="depotDetails" required="true" style="height: auto !important;padding: 0;"
-            name="depotCode" [items]="depots" bindLabel="label" ngModel [searchable]="true">
+        <button class="show-data-btn" nz-button nzType="primary" (click)="loadData()" [nzLoading]="isLoadingOne">Select
+            File</button>
+        <ng-select [style]="{'width':'300px'}" [disabled]="TableData.length==0?true:false" formControlName="depotDetails" required="true" style="height: auto !important;padding: 0;"
+            name="depotCode" (change)="ChangeTableDataDepotCode($event)" placeholder="Select Depot Code" [items]="depots" bindLabel="label" ngModel
+            [searchable]="true">
         </ng-select>
-        <button class="show-data-btn" [disabled]="filterForm.invalid" nz-button nzType="primary" (click)="loadData()"
-            [nzLoading]="isLoadingOne">Upload</button>
+        <button class="show-data-btn" [disabled]="TableData.length==0" nz-button nzType="primary"
+            (click)="uploadStart($event)" [nzLoading]="isLoadingOne">Upload</button>
     </form>
+    <div class="div">
+        <nz-empty *ngIf="TableData.length==0"></nz-empty>
+         <div class="date-lable-input" *ngIf="this.IN_VALID_DATE">
+                    <label class="heading-lable" style="color: red;">Only data insert 5 days before<br> Please check entry date! </label>
+                </div>
+                <div class="date-lable-input" *ngIf="this.GradeNotFound.length!=0">
+                    <label class="heading-lable" style="color: red;" *ngFor="let item of this.GradeNotFound">{{item}}</label>
+                </div>
+        <mat-table-pagination *ngIf="TableData.length!=0" (onPageChange)="onChangeEvent($event)"
+            [totalRecords]="totalRecords" [recordsPerPage]="10"></mat-table-pagination>
+        <nz-table *ngIf="TableData.length!=0">
+            <thead>
+                <tr>
+                    <!-- <th class="col1">Action</th> -->
+                    <th class="col1">Sr.No.</th>
+                    <th class="col1">Entry_Date</th>
+                    <th class="col1">SourcePlant</th>
+                    <th class="col1">PlantInvoiceNo</th>
+                    <th class="col1">Invoice_Date</th>
+                    <th class="col1">Arr.Dt.Truck</th>
+                    <th class="col1">InvoiceQty</th>
+                    <th class="col1">Grade</th>
+                    <th class="col1">GoodStock</th>
+                    <th class="col1">Cut&Torn</th>
+                    <th class="col1">Shortage</th>
+                    <th class="col1">Unloading</th>
+                    <th class="col1">Transhipment</th>
+                    <th class="col1">diversion</th>
+                    <th class="col1">TransportC0mpany</th>
+                    <th class="col1">VehicleNo.</th>
+                    <th class="col1">Reason Delay</th>
+                    <th class="col1">InTime</th>
+                    <th class="col1">OutTime</th>
+                    <th class="col1">HaltTime</th>
+                    <th class="col1">Depot Code</th>
+                    <th class="col1">Emp ID</th>
+                    <th class="col1">Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of TableData;let i=index">
+                    <!-- <td class="col1 color-black gap">
+                    <a><i class="fa fa-edit" title="Edit of Table : row : "></i></a>
+                    <a><i class="fa fa-trash" title="Delete of Table : row : "></i></a>
+                </td> -->
+                    <td class="col1 color-black">{{(i+1)}}</td>
+                    <td class="col1 color-black">{{(data['Entry_Date'])}}</td>
+                    <td class="col1 color-black">{{(data['SourcePlant'])}}</td>
+                    <td class="col1 color-black">{{(data['InvoiceNumber'])}}</td>
+                    <td class="col1 color-black">{{(data['InvoiceDate'])}}</td>
+                    <td class="col1 color-black">{{(data['ArrivalDateOfTruck'])}}</td>
+                    <td class="col1 color-black">{{this.service.ParseFloat(data['InvoiceQty'])}}</td>
+                    <td class="col1 color-black">{{(data['Grade'])}}</td>
+                    <td class="col1 color-black">{{this.service.ParseFloat(data['GoodStock'])}}</td>
+                    <td class="col1 color-black">{{this.service.ParseFloat(data['CutAndTorn'])}}</td>
+                    <td class="col1 color-black">{{this.service.ParseFloat(data['Shortage'])}}</td>
+                    <td class="col1 color-black">{{this.service.ParseFloat(data['Unloading'])}}</td>
+                    <td class="col1 color-black">{{this.service.ParseFloat(data['Transphipment'])}}
+                    </td>
+                    <td class="col1 color-black">{{this.service.ParseFloat(data['Diversion'])}}</td>
+                    <td class="col1 color-black">{{(data['TransporterCompany'])}}</td>
+                    <td class="col1 color-black">{{(data['VehicleNumber'])}}</td>
+                    <td class="col1 color-black">{{(data['reasonForDelay'])}}</td>
+                    <td class="col1 color-black">{{(data['inTimeOfTruck'])}}</td>
+                    <td class="col1 color-black">{{(data['outTimeOfTruck'])}}</td>
+                    <td class="col1 color-black">{{(data['HaltHour'])}}</td>
+                    <td class="col1 color-black">{{(data['depot_code'])}}</td>
+                    <td class="col1 color-black">{{(data['emp_id'])}}</td>
+                    <td class="col1 color-black">{{(data['comments'])}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
 </div>
 <ng-template #UploadUIOpen>
-    <custom-upload-ui [TableColumns]="this.Tabelheader"></custom-upload-ui>
+    <custom-upload-ui (eventCompleted)="uploadCompleted($event)" [TableColumns]="this.Tabelheader"></custom-upload-ui>
 </ng-template>

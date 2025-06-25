@@ -42,8 +42,7 @@
     <section id="content">
         <nav>
             <span class="change-menu"><i class="fa-solid fa-bars"></i></span>
-            <div class="title-of-page">
-                {{this.serviceService.TITLE_OF_PAGE}}
+            <div class="title-of-page" [innerHTML]="this.serviceService.TITLE_OF_PAGE">
             </div>
             <a class="profile" matButton [matMenuTriggerFor]="menu" id="profileIcon">
                 <ngx-avatars [name]="this.SESSION_DATA?.emp_name"></ngx-avatars>
@@ -126,6 +125,10 @@
                         <div class="stat">
                             <span class="stat-value">{{SESSION_DATA?.Emp_Id}}</span>
                             <span class="stat-label">Emp Id</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">{{SESSION_DATA?.depot_code}}</span>
+                            <span class="stat-label">Depot Code</span>
                         </div>
                     </div>
                 </div>

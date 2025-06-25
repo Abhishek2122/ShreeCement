@@ -37,7 +37,7 @@
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "upload-utils-ui": "^0.0.27",
+    "upload-utils-ui": "^0.0.28",
     "zone.js": "~0.14.10"
   },
   "devDependencies": {
