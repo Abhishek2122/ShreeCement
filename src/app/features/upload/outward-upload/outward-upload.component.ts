@@ -64,6 +64,7 @@ export class OutwardUploadComponent implements OnInit {
   GRADE_LIST_OBJECT: any = [];
   SESSION_DATA: any = [];
   IN_VALID_DATE: boolean = false;
+  STORAGE_LOCATION: any = ['LT01', 'DM01', 'CT01', 'TL01', 'OCFG'];
 
   constructor(
     public service: MainService,
@@ -106,13 +107,16 @@ export class OutwardUploadComponent implements OnInit {
   }
 
   uploadCompleted(event: any) {
+    console.log(event, "asdasdasdasd")
     this.IN_VALID_DATE = false;
     this.UploadUIOpen_Close?.close(this.UploadUIOpen_Close?.RAMDOM_ID ?? 0);
+    this.FILE_DETAILS = event?.uploadQueue[0]?.file
     this.TableData = event?.uploadQueue[0]?.data?.result?.map((items: any) => {
       const plant_code: any = this.PLANT_CODE[(items['Plant'])];
-      let GRADE_NAME: any = this.gradeIndexOf(items['Material Desc.'])
-      let GradeName = ''
-      const FILTER_MATERIAL_DATA: any = this.MATERIAL_NO.filter((item: any) => item?.material_no === items['Material No'])
+      let grade = items['MATERIAL DESCRIPTION'] != undefined ? items['MATERIAL DESCRIPTION'] : items['Material Desc.'];
+      let GRADE_NAME: any = this.gradeIndexOf(grade);
+      let GradeName: any = ''
+      const FILTER_MATERIAL_DATA: any = this.MATERIAL_NO.filter((item: any) => item?.material_no === (items['Material No'] || items['MATERIAL NUMBER']))
       if (FILTER_MATERIAL_DATA?.length != 0) {
         GradeName = (FILTER_MATERIAL_DATA[0]?.Grade_Name)
       } else if (GRADE_NAME != undefined && GRADE_NAME != null && GRADE_NAME != '') {
@@ -121,59 +125,67 @@ export class OutwardUploadComponent implements OnInit {
         GradeName = ("Not Grade found")
         this.GradeNotFound.push(`Error: Grade "${items['Material No']} | ${items['Material Desc.']}" not found in the existing list.`)
       }
-      const UNLOADING = items['Expences Type'] == 'ROAD-Unloading Chg' && (items['Sto.Location'] == 'SA01' ||
-        items['Sto.Location'] == 'CT01' || items['Sto.Location'] == 'DM01') ?
-        items['GRN qty'] : 0;
-      const Transphipment = items['Expences Type'] == 'Transhipment Charges' && (items['Sto.Location'] == 'SA01' ||
-        items['Sto.Location'] == 'CT01' || items['Sto.Location'] == 'DM01') ?
-        items['GRN qty'] : 0;
-      const Diversion = items['Expences Type'] == 'Diversion charges' && (items['Sto.Location'] == 'SA01' ||
-        items['Sto.Location'] == 'CT01' || items['Sto.Location'] == 'DM01') ?
-        items['GRN qty'] : 0;
+      const UNLOADING = items['SHIPING DESC'] == 'LOADING' ? items['ACTUAL INVOICED QUANTITY'] : 0;
+      const Transphipment = items['SHIPING DESC'] == 'Transshipment' ? items['ACTUAL INVOICED QUANTITY'] : 0;
+      const Diversion = items['SHIPING DESC'] == 'Diversion' ? items['ACTUAL INVOICED QUANTITY'] : 0;
       let deleteflag = 0;
-      if (items['Expences Type'] == 'Diversion charges' && (items['Sales Order Quantity']).toString() == 'NF') {
-        deleteflag = 1
+      let comments = "NA"
+      if (this.STORAGE_LOCATION.includes(items['STORAGE LOCATION'])) {
+        deleteflag = 1;
+        comments = (items['STORAGE LOCATION']);
+      } else if (items['SHIPING DESC'] == 'Diversion' && (items['DCHNL NAME']).toLocaleLowerCase() == ('stock transfer').toString().toLocaleLowerCase()) {
+        deleteflag = 1;
       } else {
         deleteflag = 0;
       }
       const haltHour: any = 'NA'
-      const storeDate = this.service.getMonthYear2(items['GRN_Date']);
+      const storeDate = this.service.getMonthYear2(items['BILL CREATION DT']);
       const session = this.SESSION_DATA;
+      items['TimeStamp'] = new Date();
+      items['DepotCode'] = (items['PLANT'])
+      items['EmpId'] = session['Emp_Id']
+      items['EntryDate'] = ((items['BILL CREATION DT']))
+      items['InvoiceDate'] = ((items['BILL CREATION DT']))
+      items['Frieght_Status'] = 'Pending'
       return {
-        Entry_Date: items['GRN_Date'],
+        Entry_Date: items['BILL CREATION DT'],
         SourcePlant: plant_code,
-        InvoiceNumber: items['Invoice No'],
-        InvoiceDate: items['Invoice Date'],
+        InvoiceNumber: items['BILLING DOCUMENT'],
+        InvoiceDate: items['BILL CREATION DT'],
+        Dealer_Name: items['SOLD-TO NAME'],
+        Dealer_Code: items['SOLD-TO PARTY'],
         ArrivalDateOfTruck: items['Arrival date'],
-        InvoiceQty: (parseFloat(items['GRN qty']) * 20).toFixed(2),
+        TruckArrangedBy: items['TRANSPORTER NAME'],
+        InvoiceQty: (parseFloat(items['ACTUAL INVOICED QUANTITY']) * 20).toFixed(2),
         Grade: GradeName,
-        GoodStock: items['Sto.Location'] == 'SA01' ? (parseFloat(items['GRN qty']) * 20).toFixed(2) : 0,
-        CutAndTorn: items['Sto.Location'] == 'DM01' ? (parseFloat(items['GRN qty']) * 20).toFixed(2) : 0,
-        Shortage: items['Sto.Location'] == 'LT01' ? (parseFloat(items['GRN qty']) * 20).toFixed(2) : 0,
         Unloading: UNLOADING,
         Transphipment: Transphipment,
         Diversion: Diversion,
         TransporterCompany: items['Transporter Name'],
-        VehicleNumber: items['Vehicle No'],
-        depot_code: this.SESSION_DATA['depot_code'],
+        VehicleNumber: items['LORRY / TRUCK NO.'],
+        InvoiceValue: items['INVOICE VALUE'],
+        EwayDate: items['E-WAY DATE'] != '' ? items['E-WAY DATE'] : 'NF',
+        EwayNo: items['E-WAY BILL NO'] != '' ? items['E-WAY BILL NO'] : 'NF',
+        depot_code: items['PLANT'],
         emp_id: this.SESSION_DATA['Emp_Id'],
-        DriverName: "NA",
-        DriverMobileNumber: "NA",
+        DriverName: items['DRIVER NAME'],
+        DriverMobileNumber: items['MOBILE NO.'],
         reasonForDelay: "NA",
-        Depot_Code: this.SESSION_DATA['depot_code'],
+        Depot_Code: items['PLANT'],
         BillingTimeOfPlant: ((items['Invoice Date'])),
-        inTimeOfTruck: ((items['Arrival Time'])),
-        outTimeOfTruck: ((items['GRN Time'])),
+        InTimeOfTruck: ((items['SO TIME'])),
+        OutTimeOfTruck: ((items['BILLING TIME'])),
         ClearDateOfTruck: "NA",
         Month: storeDate.Month,
         Year: storeDate.Year,
         Emp_Id: session['Emp_Id'],
         HaltHour: haltHour,
-        comments: "NA",
+        comments: comments,
         Today: storeDate.DayOfWeek,
         fileId: this.STATIC_UNIQUE_ID + '_' + session['Emp_Id'],
         STO_LOCATION: items['STO_LOCATION'],
-        deleteflag: items['deleteflag']
+        deleteflag: deleteflag,
+        OUTWARD_TRANSPORTER: items
       }
     });
     this.IN_VALID_DATE = this.CHECK_IF_OLD_DATA_EXISTS();
@@ -200,11 +212,12 @@ export class OutwardUploadComponent implements OnInit {
     const FILE_Id = this.STATIC_UNIQUE_ID + '_' + this.SESSION_DATA['Emp_Id']
     this.service.FileUpload({
       id: FILE_Id,
-      'Name': this.FILE_DETAILS?.name, Time: new Date(),
+      'Name': this.FILE_DETAILS?.name,
+      Time: moment(new Date()).format("YYYY-MM-DD hh:mm A"),
       Size: this.FILE_DETAILS?.size,
-      TableName: 'Inward',
+      TableName: 'Outward',
       EmpId: this.SESSION_DATA['Emp_Id'],
-      DepotCode: this.SESSION_DATA['Depot_Code'],
+      DepotCode: this.SESSION_DATA['depot_code'],
       Date: moment(new Date()).format("YYYY-MM-DD")
     }).subscribe((fileres) => {
       this.UPLOAD_FILE_EXCEL(progressbtn, FILE_Id)
@@ -217,12 +230,8 @@ export class OutwardUploadComponent implements OnInit {
       console.warn('No data to upload.');
       return;
     }
-
-    this.progress = 0;
     clearInterval(this.CLEAR_INTERVAL);
-
     const batchdata = this.TableData.slice(this.START_INDEX, this.END_INDEX);
-
     if (batchdata.length === 0) {
       console.warn('No batch data to process.');
       return;
@@ -231,10 +240,9 @@ export class OutwardUploadComponent implements OnInit {
     const totalLength = this.TableData.length;
     const currentBatchLength = batchdata.length;
 
-    this.service.InwardUploadNew(batchdata).subscribe((event: any) => {
+    this.service.OutwardUploadNew(batchdata).subscribe((event: any) => {
       switch (event.type) {
         case HttpEventType.Sent:
-          this.progress = 0;
           console.log('Request has been made!');
           break;
         case HttpEventType.ResponseHeader:
@@ -253,14 +261,12 @@ export class OutwardUploadComponent implements OnInit {
             this.notifyService.showSuccess(event.body['response']['message'], "Success Insert Data");
             break;
           } else {
-            setTimeout(() => {
-              this.START_INDEX = this.END_INDEX;
-              this.END_INDEX += this.BATCH_LIMIT;
-              if (this.END_INDEX >= this.TableData.length) {
-                this.END_INDEX = this.TableData.length;
-              }
-              this.UPLOAD_FILE_EXCEL(progressbtn, fileId);
-            }, 10);
+            this.START_INDEX = this.END_INDEX;
+            this.END_INDEX += this.BATCH_LIMIT;
+            if (this.END_INDEX >= this.TableData.length) {
+              this.END_INDEX = this.TableData.length;
+            }
+            this.UPLOAD_FILE_EXCEL(progressbtn, fileId);
           }
       }
     });

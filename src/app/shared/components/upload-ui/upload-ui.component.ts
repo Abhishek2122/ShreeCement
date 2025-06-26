@@ -29,17 +29,6 @@ export class UploadUIComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.service.ALLDepotCode().then((res: any) => {
-      console.log(res);
-      this.depots = res?.data?.map((items: any) => {
-        return {
-          label: items['depot_name'] + ' | ' + items['depot_code'],
-          value: items['depot_code'],
-          ...items
-        }
-      })
-      this.filteredDepots = this.depots
-    });
   }
 
   filterDepots() {

@@ -1,28 +1,30 @@
 <div class="card">
+    <nz-progress [nzPercent]="this.progress" nzStatus="active">{{0}}</nz-progress>
     <form class="form-card" [formGroup]="filterForm">
         <button class="show-data-btn" nz-button nzType="primary" (click)="loadData()" [nzLoading]="isLoadingOne">Select
             File</button>
-        <ng-select [style]="{'width':'300px'}" [disabled]="TableData.length==0?true:false" formControlName="depotDetails" required="true" style="height: auto !important;padding: 0;"
-            name="depotCode" (change)="ChangeTableDataDepotCode($event)" placeholder="Select Depot Code" [items]="depots" bindLabel="label" ngModel
-            [searchable]="true">
+        <ng-select [style]="{'width':'300px'}" [disabled]="TableData.length==0?true:false"
+            formControlName="depotDetails" required="true" style="height: auto !important;padding: 0;" name="depotCode"
+            (change)="ChangeTableDataDepotCode($event)" placeholder="Select Depot Code" [items]="depots"
+            bindLabel="label" ngModel [searchable]="true">
         </ng-select>
         <button class="show-data-btn" [disabled]="TableData.length==0" nz-button nzType="primary"
             (click)="uploadStart($event)" [nzLoading]="isLoadingOne">Upload</button>
     </form>
     <div class="div">
         <nz-empty *ngIf="TableData.length==0"></nz-empty>
-         <div class="date-lable-input" *ngIf="this.IN_VALID_DATE">
-                    <label class="heading-lable" style="color: red;">Only data insert 5 days before<br> Please check entry date! </label>
-                </div>
-                <div class="date-lable-input" *ngIf="this.GradeNotFound.length!=0">
-                    <label class="heading-lable" style="color: red;" *ngFor="let item of this.GradeNotFound">{{item}}</label>
-                </div>
+        <div class="date-lable-input" *ngIf="this.IN_VALID_DATE">
+            <label class="heading-lable" style="color: red;">Only data insert 5 days before<br> Please check entry date!
+            </label>
+        </div>
+        <div class="date-lable-input" *ngIf="this.GradeNotFound.length!=0">
+            <label class="heading-lable" style="color: red;" *ngFor="let item of this.GradeNotFound">{{item}}</label>
+        </div>
         <mat-table-pagination *ngIf="TableData.length!=0" (onPageChange)="onChangeEvent($event)"
             [totalRecords]="totalRecords" [recordsPerPage]="10"></mat-table-pagination>
         <nz-table *ngIf="TableData.length!=0">
             <thead>
                 <tr>
-                    <!-- <th class="col1">Action</th> -->
                     <th class="col1">Sr.No.</th>
                     <th class="col1">Entry_Date</th>
                     <th class="col1">SourcePlant</th>
@@ -50,10 +52,6 @@
             </thead>
             <tbody>
                 <tr *ngFor="let data of TableData;let i=index">
-                    <!-- <td class="col1 color-black gap">
-                    <a><i class="fa fa-edit" title="Edit of Table : row : "></i></a>
-                    <a><i class="fa fa-trash" title="Delete of Table : row : "></i></a>
-                </td> -->
                     <td class="col1 color-black">{{(i+1)}}</td>
                     <td class="col1 color-black">{{(data['Entry_Date'])}}</td>
                     <td class="col1 color-black">{{(data['SourcePlant'])}}</td>

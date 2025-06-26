@@ -96,7 +96,7 @@ export class InwardUploadComponent implements OnInit {
 
   @ViewChild("UploadUIOpen") UploadUIOpen: any;
   UploadUIOpen_Close?: AngularModalPopup;
-  loadData(): void {
+  loadData() {
     this.UploadUIOpen_Close = this.modalService.open(this.UploadUIOpen, {
       title: "",
       headerhide: true,
@@ -106,6 +106,7 @@ export class InwardUploadComponent implements OnInit {
 
   uploadCompleted(event: any) {
     this.IN_VALID_DATE = false;
+    this.FILE_DETAILS = event?.uploadQueue[0]?.file
     this.UploadUIOpen_Close?.close(this.UploadUIOpen_Close?.RAMDOM_ID ?? 0);
     this.TableData = event?.uploadQueue[0]?.data?.result?.map((items: any) => {
       const plant_code: any = this.PLANT_CODE[(items['Plant'])];
@@ -154,12 +155,12 @@ export class InwardUploadComponent implements OnInit {
         Diversion: Diversion,
         TransporterCompany: items['Transporter Name'],
         VehicleNumber: items['Vehicle No'],
-        depot_code: this.SESSION_DATA['depot_code'],
+        depot_code: this.SESSION_DATA['Depot Code'],
         emp_id: this.SESSION_DATA['Emp_Id'],
         DriverName: "NA",
         DriverMobileNumber: "NA",
         reasonForDelay: "NA",
-        Depot_Code: this.SESSION_DATA['depot_code'],
+        Depot_Code: this.SESSION_DATA['Depot Code'],
         BillingTimeOfPlant: ((items['Invoice Date'])),
         inTimeOfTruck: ((items['Arrival Time'])),
         outTimeOfTruck: ((items['GRN Time'])),
@@ -171,8 +172,8 @@ export class InwardUploadComponent implements OnInit {
         comments: "NA",
         Today: storeDate.DayOfWeek,
         fileId: this.STATIC_UNIQUE_ID + '_' + session['Emp_Id'],
-        STO_LOCATION: items['STO_LOCATION'],
-        deleteflag: items['deleteflag']
+        STO_LOCATION: items['Sto.Location'],
+        deleteflag: deleteflag
       }
     });
     this.IN_VALID_DATE = this.CHECK_IF_OLD_DATA_EXISTS();
@@ -199,11 +200,12 @@ export class InwardUploadComponent implements OnInit {
     const FILE_Id = this.STATIC_UNIQUE_ID + '_' + this.SESSION_DATA['Emp_Id']
     this.service.FileUpload({
       id: FILE_Id,
-      'Name': this.FILE_DETAILS?.name, Time: new Date(),
+      'Name': this.FILE_DETAILS?.name,
+      Time: moment(new Date()).format("YYYY-MM-DD hh:mm A"),
       Size: this.FILE_DETAILS?.size,
       TableName: 'Inward',
       EmpId: this.SESSION_DATA['Emp_Id'],
-      DepotCode: this.SESSION_DATA['Depot_Code'],
+      DepotCode: this.SESSION_DATA['depot_code'],
       Date: moment(new Date()).format("YYYY-MM-DD")
     }).subscribe((fileres) => {
       this.UPLOAD_FILE_EXCEL(progressbtn, FILE_Id)
@@ -216,10 +218,7 @@ export class InwardUploadComponent implements OnInit {
       console.warn('No data to upload.');
       return;
     }
-
-    this.progress = 0;
     clearInterval(this.CLEAR_INTERVAL);
-
     const batchdata = this.TableData.slice(this.START_INDEX, this.END_INDEX);
 
     if (batchdata.length === 0) {
@@ -233,7 +232,6 @@ export class InwardUploadComponent implements OnInit {
     this.service.InwardUploadNew(batchdata).subscribe((event: any) => {
       switch (event.type) {
         case HttpEventType.Sent:
-          this.progress = 0;
           console.log('Request has been made!');
           break;
         case HttpEventType.ResponseHeader:
