@@ -30,6 +30,7 @@ import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { ReactiveJsonFormsService, ReactiveJsonFormsModule } from 'reactive-forms-json';
+import { MaterialModule } from './material.module';
 
 const antDesignIcons = AllIcons as {
     [key: string]: IconDefinition;
@@ -64,7 +65,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         CoreModule,
         UploadUtilsUIModule,
         NgZorroAntdModule,
-        ReactiveJsonFormsModule
+        ReactiveJsonFormsModule,
+        MaterialModule
     ],
     exports: [
         FormsModule,
@@ -89,7 +91,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         UploadUIComponent,
         UploadUtilsUIModule,
         NgZorroAntdModule,
-        ReactiveJsonFormsModule
+        ReactiveJsonFormsModule,
+        MaterialModule
     ],
     providers: [
         ModalService,

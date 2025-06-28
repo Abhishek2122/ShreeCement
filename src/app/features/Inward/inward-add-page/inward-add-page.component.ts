@@ -26,14 +26,15 @@ export class InwardAddPageComponent implements OnInit {
         maxLength: 6
       },
       lastname: {
-        type: "text",
+        type: "SelectOption",
         value: "",
         label: "your last name",
         rules: {
           required: true,
         },
         placeholderText: "",
-        maxLength: 6
+        maxLength: 6,
+        items:['add','sdsdsds']
       }
     }, "newform").then((res: any) => {
     });
