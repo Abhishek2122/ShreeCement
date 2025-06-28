@@ -29,6 +29,9 @@ import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
+import { ChatOneToOneComponent } from './components/chat-one-to-one/chat-one-to-one.component';
+import { ReactiveJsonFormsService,JsonReactiveFormModule } from 'json-reactive-form-angular-18';
+
 const antDesignIcons = AllIcons as {
     [key: string]: IconDefinition;
 };
@@ -38,7 +41,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     declarations: [
         MatTableResuableComponent,
         PaginationComponent,
-        UploadUIComponent
+        UploadUIComponent,
+        ChatOneToOneComponent
     ],
     imports: [
         FormsModule,
@@ -62,7 +66,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         MatProgressBarModule,
         CoreModule,
         UploadUtilsUIModule,
-        NgZorroAntdModule
+        NgZorroAntdModule,
+        JsonReactiveFormModule
     ],
     exports: [
         FormsModule,
@@ -86,10 +91,13 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         MatProgressBarModule,
         UploadUIComponent,
         UploadUtilsUIModule,
-        NgZorroAntdModule
+        NgZorroAntdModule,
+        ChatOneToOneComponent,
+        JsonReactiveFormModule
     ],
     providers: [
         ModalService,
+        ReactiveJsonFormsService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: LoaderInterceptor,

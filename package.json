@@ -30,6 +30,7 @@
     "@ctrl/tinycolor": "^4.1.0",
     "@ng-select/ng-select": "^13.9.1",
     "express": "^4.18.2",
+    "json-reactive-form-angular-18": "^18.0.20",
     "modal-popup-angular-18": "^18.0.62",
     "moment": "^2.30.1",
     "ng-zorro-antd": "^18.0.1",

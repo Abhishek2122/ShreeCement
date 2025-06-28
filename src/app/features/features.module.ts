@@ -10,7 +10,6 @@ import { FileUploadDetailsandDeletionComponent } from './file-upload-detailsand-
 
 @NgModule({
     declarations: [
-        LoginPageComponent,
         DashboardPageComponent,
         StockReportPageComponent,
         FileUploadDetailsandDeletionComponent

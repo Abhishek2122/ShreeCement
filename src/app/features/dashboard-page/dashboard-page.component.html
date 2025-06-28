@@ -80,8 +80,7 @@
                         </div>
                         <div class="card-footer p-4">
                             <div class="margin-left" *ngFor="let child of n.subMenu">
-                                <a routerlinkactive="active" [routerLink]="child?.route"
-                                    class="nav-link">{{child.label}}</a>
+                                <a [routerLink]="child?.route" class="nav-link">{{child.label}}</a>
                             </div>
                         </div>
                     </div>
