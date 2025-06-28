@@ -14,6 +14,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+          token: ${{ secrets.GH_PAT }}
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -24,21 +26,26 @@ jobs:
       run: npm ci --force
 
     - name: Build Angular project and bump version
-      env:
-        TOKEN: ${{ secrets.GH_PAT }}
       run: |
             export NODE_OPTIONS="--max-old-space-size=5120"
             npm run build -- --configuration dev
-            npm version ${{env.version}} --no-git-tag-version --allow-same-version
-            npm version patch -m "[RELEASE] %s" --no-git-tag-version --allow-same-version
-            CURRENT_VERSION=$(node -p "require('./package.json').version")
-            UPDATED_VERSION=$(node -p "require('./package.json').version")
-            git add package.json
-            [ -f package-lock.json ] && git add package-lock.json
-            # git remote set-url origin https://${{ secrets.GH_PAT }}}@github.com/Abhishek2122/ShreeCement.git
-            git commit -m "Updating App version"
-            git push origin main
-            
+
+    - name: Configure Git
+      run: |
+          git config user.name "Abhishek2122"
+          git config user.email "ms7306545@gmail.com"
+
+    - name: Bump Version (patch)
+      run: |
+          npm version patch --no-git-tag-version --allow-same-version -m "[RELEASE] %s"
+
+    - name: Commit and Push Changes
+      run: |
+          git add package.json
+          [ -f package-lock.json ] && git add package-lock.json
+          git commit -m "Updating App version"
+          git push origin main
+
     - name: Upload via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
