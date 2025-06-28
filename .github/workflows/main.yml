@@ -25,11 +25,6 @@ jobs:
     - name: Install dependencies
       run: npm ci --force
 
-    - name: Build Angular project and bump version
-      run: |
-            export NODE_OPTIONS="--max-old-space-size=5120"
-            npm run build -- --configuration dev
-
     - name: Configure Git
       run: |
           git config user.name "Abhishek2122"
@@ -45,6 +40,11 @@ jobs:
           [ -f package-lock.json ] && git add package-lock.json
           git commit -m "Updating App version"
           git push origin main
+
+    - name: Build Angular project and bump version
+      run: |
+            export NODE_OPTIONS="--max-old-space-size=5120"
+            npm run build -- --configuration dev
 
     - name: Upload via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
