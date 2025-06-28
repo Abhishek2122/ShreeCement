@@ -37,6 +37,8 @@ jobs:
         git add package.json
         [ -f package-lock.json ] && git add package-lock.json
         git commit -m "Updating App version"
+
+        git remote set-url origin https://x-access-token:${TOKEN}@github.com/Abhishek2122/ShreeCement.git
         git push origin main
 
     - name: Upload via FTP
