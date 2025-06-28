@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { FeaturesRoutingModule } from './features-routing.module';
-import { LoginPageComponent } from './login-page/login-page.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';

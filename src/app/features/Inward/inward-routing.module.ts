@@ -5,16 +5,12 @@ import { InwardAddPageComponent } from './inward-add-page/inward-add-page.compon
 
 const routes: Routes = [
     {
-        path: "View",
-        component: InwardViewPageComponent,
-        data: {
+        path: "View", component: InwardViewPageComponent, data: {
             title: "This is Inward Report sheet : Select Options to navigate"
         }
     },
     {
-        path: "Add",
-        component: InwardAddPageComponent,
-        data: {
+        path: "Add", component: InwardAddPageComponent, data: {
             title: "This is Inward Entry Sheet"
         }
     },

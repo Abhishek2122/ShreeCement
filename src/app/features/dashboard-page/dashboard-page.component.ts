@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { MainService } from '../../core/services/service.service';
 import { CustomToolTipsService } from '../../core/services/custom-tool-tips.service';
 import { ApiServiceService } from '../../core/services/api-service.service';
@@ -190,7 +190,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const routeData = this.getCurrentRouteData(this.activatedRoute);
-        this.serviceService.TITLE_OF_PAGE = (routeData?.title)
+        this.serviceService.TITLE_OF_PAGE=(routeData?.title)
       }
     })
   }
@@ -307,10 +307,4 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     }
     return route.snapshot.data;
   }
-
-  changePage(url: string) {
-    console.log(url, "qdhkjdhakjdadksh")
-    this.router.navigate([url])
-  }
-
 }

@@ -29,8 +29,7 @@ import { NZ_ICONS } from 'ng-zorro-antd/icon';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
-import { ChatOneToOneComponent } from './components/chat-one-to-one/chat-one-to-one.component';
-import { ReactiveJsonFormsService,JsonReactiveFormModule } from 'json-reactive-form-angular-18';
+import { ReactiveJsonFormsService, ReactiveJsonFormsModule } from 'reactive-forms-json';
 
 const antDesignIcons = AllIcons as {
     [key: string]: IconDefinition;
@@ -41,13 +40,11 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     declarations: [
         MatTableResuableComponent,
         PaginationComponent,
-        UploadUIComponent,
-        ChatOneToOneComponent
+        UploadUIComponent
     ],
     imports: [
         FormsModule,
         ReactiveFormsModule,
-        CommonModule,
         RouterModule,
         MatToolbarModule,
         MatFormFieldModule,
@@ -67,7 +64,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         CoreModule,
         UploadUtilsUIModule,
         NgZorroAntdModule,
-        JsonReactiveFormModule
+        ReactiveJsonFormsModule
     ],
     exports: [
         FormsModule,
@@ -92,8 +89,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         UploadUIComponent,
         UploadUtilsUIModule,
         NgZorroAntdModule,
-        ChatOneToOneComponent,
-        JsonReactiveFormModule
+        ReactiveJsonFormsModule
     ],
     providers: [
         ModalService,

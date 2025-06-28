@@ -91,6 +91,7 @@
               ]
             },
             "local": {
+              "aot": true,
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true

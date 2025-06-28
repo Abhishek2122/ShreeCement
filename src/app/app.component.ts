@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MainService } from './core/services/service.service';
-import { filter } from 'rxjs';
+import { BehaviorSubject, filter } from 'rxjs';
 import { LoaderService } from './core/services/loader.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { LoaderService } from './core/services/loader.service';
 export class AppComponent implements OnInit {
   title = 'Shree Cement';
   isToken: any = ''
-  isLoading: any = false;
+  isLoading: any = new BehaviorSubject(false);
 
   constructor(
     private mainSerivce: MainService,
