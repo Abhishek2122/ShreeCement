@@ -34,7 +34,8 @@ export class InwardAddPageComponent implements OnInit {
         },
         placeholderText: "",
         maxLength: 6,
-        items:['add','sdsdsds']
+        items: ['add', 'sdsdsds'],
+        ngClass: "dropdown"
       }
     }, "newform").then((res: any) => {
     });
