@@ -15,6 +15,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   SESSION_DATA: any = [];
   previousUrl: string = '';
   selected: any = {};
+  AppVersion: string = "v1.0.0"
   menuList: any = [{
     name: "Inward Sheet",
     route: "menulink2",
@@ -187,10 +188,11 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     public ToolTipsService: CustomToolTipsService,
     public modal: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object) {
+    this.AppVersion = 'v'+this.serviceService.environment.AppVersion
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const routeData = this.getCurrentRouteData(this.activatedRoute);
-        this.serviceService.TITLE_OF_PAGE=(routeData?.title)
+        this.serviceService.TITLE_OF_PAGE = (routeData?.title)
       }
     })
   }

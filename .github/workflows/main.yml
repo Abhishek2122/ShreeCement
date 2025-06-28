@@ -7,6 +7,7 @@ on:
 
 jobs:
   ftp-deploy:
+    if: github.ref == 'refs/heads/main' && github.event.head_commit.message != 'Updating App version'
     name: Build & Upload Angular App to FTP Server
     runs-on: ubuntu-latest
 
@@ -23,8 +24,16 @@ jobs:
       run: npm ci --force
 
     - name: Build Angular project
-      run: npm run build -- --configuration dev
-
+      run: 
+            npm run build -- --configuration dev
+            npm version ${{env.version}} --no-git-tag-version --allow-same-version
+            npm version patch -m "[RELEASE] %s" --no-git-tag-version --allow-same-version
+            CURRENT_VERSION=$(node -p "require('./package.json').version")
+            UPDATED_VERSION=$(node -p "require('./package.json').version")
+            git add package.json
+            [ -f package-lock.json ] && git add package-lock.json
+            git commit -m "Updating App version"
+            git push main
     - name: Upload via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
