@@ -27,23 +27,20 @@ jobs:
       env:
         TOKEN: ${{ secrets.GH_PAT }}
       run: |
-        npm run build -- --configuration dev
-
-        npm version patch --no-git-tag-version --allow-same-version -m "[RELEASE] %s"
-
-        CURRENT_VERSION=$(node -p "require('./package.json').version")
-        echo "Updated version: $CURRENT_VERSION"
-
-        git config user.name "Abhishek2122"
-        git config user.email "ms7306545@gmail.com"
-
-        git add package.json
-        [ -f package-lock.json ] && git add package-lock.json
-        git commit -m "Updating App version"
-
-        git remote set-url origin https://x-access-token:${TOKEN}@github.com/Abhishek2122/ShreeCement.git
-        git push origin main
-
+            export NODE_OPTIONS="--max-old-space-size=5120"
+            npm run build -- --configuration dev
+            npm version ${{env.version}} --no-git-tag-version --allow-same-version
+            npm version patch -m "[RELEASE] %s" --no-git-tag-version --allow-same-version
+            CURRENT_VERSION=$(node -p "require('./package.json').version")
+            UPDATED_VERSION=$(node -p "require('./package.json').version")
+            git config --global user.email ${{secrets.GIT_EMAIL_DEPLOY_ADMIN}}
+            git config --global user.name ${{secrets.GIT_USERNAME_ADMIN_DEPLOY}}
+            git add package.json
+            [ -f package-lock.json ] && git add package-lock.json
+            git remote set-url origin https://x-access-token:${TOKEN}@github.com/Abhishek2122/ShreeCement.git
+            git commit -m "Updating App version"
+            git push origin main
+            
     - name: Upload via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
