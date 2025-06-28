@@ -37,7 +37,7 @@ jobs:
             git config --global user.name "Abhishek2122"
             git add package.json
             [ -f package-lock.json ] && git add package-lock.json
-            git remote set-url origin https://x-access-token:${TOKEN}@github.com/Abhishek2122/ShreeCement.git
+            git remote set-url origin https://${TOKEN}@github.com/Abhishek2122/ShreeCement.git
             git commit -m "Updating App version"
             git push origin main
             
