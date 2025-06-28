@@ -32,8 +32,8 @@ jobs:
         CURRENT_VERSION=$(node -p "require('./package.json').version")
         echo "Updated version: $CURRENT_VERSION"
 
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
+        git config user.name "Abhishek2122"
+        git config user.email "ms7306545@gmail.com"
         git add package.json
         [ -f package-lock.json ] && git add package-lock.json
         git commit -m "Updating App version"
