@@ -3,7 +3,7 @@ name: FTP Deploy
 on:
   push:
     branches:
-      - main  # change if needed
+      - main
 
 jobs:
   ftp-deploy:
@@ -18,26 +18,31 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'  # or your Angular Node version
+        node-version: '18'
 
     - name: Install dependencies
       run: npm ci --force
 
-    - name: Build Angular project
-      run: 
-            npm run build -- --configuration dev
-            npm version ${{env.version}} --no-git-tag-version --allow-same-version
-            npm version patch -m "[RELEASE] %s" --no-git-tag-version --allow-same-version
-            CURRENT_VERSION=$(node -p "require('./package.json').version")
-            UPDATED_VERSION=$(node -p "require('./package.json').version")
-            git add package.json
-            [ -f package-lock.json ] && git add package-lock.json
-            git commit -m "Updating App version"
-            git push main
+    - name: Build Angular project and bump version
+      run: |
+        npm run build -- --configuration dev
+
+        npm version patch --no-git-tag-version --allow-same-version -m "[RELEASE] %s"
+
+        CURRENT_VERSION=$(node -p "require('./package.json').version")
+        echo "Updated version: $CURRENT_VERSION"
+
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add package.json
+        [ -f package-lock.json ] && git add package-lock.json
+        git commit -m "Updating App version"
+        git push origin main
+
     - name: Upload via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: 217.21.85.163
         username: u139672595.ShreeCement
         password: T7g/7+Nx6hGUv?(89lJ'
-        local-dir: ./dist/s/  # adjust this if your Angular project name is different
+        local-dir: ./dist/s/
