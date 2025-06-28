@@ -36,7 +36,7 @@
     "ng-zorro-antd": "^18.0.1",
     "ngx-avatars": "^1.9.3",
     "ngx-toastr": "^19.0.0",
-    "reactive-forms-json": "^0.0.12",
+    "reactive-forms-json": "^0.0.20",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "upload-utils-ui": "^0.0.36",

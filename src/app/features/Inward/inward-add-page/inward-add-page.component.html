@@ -1,1 +1,11 @@
-<Json-Reactive-Forms id="newform" [CancelRoute]="'/home'" (OnSubmitEvent)="onSubmit($event)"></Json-Reactive-Forms>
+<Json-Reactive-Forms SubmitName="Previews"
+    [FormStyle]="'display:grid;grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));'" id="newform"
+    [CancelRoute]="'/home'" (SubmitEvent)="onSubmit($event)"></Json-Reactive-Forms>
+
+<ng-template #showpre>
+    <div class="pre-div">
+        <Json-Reactive-Forms
+            [FormStyle]="'display:grid;grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));'"
+            id="PreviewsInward" [CancelRoute]="'/home'"></Json-Reactive-Forms>
+    </div>
+</ng-template>
