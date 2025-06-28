@@ -24,6 +24,8 @@ jobs:
       run: npm ci --force
 
     - name: Build Angular project and bump version
+      env:
+        TOKEN: ${{ secrets.GH_PAT }}
       run: |
         npm run build -- --configuration dev
 
@@ -39,7 +41,7 @@ jobs:
         [ -f package-lock.json ] && git add package-lock.json
         git commit -m "Updating App version"
 
-        git remote set-url origin  https://x-access-token:${{secrets.GH_PAT}}git@github.com:Abhishek2122/ShreeCement.git
+        git remote set-url origin https://x-access-token:${TOKEN}@github.com/Abhishek2122/ShreeCement.git
         git push origin main
 
     - name: Upload via FTP
