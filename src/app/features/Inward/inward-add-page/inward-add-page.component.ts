@@ -84,6 +84,7 @@ export class InwardAddPageComponent implements OnInit {
             },
             placeholderText: "Select Invoice Date",
             ngClass: "custom-rounded-input",
+            
           },
           billingTimeOfPlant: {
             type: "time",
