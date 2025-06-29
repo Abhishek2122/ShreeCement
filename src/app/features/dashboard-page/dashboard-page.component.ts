@@ -180,6 +180,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       { label: "Upload Documents", route: "submenulink1" },
     ]
   }]
+  isFullScreen: boolean = false;
+
   constructor(
     public serviceService: MainService,
     public router: Router,
@@ -188,7 +190,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     public ToolTipsService: CustomToolTipsService,
     public modal: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object) {
-    this.AppVersion = 'v'+this.serviceService.environment.AppVersion
+    this.AppVersion = 'v' + this.serviceService.environment.AppVersion
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const routeData = this.getCurrentRouteData(this.activatedRoute);
@@ -216,6 +218,11 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    document.addEventListener('fullscreenchange', () => {
+      this.isFullScreen = !!document.fullscreenElement;
+      console.log('Fullscreen mode:', this.isFullScreen);
+    });
+
     this.serviceService.getSessionLogin().subscribe((res: any) => {
       this.SESSION_DATA = { ...res, ...res?.data }
     })
@@ -255,8 +262,8 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   // Menülerin açılıp kapanması için fonksiyon
   toggleMenu(menuId: any) {
-    var menu: any = document.getElementById(menuId);
-    var allMenus: any = document.querySelectorAll(".menu");
+    const menu: any = document.getElementById(menuId);
+    const allMenus: any = document.querySelectorAll(".menu");
 
     // Diğer tüm menüleri kapat
     allMenus.forEach(function (m: any) {
@@ -308,5 +315,26 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
       route = route.firstChild;
     }
     return route.snapshot.data;
+  }
+
+  goFullScreen(): void {
+    const elem = document.documentElement; // or any specific element
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if ((elem as any).webkitRequestFullscreen) { // Safari
+      (elem as any).webkitRequestFullscreen();
+    } else if ((elem as any).msRequestFullscreen) { // IE11
+      (elem as any).msRequestFullscreen();
+    }
+  }
+
+  exitFullScreen(): void {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if ((document as any).webkitExitFullscreen) { // Safari
+      (document as any).webkitExitFullscreen();
+    } else if ((document as any).msExitFullscreen) { // IE11
+      (document as any).msExitFullscreen();
+    }
   }
 }
