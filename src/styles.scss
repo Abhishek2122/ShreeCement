@@ -214,19 +214,19 @@ h6 {
 
 .mat-label-input input[type="date"] {
     display: block;
-        width: 100%;
-        padding: 5px 10px !important;
-        font-size: unset !important;
-        font-weight: unset !important;
-        line-height: unset !important;
-        color: #212529;
-        background-color: #fff;
-        background-clip: unset !important;
-        border: unset !important;
-        appearance: none;
-        border-radius: unset !important;
-        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-        outline: none;
+    width: 100%;
+    padding: 5px 10px !important;
+    font-size: unset !important;
+    font-weight: unset !important;
+    line-height: unset !important;
+    color: #212529;
+    background-color: #fff;
+    background-clip: unset !important;
+    border: unset !important;
+    appearance: none;
+    border-radius: unset !important;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    outline: none;
 }
 
 
@@ -242,14 +242,23 @@ input[type="number"] {
     /* Firefox */
 }
 
-/* Target all input fields inside .mat-label-input */
-.mat-label-input input {
+.ng-select .ng-select-container {
+    cursor: default;
+    display: flex;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
     border: 1px solid #f5c2c7 !important;
     border-radius: 25px !important;
-    padding: 0.5rem 1rem !important;
-    box-shadow: none !important;
-    outline: none !important;
-    width: 100%;
-    font-size: 1rem;
-    background-color: white !important;
+    padding-left: 10px;
+}
+
+// /* Target all input fields inside .mat-label-input */
+.mat-label-input input {
+    border: none !important;
+}
+
+.ng-select {
+    padding-bottom: 0 !important;
 }

@@ -6,6 +6,6 @@
     <div class="pre-div">
         <Json-Reactive-Forms
             [FormStyle]="'display:grid;grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));'"
-            id="PreviewsInward" [CancelRoute]="'/home'"></Json-Reactive-Forms>
+            id="PreviewsInward" [CancelRoute]="'/home'" (SubmitEvent)="onSubmitApi(this.FormGroupObj)"></Json-Reactive-Forms>
     </div>
 </ng-template>
