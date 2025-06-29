@@ -41,7 +41,8 @@ export class InwardAddPageComponent implements OnInit {
             },
             items: depots,
             placeholderText: "Select Depot Code",
-            bindLabel: "label"
+            bindLabel: "label",
+            ngClass: "field-lastname form-field"
           },
           date_entry: {
             type: "date",
@@ -50,7 +51,7 @@ export class InwardAddPageComponent implements OnInit {
             rules: {
               required: false,
             },
-            ngClass: "form-controls",
+            ngClass: "form-controls custom-rounded-input",
             placeholderText: "Entry Date of Form",
           },
           sourcePlant: {
@@ -62,9 +63,11 @@ export class InwardAddPageComponent implements OnInit {
             },
             items: this.service.SourcePlantData(),
             placeholderText: "Select Source Plant",
+            ngClass: "field-lastname form-field"
           },
           invoiceNumber: {
-            type: "number",
+            type: "text",
+            pattern: "[0-9]*",
             value: "",
             label: "Invoice Number",
             rules: {
@@ -80,27 +83,31 @@ export class InwardAddPageComponent implements OnInit {
               required: false,
             },
             placeholderText: "Select Invoice Date",
+            ngClass: "custom-rounded-input",
           },
           billingTimeOfPlant: {
-            type: "datetime",
+            type: "time",
             value: "",
             label: "Billing Time Of Plant",
             rules: {
               required: false,
             },
             placeholderText: "Enter Billing Time",
+            ngClass: "custom-rounded-input",
           },
           arrivalDateOfTruck: {
-            type: "datetime",
+            type: "date",
             value: "",
             label: "Arrival Date Of Truck",
             rules: {
               required: false,
             },
             placeholderText: "Select Arrival Date",
+            ngClass: "form-controls custom-rounded-input",
           },
           invoiceQty: {
-            type: "number",
+            type: "text",
+            pattern: "[0-9]*",
             value: "",
             label: "Invoice Quantity",
             rules: {
@@ -117,6 +124,7 @@ export class InwardAddPageComponent implements OnInit {
             },
             items: gradeList,
             placeholderText: "Select Grade",
+            ngClass: "field-lastname form-field"
           },
           cutAndTorn: {
             type: "number",
@@ -164,23 +172,25 @@ export class InwardAddPageComponent implements OnInit {
             placeholderText: "Is Transhipment?",
           },
           diversion: {
-            type: "SelectOption",
+            type: "text",
             value: "",
             label: "Diversion",
             rules: {
               required: false,
             },
-            items: ['Yes', 'No'],
+
             placeholderText: "Is Diverted?",
           },
           transporterCompany: {
-            type: "text",
+            type: "SelectOption",
             value: "",
             label: "Transporter Company",
             rules: {
               required: false,
             },
+            items: ['Yes', 'No'],
             placeholderText: "Enter Transporter Company Name",
+            ngClass: "field-lastname form-field"
           },
           vehicleNumber: {
             type: "text",
@@ -208,6 +218,7 @@ export class InwardAddPageComponent implements OnInit {
               required: false,
             },
             placeholderText: "Enter In Time",
+            ngClass: "custom-rounded-input",
           },
           halting: {
             type: "number",
@@ -236,6 +247,7 @@ export class InwardAddPageComponent implements OnInit {
               required: false,
             },
             placeholderText: "Enter Out Time",
+            ngClass: "custom-rounded-input",
           }
         }, "newform").then((res: any) => {
         });
