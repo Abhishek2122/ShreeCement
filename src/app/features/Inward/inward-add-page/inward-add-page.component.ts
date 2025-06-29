@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ModalService } from 'modal-popup-angular-18';
+import { AngularModalPopup, ModalService } from 'modal-popup-angular-18';
 import { ReactiveJsonFormsService } from 'reactive-forms-json';
 import { MainService } from '../../../core/services/service.service';
 import { NotificationService } from '../../../core/services/notification.service';
+import { InwwardServiceService } from '../../../core/services/inwward-service.service';
 
 @Component({
   selector: 'app-inward-add-page',
@@ -11,9 +12,11 @@ import { NotificationService } from '../../../core/services/notification.service
   styleUrl: './inward-add-page.component.scss'
 })
 export class InwardAddPageComponent implements OnInit {
+  SESSION_DATA: any = [];
   constructor(
     public form_service: ReactiveJsonFormsService,
     public service: MainService,
+    public InwardService: InwwardServiceService,
     private notifyService: NotificationService,
     public modal: ModalService) { }
 
@@ -22,6 +25,9 @@ export class InwardAddPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.service.getSessionLogin().subscribe((res: any) => {
+      this.SESSION_DATA = { ...res, ...res?.data }
+    })
     this.service.ALLDepotCode().then((res: any) => {
       const depots = res?.data?.map((items: any) => {
         return {
@@ -37,10 +43,10 @@ export class InwardAddPageComponent implements OnInit {
             value: "",
             label: "Choose Depot Code",
             rules: {
-              required: false,
+              required: true,
             },
             items: depots,
-            placeholderText: "Select Depot Code",
+            placeholderText: "",
             bindLabel: "label",
             ngClass: "field-lastname form-field"
           },
@@ -49,7 +55,7 @@ export class InwardAddPageComponent implements OnInit {
             value: "",
             label: "Entry Date of Form",
             rules: {
-              required: false,
+              required: true,
             },
             ngClass: "form-controls custom-rounded-input",
             placeholderText: "Entry Date of Form",
@@ -59,7 +65,7 @@ export class InwardAddPageComponent implements OnInit {
             value: "",
             label: "Choose Source Plant",
             rules: {
-              required: false,
+              required: true,
             },
             items: this.service.SourcePlantData(),
             placeholderText: "Select Source Plant",
@@ -69,20 +75,20 @@ export class InwardAddPageComponent implements OnInit {
             type: "text",
             pattern: "[0-9]*",
             value: "",
-            label: "Invoice Number",
+            label: "Plant Invoice No.",
             rules: {
-              required: false,
+              required: true,
             },
-            placeholderText: "Enter Invoice Number",
+            placeholderText: "Enter Plant Invoice No.",
           },
           invoiceDate: {
             type: "date",
             value: "",
-            label: "Invoice Date",
+            label: "Plant Invoice Date",
             rules: {
-              required: false,
+              required: true,
             },
-            placeholderText: "Select Invoice Date",
+            placeholderText: "Select Plant Invoice Date",
             ngClass: "custom-rounded-input",
           },
           billingTimeOfPlant: {
@@ -90,7 +96,7 @@ export class InwardAddPageComponent implements OnInit {
             value: "",
             label: "Billing Time Of Plant",
             rules: {
-              required: false,
+              required: true,
             },
             placeholderText: "Enter Billing Time",
             ngClass: "custom-rounded-input",
@@ -100,7 +106,7 @@ export class InwardAddPageComponent implements OnInit {
             value: "",
             label: "Arrival Date Of Truck",
             rules: {
-              required: false,
+              required: true,
             },
             placeholderText: "Select Arrival Date",
             ngClass: "form-controls custom-rounded-input",
@@ -109,18 +115,18 @@ export class InwardAddPageComponent implements OnInit {
             type: "text",
             pattern: "[0-9]*",
             value: "",
-            label: "Invoice Quantity",
+            label: "Invoice Quantity (in Bags)",
             rules: {
-              required: false,
+              required: true,
             },
-            placeholderText: "Enter Quantity",
+            placeholderText: "Enter Quantity (in Bags)",
           },
           grade: {
             type: "SelectOption",
             value: "",
             label: "Grade",
             rules: {
-              required: false,
+              required: true,
             },
             items: gradeList,
             placeholderText: "Select Grade",
@@ -129,66 +135,66 @@ export class InwardAddPageComponent implements OnInit {
           cutAndTorn: {
             type: "number",
             value: "",
-            label: "Cut And Torn",
+            label: "Cut And Torn (in Bags)",
             rules: {
-              required: false,
+              required: true,
             },
-            placeholderText: "Enter Cut & Torn Qty",
+            placeholderText: "Enter Cut & Torn Qty (in Bags)",
           },
           shortage: {
             type: "number",
             value: "",
-            label: "Shortage",
+            label: "Shortage (in Bags)",
             rules: {
-              required: false,
+              required: true,
             },
-            placeholderText: "Enter Shortage Qty",
+            placeholderText: "Enter Shortage Qty (in Bags)",
           },
           goodStock: {
             type: "number",
             value: "",
-            label: "Good Stock",
+            label: "Good Stock (in Bags)",
             rules: {
-              required: false,
+              required: true,
             },
-            placeholderText: "Enter Good Stock Qty",
+            placeholderText: "Enter Good Stock Qty (in Bags)",
           },
           unloading: {
             type: "number",
             value: "",
-            label: "Unloading",
+            label: "Unloading (in Bags)",
             rules: {
-              required: false,
+              required: true,
             },
-            placeholderText: "Enter Unloading Qty",
+            placeholderText: "Enter Unloading Qty (in Bags)",
           },
           transphipment: {
             type: "number",
             value: "",
-            label: "Transhipment",
+            label: "Transhipment (in Bags)",
             rules: {
-              required: false,
+              required: true,
             },
-            placeholderText: "Is Transhipment?",
+            placeholderText: "Is Transhipment (in Bags)",
           },
           diversion: {
             type: "text",
             value: "",
-            label: "Diversion",
+            label: "Diversion (in Bags)",
             rules: {
-              required: false,
+              required: true,
             },
 
-            placeholderText: "Is Diverted?",
+            placeholderText: "Is Diverted (in Bags)?",
           },
           transporterCompany: {
             type: "SelectOption",
             value: "",
             label: "Transporter Company",
             rules: {
-              required: false,
+              required: true,
             },
-            items: ['Yes', 'No'],
+            items: this.InwardService.getTransporterCompanyName(),
             placeholderText: "Enter Transporter Company Name",
             ngClass: "field-lastname form-field"
           },
@@ -197,16 +203,16 @@ export class InwardAddPageComponent implements OnInit {
             value: "",
             label: "Vehicle Number",
             rules: {
-              required: false,
+              required: true,
             },
             placeholderText: "Enter Vehicle Number",
           },
           reasonForDelay: {
             type: "textarea",
             value: "",
-            label: "Reason For Delay",
+            label: "Reason for Delay/Normal Time",
             rules: {
-              required: false,
+              required: true,
             },
             placeholderText: "Mention delay reason if any",
           },
@@ -215,7 +221,7 @@ export class InwardAddPageComponent implements OnInit {
             value: "",
             label: "In Time Of Truck",
             rules: {
-              required: false,
+              required: true,
             },
             placeholderText: "Enter In Time",
             ngClass: "custom-rounded-input",
@@ -225,26 +231,37 @@ export class InwardAddPageComponent implements OnInit {
             value: "",
             label: "Halting (in hrs)",
             rules: {
-              required: false,
+              required: true,
             },
             placeholderText: "Enter Halting Hours",
           },
           cleared: {
             type: "MatCheckBox",
-            value: "halting",
-            label: "Cleared",
+            value: "",
+            label: "Truck Status",
             rules: {
-              required: false,
+              required: true,
             },
             items: [{ text: 'halting', value: "halting" }, { text: 'cleared', value: "cleared" }],
-            placeholderText: "Cleared?",
+            placeholderText: "Truck Status:?",
+            callback: (items: any) => {
+              console.log(items, "asdaskdsajdksadhadjkh")
+              const FIELDS_DATA = this.form_service.FIELDS_DATA['newform'];
+              if (items?.value == "halting") {
+                FIELDS_DATA[FIELDS_DATA.length - 1]['type'] = 'text';
+                FIELDS_DATA[FIELDS_DATA.length - 1]['value'] = 'NA'
+              } else {
+                FIELDS_DATA[FIELDS_DATA.length - 1]['type'] = 'time';
+                FIELDS_DATA[FIELDS_DATA.length - 1]['value'] = ''
+              }
+            }
           },
           outTimeOfTruck: {
             type: "time",
             value: "",
             label: "Out Time Of Truck",
             rules: {
-              required: false,
+              required: true,
             },
             placeholderText: "Enter Out Time",
             ngClass: "custom-rounded-input",
@@ -256,234 +273,239 @@ export class InwardAddPageComponent implements OnInit {
   }
 
   @ViewChild("showpre", { static: true }) showpre: any;
+  showpreClose?: AngularModalPopup;
+  FormGroupObj!: FormGroup;
   PreviesShow(form: FormGroup) {
-    this.modal.open(this.showpre, {
-      title: "",
-      bghide: true,
-      headerhide: true
-    })
+    this.FormGroupObj = form;
     const FormValue = form?.value;
-    this.form_service.buildForm({
-      date_entry: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Entry Date of Form",
-        rules: {
-          required: false,
+    if (this.checking(FormValue)) {
+      this.form_service.buildForm({
+        date_entry: {
+          type: "LabelShow",
+          value: FormValue?.date_entry,
+          label: "Entry Date of Form",
+          rules: {
+            required: true,
+          },
+          ngClass: "form-controls",
+          placeholderText: "Entry Date of Form",
         },
-        ngClass: "form-controls",
-        placeholderText: "Entry Date of Form",
-      },
-      sourcePlant: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Choose Source Plant",
-        rules: {
-          required: false,
+        sourcePlant: {
+          type: "LabelShow",
+          value: FormValue?.sourcePlant,
+          label: "Choose Source Plant",
+          rules: {
+            required: true,
+          },
+          items: ['Plant A', 'Plant B'],
+          placeholderText: "Select Source Plant",
         },
-        items: ['Plant A', 'Plant B'],
-        placeholderText: "Select Source Plant",
-      },
-      invoiceNumber: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Invoice Number",
-        rules: {
-          required: false,
+        invoiceNumber: {
+          type: "LabelShow",
+          value: FormValue?.invoiceNumber,
+          label: "Invoice Number",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter Invoice Number",
         },
-        placeholderText: "Enter Invoice Number",
-      },
-      invoiceDate: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Invoice Date",
-        rules: {
-          required: false,
+        invoiceDate: {
+          type: "LabelShow",
+          value: FormValue?.invoiceDate,
+          label: "Invoice Date",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Select Invoice Date",
         },
-        placeholderText: "Select Invoice Date",
-      },
-      billingTimeOfPlant: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Billing Time Of Plant",
-        rules: {
-          required: false,
+        billingTimeOfPlant: {
+          type: "LabelShow",
+          value: FormValue?.billingTimeOfPlant,
+          label: "Billing Time Of Plant",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter Billing Time",
         },
-        placeholderText: "Enter Billing Time",
-      },
-      arrivalDateOfTruck: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Arrival Date Of Truck",
-        rules: {
-          required: false,
+        arrivalDateOfTruck: {
+          type: "LabelShow",
+          value: FormValue?.arrivalDateOfTruck,
+          label: "Arrival Date Of Truck",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Select Arrival Date",
         },
-        placeholderText: "Select Arrival Date",
-      },
-      invoiceQty: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Invoice Quantity",
-        rules: {
-          required: false,
+        invoiceQty: {
+          type: "LabelShow",
+          value: FormValue?.invoiceQty,
+          label: "Invoice Quantity",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter Quantity",
         },
-        placeholderText: "Enter Quantity",
-      },
-      grade: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Grade",
-        rules: {
-          required: false,
+        grade: {
+          type: "LabelShow",
+          value: FormValue?.grade,
+          label: "Grade",
+          rules: {
+            required: true,
+          },
+          items: ['Grade A', 'Grade B'],
+          placeholderText: "Select Grade",
         },
-        items: ['Grade A', 'Grade B'],
-        placeholderText: "Select Grade",
-      },
-      cutAndTorn: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Cut And Torn",
-        rules: {
-          required: false,
+        cutAndTorn: {
+          type: "LabelShow",
+          value: FormValue?.cutAndTorn,
+          label: "Cut And Torn",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter Cut & Torn Qty",
         },
-        placeholderText: "Enter Cut & Torn Qty",
-      },
-      shortage: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Shortage",
-        rules: {
-          required: false,
+        shortage: {
+          type: "LabelShow",
+          value: FormValue?.shortage,
+          label: "Shortage",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter Shortage Qty",
         },
-        placeholderText: "Enter Shortage Qty",
-      },
-      goodStock: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Good Stock",
-        rules: {
-          required: false,
+        goodStock: {
+          type: "LabelShow",
+          value: FormValue?.goodStock,
+          label: "Good Stock",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter Good Stock Qty",
         },
-        placeholderText: "Enter Good Stock Qty",
-      },
-      unloading: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Unloading",
-        rules: {
-          required: false,
+        unloading: {
+          type: "LabelShow",
+          value: FormValue?.unloading,
+          label: "Unloading",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter Unloading Qty",
         },
-        placeholderText: "Enter Unloading Qty",
-      },
-      transphipment: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Transhipment",
-        rules: {
-          required: false,
+        transphipment: {
+          type: "LabelShow",
+          value: FormValue?.transphipment,
+          label: "Transhipment",
+          rules: {
+            required: true,
+          },
+          items: [{ text: 'Yes' }, { text: 'No' }],
+          placeholderText: "Is Transhipment?",
         },
-        items: [{ text: 'Yes' }, { text: 'No' }],
-        placeholderText: "Is Transhipment?",
-      },
-      diversion: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Diversion",
-        rules: {
-          required: false,
+        diversion: {
+          type: "LabelShow",
+          value: FormValue?.diversion,
+          label: "Diversion",
+          rules: {
+            required: true,
+          },
+          items: ['Yes', 'No'],
+          placeholderText: "Is Diverted?",
         },
-        items: ['Yes', 'No'],
-        placeholderText: "Is Diverted?",
-      },
-      transporterCompany: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Transporter Company",
-        rules: {
-          required: false,
+        transporterCompany: {
+          type: "LabelShow",
+          value: FormValue?.transporterCompany,
+          label: "Transporter Company",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter Transporter Company Name",
         },
-        placeholderText: "Enter Transporter Company Name",
-      },
-      vehicleNumber: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Vehicle Number",
-        rules: {
-          required: false,
+        vehicleNumber: {
+          type: "LabelShow",
+          value: FormValue?.vehicleNumber,
+          label: "Vehicle Number",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter Vehicle Number",
         },
-        placeholderText: "Enter Vehicle Number",
-      },
-      reasonForDelay: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Reason For Delay",
-        rules: {
-          required: false,
+        reasonForDelay: {
+          type: "LabelShow",
+          value: FormValue?.reasonForDelay,
+          label: "Reason For Delay",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Mention delay reason if any",
         },
-        placeholderText: "Mention delay reason if any",
-      },
-      inTimeOfTruck: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "In Time Of Truck",
-        rules: {
-          required: false,
+        inTimeOfTruck: {
+          type: "LabelShow",
+          value: FormValue?.inTimeOfTruck,
+          label: "In Time Of Truck",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter In Time",
         },
-        placeholderText: "Enter In Time",
-      },
-      halting: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Halting (in hrs)",
-        rules: {
-          required: false,
+        halting: {
+          type: "LabelShow",
+          value: FormValue?.halting,
+          label: "Halting (in hrs)",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter Halting Hours",
         },
-        placeholderText: "Enter Halting Hours",
-      },
-      cleared: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Cleared",
-        rules: {
-          required: false,
+        cleared: {
+          type: "LabelShow",
+          value: FormValue?.cleared,
+          label: "Cleared",
+          rules: {
+            required: true,
+          },
+          items: ['Yes', 'No'],
+          placeholderText: "Cleared?",
         },
-        items: ['Yes', 'No'],
-        placeholderText: "Cleared?",
-      },
-      outTimeOfTruck: {
-        type: "LabelShow",
-        value: FormValue?.date_entry,
-        label: "Out Time Of Truck",
-        rules: {
-          required: false,
-        },
-        placeholderText: "Enter Out Time",
-      }
-    }, "PreviewsInward").then((res: any) => {
-    });
+        outTimeOfTruck: {
+          type: "LabelShow",
+          value: FormValue?.outTimeOfTruck,
+          label: "Out Time Of Truck",
+          rules: {
+            required: true,
+          },
+          placeholderText: "Enter Out Time",
+        }
+      }, "PreviewsInward").then((res: any) => {
+        this.showpreClose = this.modal.open(this.showpre, {
+          title: "",
+          bghide: true,
+          headerhide: true
+        })
+      });
+    }
   }
 
   checking(data: any): boolean {
     const {
-      ArrivalDateOfTruck: arrivalDateOfTruck,
-      InvoiceQty: invoiceQty,
-      Shortage: shortage,
-      CutAndTorn: cutAndTorn,
-      GoodStock: goodStock,
-      Unloading: unloading,
-      Transphipment: transphipment,
-      Diversion: diversion,
-      InTimeOfTruck: inTimeOfTruck,
-      OutTimeOfTruck: outTimeOf,
-      InvoiceNumber: invoiceNumber
+      arrivalDateOfTruck: arrivalDateOfTruck,
+      invoiceQty: invoiceQty,
+      shortage: shortage,
+      cutAndTorn: cutAndTorn,
+      goodStock: goodStock,
+      unloading: unloading,
+      transphipment: transphipment,
+      diversion: diversion,
+      inTimeOfTruck: inTimeOfTruck,
+      outTimeOf: outTimeOf,
+      invoiceNumber: invoiceNumber,
+      cleared: cleared
     } = data;
 
     let bool = true;
     let outTimeOfTruck = (outTimeOf === '--:-- --' || outTimeOf === '') ? 'NA' : outTimeOf;
 
     // ✅ Check 1: Intime should be less than out time
-    const checkedRadio: any = document.querySelector("input[name='truckStatus']:checked");
-    const truckStatus = checkedRadio ? checkedRadio.value : undefined;
+    const truckStatus = cleared ? cleared : undefined;
 
     if (
       inTimeOfTruck &&
@@ -502,7 +524,7 @@ export class InwardAddPageComponent implements OnInit {
 
     if (invoiceQtyNum < totalStock) {
       this.notifyService.showError(
-        [`${invoiceQtyNum} < ${totalStock}<br> Please check Invoice Quantity, Good Stock, Shortage, Cut and Torn`],
+        [`${invoiceQtyNum} < ${totalStock}\n Please check Invoice Quantity, Good Stock, Shortage, Cut and Torn`],
         null
       );
       bool = false;
@@ -513,7 +535,7 @@ export class InwardAddPageComponent implements OnInit {
 
     if (Number(goodStock) !== calculatedStock) {
       this.notifyService.showError(
-        [`${goodStock} ≠ ${unloading} + ${transphipment} + ${diversion}<br> Sum of Unloading | Diversion | Transphipment should equal Good Stock`],
+        [`${goodStock} = ${unloading} + ${transphipment} + ${diversion} \n Sum of Unloading | Diversion | Transphipment should equal Good Stock`],
         null
       );
       bool = false;
@@ -532,6 +554,58 @@ export class InwardAddPageComponent implements OnInit {
     }
 
     return bool;
+  }
+
+  onSubmitApi(event: FormGroup) {
+    const formValue = event?.value
+    const storeDate = this.getMonthYear(formValue['invoiceDate']);
+    formValue['Month'] = storeDate.Month;
+    formValue['Year'] = storeDate.Year;
+    formValue['Day'] = storeDate.Day;
+    formValue['Emp_Id'] = this.SESSION_DATA['Emp_Id'];
+    formValue['Month'] = formValue['Month'];
+    formValue['Year'] = formValue['Year'];
+    formValue['Today'] = formValue['Day'];
+
+    if (formValue["outTimeOfTruck"] !== "" && formValue["outTimeOfTruck"] !== "NA") {
+      const arrivalDate = formValue["arrivalDateOfTruck"];
+      const entryDate = formValue["entryDate"];
+      const inTime = formValue["inTimeOfTruck"];
+      const outTime = formValue["outTimeOfTruck"];
+      const datediff: number = this.dateDiff(arrivalDate, entryDate); // assuming it returns number of days
+      const [inHours, inMinutes] = inTime.split(':').map(Number);
+      const [outHours, outMinutes] = outTime.split(':').map(Number);
+      const haltMinutes = (datediff * 24 * 60) + (outHours * 60 + outMinutes) - (inHours * 60 + inMinutes);
+      const haltHour = (haltMinutes / 60).toFixed(2);
+      formValue["haltHour"] = (haltHour);
+      formValue["clearDateOfTruck"] = (entryDate);
+    } else {
+      const haltHour = 0;
+      formValue["haltHour"] = (haltHour.toString());
+      formValue["clearDateOfTruck"] = ('2000-01-01');
+      formValue["outTimeOfTruck"] = ('halting');
+    }
+    formValue['HaltHour'] = formValue['haltHour'];
+    formValue['ClearDateOfTruck'] = formValue["clearDateOfTruck"];
+    console.log(event, "onSubmitApi")
+    // this.service.InsertInwardData(formValue).subscribe(res => {
+    //   this.showpreClose?.close(this.showpreClose.RAMDOM_ID);
+    // })
+  }
+
+  getMonthYear(date: string) {
+    const dateObj = new Date(date);
+    const month = dateObj.toLocaleString('default', { month: 'long' });
+    const day = dateObj.toLocaleDateString('default', { weekday: 'long' });
+    const year = dateObj.getUTCFullYear();
+    return { Month: month, Year: year, Day: day }
+  }
+
+  dateDiff(date1: any, date2: any) {
+    var date1_ts = Date.parse(date1);
+    var date2_ts = Date.parse(date2);
+    var diff = date2_ts - date1_ts;
+    return Math.round(diff / 86400000);
   }
 
 }
