@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ModalService } from 'modal-popup-angular-18';
 import { ReactiveJsonFormsService } from 'reactive-forms-json';
 import { MainService } from '../../../core/services/service.service';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-inward-add-page',
@@ -10,7 +11,11 @@ import { MainService } from '../../../core/services/service.service';
   styleUrl: './inward-add-page.component.scss'
 })
 export class InwardAddPageComponent implements OnInit {
-  constructor(public form_service: ReactiveJsonFormsService, public service: MainService, public modal: ModalService) { }
+  constructor(
+    public form_service: ReactiveJsonFormsService,
+    public service: MainService,
+    private notifyService: NotificationService,
+    public modal: ModalService) { }
 
   onSubmit(form: any) {
     this.PreviesShow(form)
@@ -445,4 +450,76 @@ export class InwardAddPageComponent implements OnInit {
     }, "PreviewsInward").then((res: any) => {
     });
   }
+
+  checking(data: any): boolean {
+    const {
+      ArrivalDateOfTruck: arrivalDateOfTruck,
+      InvoiceQty: invoiceQty,
+      Shortage: shortage,
+      CutAndTorn: cutAndTorn,
+      GoodStock: goodStock,
+      Unloading: unloading,
+      Transphipment: transphipment,
+      Diversion: diversion,
+      InTimeOfTruck: inTimeOfTruck,
+      OutTimeOfTruck: outTimeOf,
+      InvoiceNumber: invoiceNumber
+    } = data;
+
+    let bool = true;
+    let outTimeOfTruck = (outTimeOf === '--:-- --' || outTimeOf === '') ? 'NA' : outTimeOf;
+
+    // ✅ Check 1: Intime should be less than out time
+    const checkedRadio: any = document.querySelector("input[name='truckStatus']:checked");
+    const truckStatus = checkedRadio ? checkedRadio.value : undefined;
+
+    if (
+      inTimeOfTruck &&
+      outTimeOfTruck !== 'NA' &&
+      inTimeOfTruck > outTimeOfTruck &&
+      new Date(arrivalDateOfTruck).getDay() === new Date().getDay() &&
+      truckStatus === 'cleared'
+    ) {
+      this.notifyService.showError(['Intime should be less than out time'], null);
+      bool = false;
+    }
+
+    // ✅ Check 2: InvoiceQty ≥ (Shortage + CutAndTorn + GoodStock)
+    const totalStock = Number(shortage) + Number(cutAndTorn) + Number(goodStock);
+    const invoiceQtyNum = Number(invoiceQty);
+
+    if (invoiceQtyNum < totalStock) {
+      this.notifyService.showError(
+        [`${invoiceQtyNum} < ${totalStock}<br> Please check Invoice Quantity, Good Stock, Shortage, Cut and Torn`],
+        null
+      );
+      bool = false;
+    }
+
+    // ✅ Check 3: GoodStock == Unloading + Transphipment + Diversion
+    const calculatedStock = Number(unloading) + Number(transphipment) + Number(diversion);
+
+    if (Number(goodStock) !== calculatedStock) {
+      this.notifyService.showError(
+        [`${goodStock} ≠ ${unloading} + ${transphipment} + ${diversion}<br> Sum of Unloading | Diversion | Transphipment should equal Good Stock`],
+        null
+      );
+      bool = false;
+    }
+
+    // ✅ Check 4: Truck status is selected
+    if (truckStatus === undefined) {
+      this.notifyService.showError(['Please check truck status is empty!'], null);
+      bool = false;
+    }
+
+    // ✅ Check 5: Invoice Number should be exactly 10 digits
+    if (!invoiceNumber || invoiceNumber.length !== 10) {
+      this.notifyService.showError(['Invoice number should be exactly 10 digits!'], null);
+      bool = false;
+    }
+
+    return bool;
+  }
+
 }
