@@ -1,0 +1,148 @@
+<div class="card">
+    <form class="form-card" [formGroup]="filterForm">
+        <nz-range-picker formControlName="Start_End_Date" ngModel></nz-range-picker>
+        <ng-select formControlName="depotDetails" required="true" style="height: auto !important;padding: 0;"
+            name="depotCode" [items]="depots" bindLabel="label" ngModel [searchable]="true">
+        </ng-select>
+        <button class="show-data-btn" [disabled]="filterForm.invalid" nz-button nzType="primary" (click)="loadData()"
+            [nzLoading]="isLoadingOne">Show</button>
+    </form>
+</div>
+<nz-tabset>
+    <nz-tab nzTitle="Inward Report Details">
+        <div class="div">
+            <nz-empty *ngIf="TableDataInward.length==0"></nz-empty>
+            <mat-table-pagination *ngIf="TableDataInward.length!=0" (onPageChange)="onChangeEvent($event)"
+                [totalRecords]="totalRecordsInward" [recordsPerPage]="10"></mat-table-pagination>
+            <nz-table *ngIf="TableDataInward.length!=0">
+                <thead>
+                    <tr>
+                        <!-- <th class="col1">Action</th> -->
+                        <th class="col1">Sr.No.</th>
+                        <th class="col1">Entry_Date</th>
+                        <th class="col1">SourcePlant</th>
+                        <th class="col1">PlantInvoiceNo</th>
+                        <th class="col1">Invoice_Date</th>
+                        <th class="col1">Arr.Dt.Truck</th>
+                        <th class="col1">InvoiceQty</th>
+                        <th class="col1">Grade</th>
+                        <th class="col1">GoodStock</th>
+                        <th class="col1">Cut&Torn</th>
+                        <th class="col1">Shortage</th>
+                        <th class="col1">Unloading</th>
+                        <th class="col1">Transhipment</th>
+                        <th class="col1">diversion</th>
+                        <th class="col1">TransportC0mpany</th>
+                        <th class="col1">VehicleNo.</th>
+                        <th class="col1">Reason Delay</th>
+                        <th class="col1">InTime</th>
+                        <th class="col1">OutTime</th>
+                        <th class="col1">HaltTime</th>
+                        <th class="col1">Depot Code</th>
+                        <th class="col1">Emp ID</th>
+                        <th class="col1">Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of TableDataInward;let i=index">
+                        <!-- <td class="col1 color-black gap">
+                    <a><i class="fa fa-edit" title="Edit of Table : row : "></i></a>
+                    <a><i class="fa fa-trash" title="Delete of Table : row : "></i></a>
+                </td> -->
+                        <td class="col1 color-black">{{(i+1)}}</td>
+                        <td class="col1 color-black">{{(item['entryDate'])}}</td>
+                        <td class="col1 color-black">{{(item['particulars'])}}</td>
+                        <td class="col1 color-black">{{(item['invoiceNumber'])}}</td>
+                        <td class="col1 color-black">{{(item['invoiceDate'])}}</td>
+                        <td class="col1 color-black">{{(item['arrivalDateOfTruck'])}}</td>
+                        <td class="col1 color-black">{{this.service.ParseFloat(item['invoiceQty'])}}</td>
+                        <td class="col1 color-black">{{(item['grade'])}}</td>
+                        <td class="col1 color-black">{{this.service.ParseFloat(item['goodStock'])}}</td>
+                        <td class="col1 color-black">{{this.service.ParseFloat(item['cutAndTorn'])}}</td>
+                        <td class="col1 color-black">{{this.service.ParseFloat(item['shortage'])}}</td>
+                        <td class="col1 color-black">{{this.service.ParseFloat(item['unloading'])}}</td>
+                        <td class="col1 color-black">{{this.service.ParseFloat(item['transphipment'])}}</td>
+                        <td class="col1 color-black">{{this.service.ParseFloat(item['diversion'])}}</td>
+                        <td class="col1 color-black">{{(item['transporterCompany'])}}</td>
+                        <td class="col1 color-black">{{(item['vehicleNumber'])}}</td>
+                        <td class="col1 color-black">{{(item['reasonForDelay'])}}</td>
+                        <td class="col1 color-black">{{(item['inTimeOfTruck'])}}</td>
+                        <td class="col1 color-black">{{(item['outTimeOfTruck'])}}</td>
+                        <td class="col1 color-black">{{(item['haltHour'])}}</td>
+                        <td class="col1 color-black">{{(item['depot_code'])}}</td>
+                        <td class="col1 color-black">{{(item['emp_id'])}}</td>
+                        <td class="col1 color-black">{{(item['comments'])}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </nz-tab>
+    <nz-tab nzTitle="Outward Report Details">
+        <div class="div">
+            <nz-empty *ngIf="TableDataOutward.length==0"></nz-empty>
+            <mat-table-pagination *ngIf="TableDataOutward.length!=0" (onPageChange)="onChangeEvent($event)"
+                [totalRecords]="totalRecordsOutawrd" [recordsPerPage]="10"></mat-table-pagination>
+            <nz-table *ngIf="TableDataOutward.length!=0">
+                <thead>
+                    <tr>
+                        <!-- <th class="col1">Action</th> -->
+                        <th class="col1">Sr.No.</th>
+                        <th class="col1">Entry_Date</th>
+                        <th class="col1">Dealer Name</th>
+                        <th class="col1">Dealer Code</th>
+                        <th class="col1">Invoice_No.</th>
+                        <th class="col1">Invoice_Date</th>
+                        <th class="col1">InvoiceQty (Ton)</th>
+                        <th class="col1">Grade</th>
+                        <th class="col1">Loading (Ton)</th>
+                        <th class="col1">Transhipment (Ton)</th>
+                        <th class="col1">diversion (Ton)</th>
+                        <th class="col1">TRUCK_ARRENGED_BY</th>
+                        <th class="col1">VehicleNo.</th>
+                        <th class="col1">DriveName</th>
+                        <th class="col1">DriverMob.</th>
+                        <th class="col1">InTime</th>
+                        <th class="col1">OutTime</th>
+                        <th class="col1">Depot Code</th>
+                        <th class="col1">Invoice Value</th>
+                        <th class="col1">Eway Date</th>
+                        <th class="col1">Eway no.</th>
+                        <th class="col1">Emp ID</th>
+                        <th class="col1">Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of TableDataOutward;let i=index">
+                        <!-- <td class="col1 color-black gap">
+                    <a><i class="fa fa-edit" title="Edit of Table : row : "></i></a>
+                    <a><i class="fa fa-trash" title="Delete of Table : row : "></i></a>
+                </td> -->
+                        <td class="col1 color-black">{{(i+1)}}</td>
+                        <td class="col1 color-black">{{item['entryDate']}}</td>
+                        <td class="col1 color-black">{{item['dealerName']}}</td>
+                        <td class="col1 color-black">{{item['dealercode']}}</td>
+                        <td class="col1 color-black">{{item['invoiceNumber']}}</td>
+                        <td class="col1 color-black">{{item['invoiceDate']}}</td>
+                        <td class="col1 color-black">{{this.service.ParseFloat(item['invoiceQt'])}}</td>
+                        <td class="col1 color-black">{{(item['grade'])}}</td>
+                        <td class="col1 color-black">{{this.service.ParseFloat(item['loading'])}}</td>
+                        <td class="col1 color-black">{{this.service.ParseFloat(item['transphipment'])}}</td>
+                        <td class="col1 color-black">{{this.service.ParseFloat(item['diversion'])}}</td>
+                        <td class="col1 color-black">{{item['truckArrangedBy']}}</td>
+                        <td class="col1 color-black">{{item['vehicleNumber']}}</td>
+                        <td class="col1 color-black">{{item['driverName']}}</td>
+                        <td class="col1 color-black">{{item['driverMobileNumber']}}</td>
+                        <td class="col1 color-black">{{item['inTimeOfTruck']}}</td>
+                        <td class="col1 color-black">{{item['outTimeOfTruck']}}</td>
+                        <td class="col1 color-black">{{item['depot_code']}}</td>
+                        <td class="col1 color-black">{{item['InvoiceValue']}}</td>
+                        <td class="col1 color-black">{{item['EwayDate']}}</td>
+                        <td class="col1 color-black">{{item['EwayNo']}}</td>
+                        <td class="col1 color-black">{{item['emp_id']}}</td>
+                        <td class="col1 color-black">{{item['comments']}}</td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </nz-tab>
+</nz-tabset>

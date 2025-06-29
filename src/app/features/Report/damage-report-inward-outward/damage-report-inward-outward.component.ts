@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import moment from 'moment';
-import { MainService } from '../../core/services/service.service';
+import { MainService } from '../../../core/services/service.service';
 
 @Component({
-  selector: 'app-file-upload-detailsand-deletion',
-  templateUrl: './file-upload-detailsand-deletion.component.html',
-  styleUrl: './file-upload-detailsand-deletion.component.scss'
+  selector: 'app-damage-report-inward-outward',
+  templateUrl: './damage-report-inward-outward.component.html',
+  styleUrl: './damage-report-inward-outward.component.scss'
 })
-export class FileUploadDetailsandDeletionComponent implements OnInit {
+export class DamageReportInwardOutwardComponent implements OnInit {
   listOfData: any[] = [];
   date = null;
   searchChange$ = new BehaviorSubject('');
@@ -24,10 +24,12 @@ export class FileUploadDetailsandDeletionComponent implements OnInit {
     BAGTON: new FormControl({}, [Validators.required]),
   });
   BAGTONData = ['Ton', 'Bag'];
-  TableData: any = [];
+  TableDataInward: any = [];
+  TableDataOutward: any = [];
   PAGE_LIMIT: number = 10;
   PAGE_INDEX: number = 1;
-  totalRecords: number = 0;
+  totalRecordsInward: number = 0;
+  totalRecordsOutawrd: number = 0;
 
   constructor(public service: MainService) {
     service.TITLE_OF_PAGE = "This is File Upload Sheet"
@@ -52,18 +54,22 @@ export class FileUploadDetailsandDeletionComponent implements OnInit {
   loadData(): void {
     console.log(this.filterForm.value, "depotDetails")
     this.isLoadingOne = true;
-    this.service.getFileUploadNewData({
-      "Start_Date": moment(this.filterForm.value.Start_End_Date).format("YYYY-MM-DD"),
+    this.service.getDamgeReportData({
+      "Start_Date": moment(this.filterForm.value.Start_End_Date[0]).format("YYYY-MM-DD"),
+      "End_Date": moment(this.filterForm.value.Start_End_Date[1]).format("YYYY-MM-DD"),
       "Depot_Name": this.filterForm.value.depotDetails?.depot_name,
       "Depot_Code": this.filterForm.value.depotDetails?.depot_code,
       limit: this.PAGE_LIMIT,
       page: this.PAGE_INDEX
     }).subscribe(async (res: any) => {
+      console.log(res, "getDamgeReportData")
       this.isLoadingOne = false;
-      this.TableData = res?.data;
-      this.totalRecords = res?.totalCount
-    },(err)=>{
-       this.isLoadingOne = false;
+      this.TableDataInward = res?.data?.InwarddataRows;
+      this.TableDataOutward = res?.data?.OutwarddataRows;
+      this.totalRecordsInward = res?.totalCount?.InwardcountRows
+      this.totalRecordsOutawrd = res?.totalCount?.OuwardcountRows
+    }, (err) => {
+      this.isLoadingOne = false;
     })
   }
 
@@ -74,4 +80,3 @@ export class FileUploadDetailsandDeletionComponent implements OnInit {
   }
 
 }
-

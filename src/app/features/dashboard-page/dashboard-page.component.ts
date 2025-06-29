@@ -58,7 +58,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     name: "Depot and Employees Details",
     route: "menulink2",
     subMenu: [
-      { label: "View Report", route: "submenulink1" },
+      { label: "View Report", route: "/home/AdminController" },
       { label: "Add Entry", route: "submenulink2" }
     ]
   },
@@ -119,7 +119,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     name: "Damage Report",
     route: "menulink2",
     subMenu: [
-      { label: "View Report", route: "submenulink1" },
+      { label: "View Report", route: "/home/DamageReport" },
     ]
   },
   {

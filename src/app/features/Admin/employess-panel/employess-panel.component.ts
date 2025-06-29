@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import moment from 'moment';
-import { MainService } from '../../core/services/service.service';
+import { MainService } from '../../../core/services/service.service';
 
 @Component({
-  selector: 'app-file-upload-detailsand-deletion',
-  templateUrl: './file-upload-detailsand-deletion.component.html',
-  styleUrl: './file-upload-detailsand-deletion.component.scss'
+  selector: 'employess-panel',
+  templateUrl: './employess-panel.component.html',
+  styleUrl: './employess-panel.component.scss'
 })
-export class FileUploadDetailsandDeletionComponent implements OnInit {
+export class EmployessPanelComponent implements OnInit {
   listOfData: any[] = [];
   date = null;
   searchChange$ = new BehaviorSubject('');
@@ -30,40 +29,24 @@ export class FileUploadDetailsandDeletionComponent implements OnInit {
   totalRecords: number = 0;
 
   constructor(public service: MainService) {
-    service.TITLE_OF_PAGE = "This is File Upload Sheet"
   }
 
   ngOnInit(): void {
-    this.service.ALLDepotCode().then((res: any) => {
-      console.log(res);
-      this.depots = res?.data?.map((items: any) => {
-        return {
-          label: items['depot_name'] + ' | ' + items['depot_code'],
-          value: items['depot_code'],
-          ...items
-        }
-      })
-      this.filteredDepots = this.depots
-    });
+    this.loadData()
   }
-
 
   isLoadingOne = false;
   loadData(): void {
-    console.log(this.filterForm.value, "depotDetails")
     this.isLoadingOne = true;
-    this.service.getFileUploadNewData({
-      "Start_Date": moment(this.filterForm.value.Start_End_Date).format("YYYY-MM-DD"),
-      "Depot_Name": this.filterForm.value.depotDetails?.depot_name,
-      "Depot_Code": this.filterForm.value.depotDetails?.depot_code,
+    this.service.getEmpData({
       limit: this.PAGE_LIMIT,
       page: this.PAGE_INDEX
     }).subscribe(async (res: any) => {
       this.isLoadingOne = false;
       this.TableData = res?.data;
       this.totalRecords = res?.totalCount
-    },(err)=>{
-       this.isLoadingOne = false;
+    }, (err) => {
+      this.isLoadingOne = false;
     })
   }
 
@@ -74,4 +57,5 @@ export class FileUploadDetailsandDeletionComponent implements OnInit {
   }
 
 }
+
 

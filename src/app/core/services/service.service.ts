@@ -66,8 +66,8 @@ export class MainService {
   USER_DATA: BehaviorSubject<any> = new BehaviorSubject(undefined);
   USER_DATA_OBJECT: any;
   ENV_TYPE: string = environment.envType;
-  TITLE_OF_PAGE_BehaviorSubject:BehaviorSubject<any> = new BehaviorSubject('');
-  
+  TITLE_OF_PAGE_BehaviorSubject: BehaviorSubject<any> = new BehaviorSubject('');
+
   constructor(private http: HttpClient,
     public router: Router,
     public cookieService: CookiesService,
@@ -198,6 +198,26 @@ export class MainService {
     return this.http.post<any>(`${environment.baseUrl + 'Sheet/Admin/getFileUpload.php'}`, formdata, { 'headers': this.headers });
   }
 
+  getDamgeReportData(formdata: any): Observable<any> {
+    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getDamgeReportData'}`, formdata, { 'headers': this.headers });
+  }  
+
+  getFileUploadNewData(formdata: any): Observable<any> {
+    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getFileUpload'}`, formdata, { 'headers': this.headers });
+  }
+
+  getEmpData(formdata: any): Observable<any> {
+    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getEmpData'}`, formdata, { 'headers': this.headers });
+  }
+
+  getDepotData(formdata: any): Observable<any> {
+    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getDepotData'}`, formdata, { 'headers': this.headers });
+  }
+
+  getGradeData(formdata: any): Observable<any> {
+    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getGradeData'}`, formdata, { 'headers': this.headers });
+  }
+
   getAllFileUploadData(formdata: any): Observable<any> {
     return this.http.post<any>(`${environment.baseUrl + 'Sheet/Admin/getAllFileUploadData.php'}`, formdata, { 'headers': this.headers });
   }
@@ -267,7 +287,7 @@ export class MainService {
   }
 
   getOutwardTableData(DATA: any) {
-   this.animation_loader.LoadingAnimation();
+    this.animation_loader.LoadingAnimation();
     return new Promise((resolve, reject) => {
       if (DATA != null && DATA != '') {
         this.http.post<any>(`${environment.NewBaseUrl + 'OutwardSheet/get'}`, DATA).subscribe((res) => {
@@ -1236,7 +1256,7 @@ export class MainService {
     return grades;
   }
 
-  SourcePlantData():Array<string> {
+  SourcePlantData(): Array<string> {
     return ['Kadapa', 'Dalmiapuram', 'Venkatagiri Kote', 'Ariyalur', 'Yadwad', 'Belgaum'];
   }
 }
