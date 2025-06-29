@@ -98,7 +98,7 @@ h6 {
 .field-lastname mat-select {
     border: 1px solid #f5c2c7 !important;
     border-radius: 50px !important;
-    padding: 8px 16px !important;
+    padding: 5px 10px !important;
     background-color: white;
     min-height: 45px;
     display: flex;
@@ -109,7 +109,7 @@ h6 {
 .field-lastname label {
     font-weight: 500;
     font-size: 0.9rem;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     color: #333;
 }
 
@@ -117,6 +117,9 @@ h6 {
 .field-lastname .mat-mdc-select-value-text {
     color: #000 !important;
 }
+
+
+
 
 /* Placeholder-specific override */
 .field-lastname .mat-mdc-select[ng-reflect-model="Select team size"] .mat-mdc-select-value-text {
@@ -129,12 +132,124 @@ h6 {
     margin-bottom: 1rem;
 }
 
-::ng-deep .json-form-wrapper>div {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+
+
+/* Label should sit outside the box */
+.custom-rounded-input>label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+    color: #333;
 }
 
-::ng-deep .json-form-wrapper>div>div {
-    flex: 0 0 50%; // force col-6 style width
+/* Wrap the actual input inside a box */
+.custom-rounded-input .input-wrapper {
+    border: 1px solid #f5c2c7;
+    border-radius: 50px;
+    padding: 5px 10px !important;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    min-height: 45px;
+}
+
+/* Input inside the wrapper */
+.custom-rounded-input .input-wrapper input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+    background: transparent;
+    color: #000;
+}
+
+.custom-rounded-input div:not(:has(label)):has(input[type="date"]) {
+    border: 1px solid #f5c2c7;
+    border-radius: 50px;
+    padding: 5px 10px !important;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    min-height: 45px;
+}
+
+
+
+
+
+/* Outer layout */
+.custom-rounded-input {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 1rem;
+}
+
+
+
+/* Input field: datetime-local (rounded box style) */
+.custom-rounded-input>input[type="time"] {
+    width: 100%;
+    padding: 5px 10px !important;
+    font-size: 1rem;
+    background-color: white;
+    color: #212529;
+
+    /* Key styles */
+    border: 1px solid #f5c2c7 !important;
+    border-radius: 50px !important;
+    outline: none;
+    appearance: none;
+    box-shadow: none;
+}
+
+/* Icon inside input (optional, for both types) */
+.custom-rounded-input>input[type="date"]::-webkit-calendar-picker-indicator,
+.custom-rounded-input>input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: grayscale(1);
+    opacity: 0.6;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.mat-label-input input[type="date"] {
+    display: block;
+        width: 100%;
+        padding: 5px 10px !important;
+        font-size: unset !important;
+        font-weight: unset !important;
+        line-height: unset !important;
+        color: #212529;
+        background-color: #fff;
+        background-clip: unset !important;
+        border: unset !important;
+        appearance: none;
+        border-radius: unset !important;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        outline: none;
+}
+
+
+/* Remove number spinner arrows */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    /* Firefox */
+}
+
+/* Target all input fields inside .mat-label-input */
+.mat-label-input input {
+    border: 1px solid #f5c2c7 !important;
+    border-radius: 25px !important;
+    padding: 0.5rem 1rem !important;
+    box-shadow: none !important;
+    outline: none !important;
+    width: 100%;
+    font-size: 1rem;
+    background-color: white !important;
 }

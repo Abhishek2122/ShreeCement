@@ -1236,4 +1236,7 @@ export class MainService {
     return grades;
   }
 
+  SourcePlantData():Array<string> {
+    return ['Kadapa', 'Dalmiapuram', 'Venkatagiri Kote', 'Ariyalur', 'Yadwad', 'Belgaum'];
+  }
 }
