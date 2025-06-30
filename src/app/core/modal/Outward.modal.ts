@@ -1,0 +1,30 @@
+export interface OutwardInvoice {
+    id: string;
+    dealerName: string;
+    dealercode: string;
+    invoiceNumber: string;
+    invoiceDate: string;
+    invoiceQt: string;
+    grade: string;
+    loading: string;
+    transphipment: string;
+    diversion: string;
+    transporterCompany: string;
+    truckArrangedBy: string;
+    vehicleNumber: string;
+    driverName: string;
+    driverMobileNumber: string;
+    inTimeOfTruck: string;
+    outTimeOfTruck: string;
+    entryDate: string;
+    emp_id: string;
+    depot_code: string;
+    comments: string;
+    nr_loading_cost: string;
+    dsp_loading_cost: string;
+    nr_transhipment_cost: string;
+    dsp_transhipment_cost: string;
+    InvoiceValue: string;
+    EwayDate: string;
+    EwayNo: string;
+}

@@ -41,11 +41,6 @@ html {
     background: #555555;
 }
 
-html,
-body {
-    height: 100%;
-}
-
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -119,8 +114,6 @@ h6 {
 }
 
 
-
-
 /* Placeholder-specific override */
 .field-lastname .mat-mdc-select[ng-reflect-model="Select team size"] .mat-mdc-select-value-text {
     color: #aaa !important;
@@ -131,7 +124,6 @@ h6 {
 .form-field {
     margin-bottom: 1rem;
 }
-
 
 
 /* Label should sit outside the box */
@@ -173,10 +165,6 @@ h6 {
     min-height: 45px;
 }
 
-
-
-
-
 /* Outer layout */
 .custom-rounded-input {
     display: flex;
@@ -184,8 +172,6 @@ h6 {
     gap: 4px;
     margin-bottom: 1rem;
 }
-
-
 
 /* Input field: datetime-local (rounded box style) */
 .custom-rounded-input>input[type="time"] {
@@ -231,11 +217,11 @@ h6 {
 
 
 /* Remove number spinner arrows */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+// input[type="number"]::-webkit-inner-spin-button,
+// input[type="number"]::-webkit-outer-spin-button {
+//     -webkit-appearance: none;
+//     margin: 0;
+// }
 
 input[type="number"] {
     -moz-appearance: textfield;
@@ -261,4 +247,31 @@ input[type="number"] {
 
 .ng-select {
     padding-bottom: 0 !important;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    /* width of the entire scrollbar */
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(142, 142, 142);
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+}
+
+.ant-select-single.ant-select-lg:not(.ant-select-customize-input) .ant-select-selector {
+    height: 100% !important;
+}
+
+.ant-select-single .ant-select-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ant-select-single.ant-select-lg:not(.ant-select-customize-input):not(.ant-select-customize-input) .ant-select-selection-search-input {
+    height: 100% !important;
 }

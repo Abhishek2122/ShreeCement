@@ -1,6 +1,10 @@
 .card {
     display: flex;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background: white;
+    left: 0;
 }
 
 .form-card {
@@ -10,7 +14,7 @@
     top: 0;
 }
 
-.show-data-btn{
+.show-data-btn {
     width: 100px;
     margin: auto;
     margin-right: 10px;
