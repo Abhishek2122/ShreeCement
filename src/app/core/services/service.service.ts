@@ -104,9 +104,11 @@ export class MainService {
   ResetPassordService(formdata: any): Observable<any> {
     return this.http.post<any>(`${environment.baseUrl + 'LoginDB/ResetPassword.php'}`, formdata, { 'headers': this.headers });
   }
+
   InsertInwardData(formdata: any): Observable<any> {
-    return this.http.post<any>(`${environment.baseUrl + 'InwardSheet/InwardInsert.php'}`, formdata, { 'headers': this.headers });
+    return this.http.post<any>(`${environment.NewBaseUrl + 'InwardSheet/insertInward'}`, formdata, { 'headers': this.headers });
   }
+
   UpdateInwardData(formdata: any): Observable<any> {
     return this.http.post<any>(`${environment.baseUrl + 'InwardSheet/InwardUpdate.php'}`, formdata, { 'headers': this.headers });
   }
@@ -144,7 +146,7 @@ export class MainService {
   }
 
   InserOutwardData(formdata: any): Observable<any> {
-    return this.http.post<any>(`${environment.baseUrl + 'OutwardSheet/OutwardInsert.php'}`, formdata, { 'headers': this.headers });
+    return this.http.post<any>(`${environment.NewBaseUrl + 'OutwardSheet/insertOutward'}`, formdata, { 'headers': this.headers });
   }
 
   UpdateOutwardData(formdata: any): Observable<any> {
@@ -512,14 +514,7 @@ export class MainService {
   }
 
   Dealer_Details() {
-    return new Promise((resolve, reject) => {
-      this.http.get<any>(`${environment.baseUrl + 'Depot_Data/DealerDetails.php'}`).pipe(delay(2000)).subscribe((res) => {
-        resolve(res);
-        this.animation_loader.removeAnimation();
-      }, err => {
-        this.animation_loader.removeAnimation();
-      });
-    });
+    return this.http.get<any>(`${environment.NewBaseUrl + 'common/DealerDetails'}`);
   }
 
   EmpList() {

@@ -110,3 +110,40 @@ h6 {
 .ant-select-single.ant-select-lg:not(.ant-select-customize-input):not(.ant-select-customize-input) .ant-select-selection-search-input {
     height: 100% !important;
 }
+
+.ng-select {
+    padding-bottom: 0 !important;
+}
+
+.ng-select .ng-select-container {
+    color: rgba(0, 0, 0, 0.87);
+    align-items: baseline;
+    min-height: auto !important;
+    border: 1px solid gray;
+    padding: 0;
+    border-radius: .25rem;
+    display: block;
+    width: 100%;
+    padding-left: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    outline: none;
+}
+
+.ng-select .ng-select-container .ng-value-container {
+    border: 0 !important;
+    padding: .4375em 0;
+    min-height: 35px;
+}
+
+.ng-dropdown-panel.ng-select-bottom {
+    top: calc(100% + 0.35rem) !important;
+}
