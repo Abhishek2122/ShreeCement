@@ -36,7 +36,7 @@ export class DamageReportInwardOutwardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.ALLDepotCode().then((res: any) => {
+    this.service.ALLDepotCode().subscribe((res: any) => {
       console.log(res);
       this.depots = res?.data?.map((items: any) => {
         return {

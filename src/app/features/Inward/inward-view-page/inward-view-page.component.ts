@@ -34,7 +34,7 @@ export class InwardViewPageComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.service.TITLE_OF_PAGE, "this.mainSerivce.TITLE_OF_PAGE")
-    this.service.ALLDepotCode().then((res: any) => {
+    this.service.ALLDepotCode().subscribe((res: any) => {
       console.log(res);
       this.depots = res?.data?.map((items: any) => {
         return {

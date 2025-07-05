@@ -28,247 +28,239 @@ export class InwardAddPageComponent implements OnInit {
     this.service.getSessionLogin().subscribe((res: any) => {
       this.SESSION_DATA = { ...res, ...res?.data }
     })
-    this.service.ALLDepotCode().then((res: any) => {
-      const depots = res?.data?.map((items: any) => {
-        return {
-          label: items['depot_name'] + ' | ' + items['depot_code'],
-          value: items['depot_code'],
-          ...items
-        }
-      })
-      this.service.getGradeList().then((gradeList: any) => {
-        this.form_service.buildForm({
-          depotCode: {
-            type: "SelectOptionObject",
-            value: "",
-            label: "Choose Depot Code",
-            rules: {
-              required: true,
-            },
-            items: depots,
-            placeholderText: "",
-            bindLabel: "label",
-            ngClass: "field-lastname form-field"
-          },
-          date_entry: {
-            type: "date",
-            value: "",
-            label: "Entry Date of Form",
-            rules: {
-              required: true,
-            },
-            ngClass: "form-controls custom-rounded-input",
-            placeholderText: "Entry Date of Form",
-          },
-          sourcePlant: {
-            type: "SelectOption",
-            value: "",
-            label: "Choose Source Plant",
-            rules: {
-              required: true,
-            },
-            items: this.service.SourcePlantData(),
-            placeholderText: "Select Source Plant",
-            ngClass: "field-lastname form-field"
-          },
-          invoiceNumber: {
-            type: "text",
-            pattern: "[0-9]*",
-            value: "",
-            label: "Plant Invoice No.",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Enter Plant Invoice No.",
-          },
-          invoiceDate: {
-            type: "date",
-            value: "",
-            label: "Plant Invoice Date",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Select Plant Invoice Date",
-            ngClass: "custom-rounded-input",
-          },
-          billingTimeOfPlant: {
-            type: "time",
-            value: "",
-            label: "Billing Time Of Plant",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Enter Billing Time",
-            ngClass: "custom-rounded-input",
-          },
-          arrivalDateOfTruck: {
-            type: "date",
-            value: "",
-            label: "Arrival Date Of Truck",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Select Arrival Date",
-            ngClass: "form-controls custom-rounded-input",
-          },
-          invoiceQty: {
-            type: "text",
-            pattern: "[0-9]*",
-            value: "",
-            label: "Invoice Quantity (in Bags)",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Enter Quantity (in Bags)",
-          },
-          grade: {
-            type: "SelectOption",
-            value: "",
-            label: "Grade",
-            rules: {
-              required: true,
-            },
-            items: gradeList,
-            placeholderText: "Select Grade",
-            ngClass: "field-lastname form-field"
-          },
-          cutAndTorn: {
-            type: "number",
-            value: "",
-            label: "Cut And Torn (in Bags)",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Enter Cut & Torn Qty (in Bags)",
-          },
-          shortage: {
-            type: "number",
-            value: "",
-            label: "Shortage (in Bags)",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Enter Shortage Qty (in Bags)",
-          },
-          goodStock: {
-            type: "number",
-            value: "",
-            label: "Good Stock (in Bags)",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Enter Good Stock Qty (in Bags)",
-          },
-          unloading: {
-            type: "number",
-            value: "",
-            label: "Unloading (in Bags)",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Enter Unloading Qty (in Bags)",
-          },
-          transphipment: {
-            type: "number",
-            value: "",
-            label: "Transhipment (in Bags)",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Is Transhipment (in Bags)",
-          },
-          diversion: {
-            type: "text",
-            value: "",
-            label: "Diversion (in Bags)",
-            rules: {
-              required: true,
-            },
-
-            placeholderText: "Is Diverted (in Bags)?",
-          },
-          transporterCompany: {
-            type: "SelectOption",
-            value: "",
-            label: "Transporter Company",
-            rules: {
-              required: true,
-            },
-            items: this.InwardService.getTransporterCompanyName(),
-            placeholderText: "Enter Transporter Company Name",
-            ngClass: "field-lastname form-field"
-          },
-          vehicleNumber: {
-            type: "text",
-            value: "",
-            label: "Vehicle Number",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Enter Vehicle Number",
-          },
-          reasonForDelay: {
-            type: "textarea",
-            value: "",
-            label: "Reason for Delay/Normal Time",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Mention delay reason if any",
-          },
-          inTimeOfTruck: {
-            type: "time",
-            value: "",
-            label: "In Time Of Truck",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Enter In Time",
-            ngClass: "custom-rounded-input",
-          },
-          halting: {
-            type: "number",
-            value: "",
-            label: "Halting (in hrs)",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Enter Halting Hours",
-          },
-          cleared: {
-            type: "MatCheckBox",
-            value: "",
-            label: "Truck Status",
-            rules: {
-              required: true,
-            },
-            items: [{ text: 'halting', value: "halting" }, { text: 'cleared', value: "cleared" }],
-            placeholderText: "Truck Status:?",
-            callback: (items: any) => {
-              console.log(items, "asdaskdsajdksadhadjkh")
-              const FIELDS_DATA = this.form_service.FIELDS_DATA['newform'];
-              if (items?.value == "halting") {
-                FIELDS_DATA[FIELDS_DATA.length - 1]['type'] = 'text';
-                FIELDS_DATA[FIELDS_DATA.length - 1]['value'] = 'NA'
-              } else {
-                FIELDS_DATA[FIELDS_DATA.length - 1]['type'] = 'time';
-                FIELDS_DATA[FIELDS_DATA.length - 1]['value'] = ''
-              }
-            }
-          },
-          outTimeOfTruck: {
-            type: "time",
-            value: "",
-            label: "Out Time Of Truck",
-            rules: {
-              required: true,
-            },
-            placeholderText: "Enter Out Time",
-            ngClass: "custom-rounded-input",
+    this.service.ALLDepotCode().subscribe((res: any) => {
+      if (res != undefined) {
+        const depots = res?.data?.map((items: any) => {
+          return {
+            label: items['depot_name'] + ' | ' + items['depot_code'],
+            value: items['depot_code'],
+            ...items
           }
-        }, "newform").then((res: any) => {
+        })
+        this.service.getGradeList().subscribe((gradeList: any) => {
+          this.form_service.buildForm({
+            depotCode: {
+              type: "SelectOptionObject",
+              value: "",
+              label: "Choose Depot Code",
+              rules: {
+                required: true,
+              },
+              items: depots,
+              placeholderText: "",
+              bindLabel: "label",
+              ngClass: "field-lastname form-field"
+            },
+            date_entry: {
+              type: "date",
+              value: "",
+              label: "Entry Date of Form",
+              rules: {
+                required: true,
+              },
+              ngClass: "form-controls custom-rounded-input",
+              placeholderText: "Entry Date of Form",
+            },
+            sourcePlant: {
+              type: "SelectOption",
+              value: "",
+              label: "Choose Source Plant",
+              rules: {
+                required: true,
+              },
+              items: this.service.SourcePlantData(),
+              placeholderText: "Select Source Plant",
+              ngClass: "field-lastname form-field"
+            },
+            invoiceNumber: {
+              type: "text",
+              pattern: "[0-9]*",
+              value: "",
+              label: "Plant Invoice No.",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Enter Plant Invoice No.",
+            },
+            invoiceDate: {
+              type: "date",
+              value: "",
+              label: "Plant Invoice Date",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Select Plant Invoice Date",
+              ngClass: "custom-rounded-input",
+            },
+            billingTimeOfPlant: {
+              type: "time",
+              value: "",
+              label: "Billing Time Of Plant",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Enter Billing Time",
+              ngClass: "custom-rounded-input",
+            },
+            arrivalDateOfTruck: {
+              type: "date",
+              value: "",
+              label: "Arrival Date Of Truck",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Select Arrival Date",
+              ngClass: "form-controls custom-rounded-input",
+            },
+            invoiceQty: {
+              type: "text",
+              pattern: "[0-9]*",
+              value: "",
+              label: "Invoice Quantity (in Bags)",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Enter Quantity (in Bags)",
+            },
+            grade: {
+              type: "SelectOptionObject",
+              value: "",
+              label: "Grade",
+              rules: {
+                required: true,
+              },
+              items: gradeList,
+              bindLabel: "Grade_Name",
+              ngClass: "field-lastname form-field"
+            },
+            cutAndTorn: {
+              type: "number",
+              value: "",
+              label: "Cut And Torn (in Bags)",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Enter Cut & Torn Qty (in Bags)",
+            },
+            shortage: {
+              type: "number",
+              value: "",
+              label: "Shortage (in Bags)",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Enter Shortage Qty (in Bags)",
+            },
+            goodStock: {
+              type: "number",
+              value: "",
+              label: "Good Stock (in Bags)",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Enter Good Stock Qty (in Bags)",
+            },
+            unloading: {
+              type: "number",
+              value: "",
+              label: "Unloading (in Bags)",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Enter Unloading Qty (in Bags)",
+            },
+            transphipment: {
+              type: "number",
+              value: "",
+              label: "Transhipment (in Bags)",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Is Transhipment (in Bags)",
+            },
+            diversion: {
+              type: "text",
+              value: "",
+              label: "Diversion (in Bags)",
+              rules: {
+                required: true,
+              },
+
+              placeholderText: "Is Diverted (in Bags)?",
+            },
+            transporterCompany: {
+              type: "SelectOption",
+              value: "",
+              label: "Transporter Company",
+              rules: {
+                required: true,
+              },
+              items: this.InwardService.getTransporterCompanyName(),
+              ngClass: "field-lastname form-field"
+            },
+            vehicleNumber: {
+              type: "text",
+              value: "",
+              label: "Vehicle Number",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Enter Vehicle Number",
+            },
+            reasonForDelay: {
+              type: "textarea",
+              value: "",
+              label: "Reason for Delay/Normal Time",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Mention delay reason if any",
+            },
+            inTimeOfTruck: {
+              type: "time",
+              value: "",
+              label: "In Time Of Truck",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Enter In Time",
+              ngClass: "custom-rounded-input",
+            },
+            cleared: {
+              type: "MatCheckBox",
+              value: "",
+              label: "Truck Status",
+              rules: {
+                required: true,
+              },
+              items: [{ text: 'halting', value: "halting" }, { text: 'cleared', value: "cleared" }],
+              placeholderText: "Truck Status:?",
+              callback: (items: any) => {
+                console.log(items, "asdaskdsajdksadhadjkh")
+                const FIELDS_DATA = this.form_service.FIELDS_DATA['newform'];
+                if (items?.value == "halting") {
+                  FIELDS_DATA[FIELDS_DATA.length - 1]['type'] = 'text';
+                  FIELDS_DATA[FIELDS_DATA.length - 1]['value'] = 'NA'
+                } else {
+                  FIELDS_DATA[FIELDS_DATA.length - 1]['type'] = 'time';
+                  FIELDS_DATA[FIELDS_DATA.length - 1]['value'] = ''
+                }
+              }
+            },
+            outTimeOfTruck: {
+              type: "time",
+              value: "",
+              label: "Out Time Of Truck",
+              rules: {
+                required: true,
+              },
+              placeholderText: "Enter Out Time",
+              ngClass: "custom-rounded-input",
+            }
+          }, "newform").then((res: any) => {
+          });
         });
-      });
+      }
     });
   }
 
@@ -446,15 +438,6 @@ export class InwardAddPageComponent implements OnInit {
             required: true,
           },
           placeholderText: "Enter In Time",
-        },
-        halting: {
-          type: "LabelShow",
-          value: FormValue?.halting,
-          label: "Halting (in hrs)",
-          rules: {
-            required: true,
-          },
-          placeholderText: "Enter Halting Hours",
         },
         cleared: {
           type: "LabelShow",

@@ -72,7 +72,7 @@ export class OutwardUploadComponent implements OnInit {
     private modalService: ModalService) { }
 
   ngOnInit(): void {
-    this.service.getGradeList().then((res) => {
+    this.service.getGradeList().subscribe((res) => {
       for (let index = 0; index < this.service.GRADE_LIST.length; index++) {
         this.GRADE_LIST_OBJECT.push(this.service.GRADE_LIST[index]);
       }
@@ -84,7 +84,7 @@ export class OutwardUploadComponent implements OnInit {
       const updatedGrades = this.service.updateGrades(this.MATERIAL_NO_DUMP, res);
       this.MATERIAL_NO = updatedGrades;
     })
-    this.service.ALLDepotCode().then((res: any) => {
+    this.service.ALLDepotCode().subscribe((res: any) => {
       this.depots = res?.data?.map((items: any) => {
         return {
           label: items['depot_name'] + ' | ' + items['depot_code'],
