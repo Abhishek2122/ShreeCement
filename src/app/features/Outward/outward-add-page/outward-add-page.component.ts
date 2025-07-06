@@ -42,27 +42,27 @@ export class OutwardAddPageComponent implements OnInit {
         })
         this.service.getGradeList().subscribe((gradeList: any) => {
           this.service.Dealer_Details().subscribe((Dealer_Details) => {
-            console.log(Dealer_Details, "Dealer_Details")
             this.form_service.buildForm({
               Dealer_Name: {
-                type: 'SelectOptionObject',
+                type: 'SelectOptionObjectPagination',
                 value: "",
                 label: "Choose Dealer Name",
                 rules: {
                   required: true,
                 },
+                placeholderText: "Choose Dealer Name",
                 items: Dealer_Details?.data,
                 bindLabel: "de_name",
                 ngClass: "field-lastname form-field",
+                defaultText: "Choose Dealer Name",
                 callback: (items) => {
                   const Dealer_Code: FormGroup = items?.dynamicFormGroup;
                   Dealer_Code.get("Dealer_Code")?.setValue(items?.value)
                   items['field'][1]['value'] = items?.value
-                  console.log(items, "asdasdkasdjadskl")
                 }
               },
               Dealer_Code: {
-                type: "SelectOptionObject",
+                type: "SelectOptionObjectPagination",
                 value: "",
                 label: "Choose Dealer Code",
                 rules: {
@@ -70,7 +70,14 @@ export class OutwardAddPageComponent implements OnInit {
                 },
                 items: Dealer_Details?.data,
                 bindLabel: "de_code",
+                defaultText: "Choose Dealer Code",
+                placeholderText: "Choose Dealer Code",
                 ngClass: "field-lastname form-field",
+                callback: (items) => {
+                  const Dealer_Name: FormGroup = items?.dynamicFormGroup;
+                  Dealer_Name.get("Dealer_Name")?.setValue(items?.value)
+                  items['field'][0]['value'] = items?.value
+                }
               },
               Depot_Code: {
                 type: "SelectOptionObject",
@@ -346,8 +353,8 @@ export class OutwardAddPageComponent implements OnInit {
     this.showpreClose?.close(this.showpreClose.RAMDOM_ID)
   }
 
-  test:any=''
-  changeValue(event:any){
+  test: any = ''
+  changeValue(event: any) {
     console.log(event)
   }
 }
