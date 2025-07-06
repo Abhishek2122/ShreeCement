@@ -67,7 +67,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         UploadUtilsUIModule,
         NgZorroAntdModule,
         ReactiveJsonFormsModule,
-        MaterialModule
+        MaterialModule,
     ],
     exports: [
         FormsModule,
@@ -93,7 +93,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         UploadUtilsUIModule,
         NgZorroAntdModule,
         ReactiveJsonFormsModule,
-        MaterialModule
+        MaterialModule,
     ],
     providers: [
         {

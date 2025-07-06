@@ -14,6 +14,7 @@ import moment from 'moment';
 })
 export class OutwardAddPageComponent implements OnInit {
   SESSION_DATA: any = [];
+
   constructor(
     public form_service: ReactiveJsonFormsService,
     public service: MainService,
@@ -43,6 +44,34 @@ export class OutwardAddPageComponent implements OnInit {
           this.service.Dealer_Details().subscribe((Dealer_Details) => {
             console.log(Dealer_Details, "Dealer_Details")
             this.form_service.buildForm({
+              Dealer_Name: {
+                type: 'SelectOptionObject',
+                value: "",
+                label: "Choose Dealer Name",
+                rules: {
+                  required: true,
+                },
+                items: Dealer_Details?.data,
+                bindLabel: "de_name",
+                ngClass: "field-lastname form-field",
+                callback: (items) => {
+                  const Dealer_Code: FormGroup = items?.dynamicFormGroup;
+                  Dealer_Code.get("Dealer_Code")?.setValue(items?.value)
+                  items['field'][1]['value'] = items?.value
+                  console.log(items, "asdasdkasdjadskl")
+                }
+              },
+              Dealer_Code: {
+                type: "SelectOptionObject",
+                value: "",
+                label: "Choose Dealer Code",
+                rules: {
+                  required: true,
+                },
+                items: Dealer_Details?.data,
+                bindLabel: "de_code",
+                ngClass: "field-lastname form-field",
+              },
               Depot_Code: {
                 type: "SelectOptionObject",
                 value: "",
@@ -65,31 +94,7 @@ export class OutwardAddPageComponent implements OnInit {
                 ngClass: "form-controls custom-rounded-input",
                 placeholderText: "Entry Date of Form",
               },
-              Dealer_Name: {
-                type: "SelectOptionObject",
-                value: "",
-                label: "Choose Dealer Name",
-                rules: {
-                  required: true,
-                },
-                items: Dealer_Details?.data,
-                bindLabel: "de_name",
-                ngClass: "field-lastname form-field"
-              },
-              Dealer_Code: {
-                type: "SelectOptionObject",
-                value: "",
-                label: "Choose Dealer Code",
-                rules: {
-                  required: true,
-                },
-                items: Dealer_Details?.data,
-                bindLabel: "de_code",
-                ngClass: "field-lastname form-field",
-                callback:(items)=>{
-                  console.log(items,"asdasdkasdjadskl")
-                }
-              },
+
               InvoiceNumber: {
                 type: "text",
                 pattern: "[0-9]*",
@@ -339,5 +344,10 @@ export class OutwardAddPageComponent implements OnInit {
   EnabledForm() {
     this.form_service.dynamicFormGroup['newform']?.enable();
     this.showpreClose?.close(this.showpreClose.RAMDOM_ID)
+  }
+
+  test:any=''
+  changeValue(event:any){
+    console.log(event)
   }
 }
