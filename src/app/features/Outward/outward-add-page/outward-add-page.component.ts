@@ -55,6 +55,7 @@ export class OutwardAddPageComponent implements OnInit {
                 bindLabel: "de_name",
                 ngClass: "field-lastname form-field",
                 defaultText: "Choose Dealer Name",
+                Inputdisabled:false,
                 callback: (items) => {
                   const Dealer_Code: FormGroup = items?.dynamicFormGroup;
                   Dealer_Code.get("Dealer_Code")?.setValue(items?.value)
