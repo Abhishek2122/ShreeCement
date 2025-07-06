@@ -1,0 +1,27 @@
+<div class="div">
+    <nz-empty *ngIf="TableData.length==0"></nz-empty>
+    <mat-table-pagination *ngIf="TableData.length!=0" (onPageChange)="onChangeEvent($event)"
+        [totalRecords]="totalRecords" [recordsPerPage]="10"></mat-table-pagination>
+    <nz-table *ngIf="TableData.length!=0">
+        <thead>
+            <tr>
+                <th class="col1">Sr.No.</th>
+                <th class="col1">EMP_ID</th>
+                <th class="col1">Name</th>
+                <th class="col1">Email Id</th>
+                <th class="col1">CONTACT NUMBER</th>
+                <th class="col1">DEPOT CODE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of TableData;let i=index">
+                <td class="col1 color-black">{{(i+1)}}</td>
+                <td class="col1">{{item.emp_id}}</td>
+                <td class="col1">{{item.emp_name}}</td>
+                <td class="col1">{{item.email_id}}</td>
+                <td class="col1">{{item.contact_number}}</td>
+                <td class="col1">{{item.depot_code}}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

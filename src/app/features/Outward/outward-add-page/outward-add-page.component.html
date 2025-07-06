@@ -1,1 +1,11 @@
-<p>outward-add-page works!</p>
+<Json-Reactive-Forms SubmitName="Previews"
+    [FormStyle]="'display:grid;grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));'" id="newform"
+    [CancelRoute]="'/home'" (SubmitEvent)="onSubmit($event)"></Json-Reactive-Forms>
+
+<ng-template #showpre>
+    <div class="pre-div">
+        <Json-Reactive-Forms [FormStyle]="'display:grid;grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));'"
+            id="newform" (CancelEvent)="EnabledForm()"
+            (RawValueEvent)="onSubmitApi(this.FormGroupObj)"></Json-Reactive-Forms>
+    </div>
+</ng-template>

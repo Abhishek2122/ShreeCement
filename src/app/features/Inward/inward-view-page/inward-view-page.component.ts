@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { MainService } from '../../../core/services/service.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import moment from 'moment';
+import { JsonToExcelService } from '../../../core/services/json-to-excel.service';
 
 @Component({
   selector: 'app-inward-view-page',
@@ -29,11 +30,11 @@ export class InwardViewPageComponent implements OnInit {
   PAGE_INDEX: number = 1;
   totalRecords: number = 0;
 
-  constructor(public service: MainService) {}
+  constructor(public service: MainService, private jsontoexcel: JsonToExcelService) { }
 
   ngOnInit(): void {
-    console.log(this.service.TITLE_OF_PAGE,"this.mainSerivce.TITLE_OF_PAGE")
-    this.service.ALLDepotCode().then((res: any) => {
+    console.log(this.service.TITLE_OF_PAGE, "this.mainSerivce.TITLE_OF_PAGE")
+    this.service.ALLDepotCode().subscribe((res: any) => {
       console.log(res);
       this.depots = res?.data?.map((items: any) => {
         return {
@@ -67,9 +68,24 @@ export class InwardViewPageComponent implements OnInit {
   }
 
   onChangeEvent(event: any) {
-    console.log(event, "onChangeEvent")
     this.PAGE_INDEX = event?.pageIndex + 1;
     this.loadData();
   }
 
+  downloadCSV() {
+    this.service.getInwardTableData({
+      "Start_Date": moment(this.filterForm.value.Start_End_Date[0]).format("YYYY-MM-DD"),
+      "End_Date": moment(this.filterForm.value.Start_End_Date[1]).format("YYYY-MM-DD"),
+      "Depot_Name": this.filterForm.value.depotDetails?.depot_name,
+      "Bag_Ton": "Ton",
+      "Depot_Code": this.filterForm.value.depotDetails?.depot_code,
+      limit: this.totalRecords,
+      page: this.PAGE_INDEX
+    }).then(async (res: any) => {
+      console.log(res, "asdasdasdsad")
+      this.isLoadingOne = false;
+      const data: any = res?.data
+      this.jsontoexcel.exportJsonToExcel(data, "InwardSheet")
+    })
+  }
 }

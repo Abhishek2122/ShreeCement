@@ -1477,3 +1477,8 @@ span.text {
     margin-bottom: -8px;
     font-weight: 500;
 }
+
+.router-view-controller {
+    height: calc(100vh - 121px);
+    overflow: auto;
+}

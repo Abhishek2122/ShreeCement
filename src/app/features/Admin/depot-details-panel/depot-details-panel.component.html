@@ -1,0 +1,39 @@
+<div class="div">
+    <nz-empty *ngIf="TableData.length==0"></nz-empty>
+    <mat-table-pagination *ngIf="TableData.length!=0" (onPageChange)="onChangeEvent($event)"
+        [totalRecords]="totalRecords" [recordsPerPage]="10"></mat-table-pagination>
+    <nz-table *ngIf="TableData.length!=0">
+        <thead>
+            <tr>
+                <th class="col1">Sr.No.</th>
+                <th class="col1">Depot Name</th>
+                <th class="col1">Depot Code</th>
+                <th class="col1">N/R L/O Cost</th>
+                <th class="col1">N/R UL/O Cost</th>
+                <th class="col1">N/R TSP Cost</th>
+                <th class="col1">DSP L/O Cost</th>
+                <th class="col1">DSP UL/O Cost</th>
+                <th class="col1">DSP TSP Cost</th>
+                <th class="col1">Fixed Cost</th>
+                <th class="col1">CityType</th>
+                <th class="col1">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of TableData;let i=index">
+                <td class="col1 color-black">{{(i+1)}}</td>
+                <td class="col1">{{item.depot_name}}</td>
+                <td class="col1">{{item.depot_code}}</td>
+                <td class="col1">{{item.nr_Loading}}</td>
+                <td class="col1">{{item.nr_unloading}}</td>
+                <td class="col1">{{item.nr_transhipment}}</td>
+                <td class="col1">{{item.dsp_loading}}</td>
+                <td class="col1">{{item.dsp_unloading}}</td>
+                <td class="col1">{{item.dsp_transhipment}}</td>
+                <td class="col1">{{item.minimum_labor_charges_per_day}}</td>
+                <td class="col1">{{item?.CityType}}</td>
+                <td class="col1">{{item?.Status}}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

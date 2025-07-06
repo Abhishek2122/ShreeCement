@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, delay, first, Observable, shareReplay, Subject } from 'rxjs';
+import { BehaviorSubject, delay, first, firstValueFrom, Observable, shareReplay, Subject } from 'rxjs';
 import moment from 'moment';
 import { CookiesService } from './cookies.service';
 import { CustomToolTipsService } from './custom-tool-tips.service';
 import { NotificationService } from './notification.service';
 import { environment } from '../../../environments/environment';
+import { ConfigService } from '../../shared/common-services/common.services';
 
 @Injectable({
   providedIn: 'root'
@@ -66,12 +67,13 @@ export class MainService {
   USER_DATA: BehaviorSubject<any> = new BehaviorSubject(undefined);
   USER_DATA_OBJECT: any;
   ENV_TYPE: string = environment.envType;
-  TITLE_OF_PAGE_BehaviorSubject:BehaviorSubject<any> = new BehaviorSubject('');
-  
+  TITLE_OF_PAGE_BehaviorSubject: BehaviorSubject<any> = new BehaviorSubject('');
+
   constructor(private http: HttpClient,
     public router: Router,
     public cookieService: CookiesService,
     public notifyService: NotificationService,
+    public commonService: ConfigService,
     public animation_loader: CustomToolTipsService) {
     this.islogged = false;
   }
@@ -102,9 +104,11 @@ export class MainService {
   ResetPassordService(formdata: any): Observable<any> {
     return this.http.post<any>(`${environment.baseUrl + 'LoginDB/ResetPassword.php'}`, formdata, { 'headers': this.headers });
   }
+
   InsertInwardData(formdata: any): Observable<any> {
-    return this.http.post<any>(`${environment.baseUrl + 'InwardSheet/InwardInsert.php'}`, formdata, { 'headers': this.headers });
+    return this.http.post<any>(`${environment.NewBaseUrl + 'InwardSheet/insertInward'}`, formdata, { 'headers': this.headers });
   }
+
   UpdateInwardData(formdata: any): Observable<any> {
     return this.http.post<any>(`${environment.baseUrl + 'InwardSheet/InwardUpdate.php'}`, formdata, { 'headers': this.headers });
   }
@@ -142,7 +146,7 @@ export class MainService {
   }
 
   InserOutwardData(formdata: any): Observable<any> {
-    return this.http.post<any>(`${environment.baseUrl + 'OutwardSheet/OutwardInsert.php'}`, formdata, { 'headers': this.headers });
+    return this.http.post<any>(`${environment.NewBaseUrl + 'OutwardSheet/insertOutward'}`, formdata, { 'headers': this.headers });
   }
 
   UpdateOutwardData(formdata: any): Observable<any> {
@@ -196,6 +200,26 @@ export class MainService {
 
   getFileUploadData(formdata: any): Observable<any> {
     return this.http.post<any>(`${environment.baseUrl + 'Sheet/Admin/getFileUpload.php'}`, formdata, { 'headers': this.headers });
+  }
+
+  getDamgeReportData(formdata: any): Observable<any> {
+    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getDamgeReportData'}`, formdata, { 'headers': this.headers });
+  }
+
+  getFileUploadNewData(formdata: any): Observable<any> {
+    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getFileUpload'}`, formdata, { 'headers': this.headers });
+  }
+
+  getEmpData(formdata: any): Observable<any> {
+    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getEmpData'}`, formdata, { 'headers': this.headers });
+  }
+
+  getDepotData(formdata: any): Observable<any> {
+    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getDepotData'}`, formdata, { 'headers': this.headers });
+  }
+
+  getGradeData(formdata: any): Observable<any> {
+    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getGradeData'}`, formdata, { 'headers': this.headers });
   }
 
   getAllFileUploadData(formdata: any): Observable<any> {
@@ -267,7 +291,7 @@ export class MainService {
   }
 
   getOutwardTableData(DATA: any) {
-   this.animation_loader.LoadingAnimation();
+    this.animation_loader.LoadingAnimation();
     return new Promise((resolve, reject) => {
       if (DATA != null && DATA != '') {
         this.http.post<any>(`${environment.NewBaseUrl + 'OutwardSheet/get'}`, DATA).subscribe((res) => {
@@ -486,28 +510,11 @@ export class MainService {
   }
 
   ALLDepotCode() {
-    this.animation_loader.LoadingAnimation();
-    return new Promise((resolve, reject) => {
-      this.http.get<any>(`${environment.NewBaseUrl + 'common/depot'}`).subscribe((res) => {
-        resolve(res);
-        this.animation_loader.removeAnimation();
-      }, err => {
-        reject(err);
-        this.notifyService.showError(err['message'], err['statusText']);
-        this.animation_loader.removeAnimation();
-      });
-    });
+    return this.commonService.DEPOT_DATA;
   }
 
   Dealer_Details() {
-    return new Promise((resolve, reject) => {
-      this.http.get<any>(`${environment.baseUrl + 'Depot_Data/DealerDetails.php'}`).pipe(delay(2000)).subscribe((res) => {
-        resolve(res);
-        this.animation_loader.removeAnimation();
-      }, err => {
-        this.animation_loader.removeAnimation();
-      });
-    });
+    return this.http.get<any>(`${environment.NewBaseUrl + 'common/DealerDetails'}`);
   }
 
   EmpList() {
@@ -572,15 +579,7 @@ export class MainService {
   }
 
   getGradeList() {
-    return new Promise((resolve, reject) => {
-      this.http.get<any>(`${environment.NewBaseUrl + 'common/grades'}`).subscribe((res) => {
-        this.GRADE_LIST = res['data'];
-        resolve(res['data']);
-      }, err => {
-        this.notifyService.showError(err['message'], err['statusText']);
-        resolve([err]);
-      });
-    });
+    return this.commonService.GRADE_DATA;
   }
 
   getGradeListData() {
@@ -1236,7 +1235,7 @@ export class MainService {
     return grades;
   }
 
-  SourcePlantData():Array<string> {
+  SourcePlantData(): Array<string> {
     return ['Kadapa', 'Dalmiapuram', 'Venkatagiri Kote', 'Ariyalur', 'Yadwad', 'Belgaum'];
   }
 }

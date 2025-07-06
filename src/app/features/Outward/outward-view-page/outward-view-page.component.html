@@ -1,23 +1,30 @@
 <div class="card">
     <form class="form-card" [formGroup]="filterForm">
         <nz-range-picker formControlName="Start_End_Date" ngModel></nz-range-picker>
-        <ng-select formControlName="depotDetails" required="true" style="height: auto !important;padding: 0;"
-            name="depotCode" [items]="depots" bindLabel="label" ngModel [searchable]="true">
-        </ng-select>
-        <ng-select formControlName="BAGTON" required="true" style="height: auto !important;padding: 0;" name="depotCode"
-            [items]="BAGTONData" ngModel [searchable]="true">
-        </ng-select>
-        <button class="show-data-btn" [disabled]="filterForm.invalid" nz-button nzType="primary" (click)="loadData()"
-            [nzLoading]="isLoadingOne">Show</button>
+        <nz-select nzSize="large" ngModel nzShowSearch nzAllowClear nzPlaceHolder="Select Depot Code"
+            formControlName="depotDetails">
+            <nz-option [nzLabel]="item['label']" [nzValue]="item" *ngFor="let item of depots"></nz-option>
+        </nz-select>
+        <nz-select nzSize="large" ngModel nzShowSearch nzAllowClear nzPlaceHolder="Select Bag or Ton"
+            formControlName="BAGTON">
+            <nz-option [nzLabel]="item" [nzValue]="item" *ngFor="let item of BAGTONData"></nz-option>
+        </nz-select>
+        <div class="mr-0" style="margin: auto;margin-right: 0;">
+            <button class="show-data-btn" [disabled]="filterForm.invalid" nz-button nzType="primary"
+                (click)="loadData()" [nzLoading]="isLoadingOne">Show</button>
+            <button class="show-data-btn" [disabled]="TableData.length==0 && filterForm.invalid" nz-button
+                nzType="primary" (click)="downloadCSV()" [nzLoading]="isLoadingOne">.csv</button>
+        </div>
     </form>
+    <div class="p-2">
+        <nz-empty *ngIf="this.TableData.length==0"></nz-empty>
+        <mat-table-pagination *ngIf="TableData.length!=0" (onPageChange)="onChangeEvent($event)"
+            [totalRecords]="totalRecords" [recordsPerPage]="10"></mat-table-pagination>
+    </div>
 </div>
 
 <div class="div">
-    <nz-empty *ngIf="TableData.length==0"></nz-empty>
-    <br>
-     <mat-table-pagination *ngIf="TableData.length!=0" (onPageChange)="onChangeEvent($event)"
-        [totalRecords]="totalRecords" [recordsPerPage]="10"></mat-table-pagination>
-    <nz-table *ngIf="TableData.length!=0">
+    <nz-table [nzData]="this.TableData.length" *ngIf="TableData.length!=0">
         <thead>
             <tr>
                 <!-- <th class="col1">Action</th> -->
@@ -78,5 +85,5 @@
             </tr>
         </tbody>
     </nz-table>
-   
+
 </div>

@@ -53,6 +53,10 @@
                     <ul>
                         <li><a (click)="UserInfoView()"><i class="fa-solid fa-user"></i> My Profile</a></li>
                         <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                        <li *ngIf="isFullScreen==false"><a (click)="goFullScreen()"><i
+                                    class="fa-solid fa-gear"></i> Full Screen</a></li>
+                        <li *ngIf="isFullScreen==true"><a (click)="exitFullScreen()"><i
+                                    class="fa-solid fa-gear"></i> Exit Full Screen</a></li>
                         <li><a (click)="logout()"><i class="fa fa-sign-out"></i> Log Out</a></li>
                     </ul>
                 </div>
@@ -88,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="this.router.url!='/'">
+            <div *ngIf="this.router.url!='/'" class="router-view-controller">
                 <router-outlet></router-outlet>
             </div>
         </main>

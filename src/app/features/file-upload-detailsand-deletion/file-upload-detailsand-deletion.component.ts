@@ -34,7 +34,7 @@ export class FileUploadDetailsandDeletionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.ALLDepotCode().then((res: any) => {
+    this.service.ALLDepotCode().subscribe((res: any) => {
       console.log(res);
       this.depots = res?.data?.map((items: any) => {
         return {
@@ -52,18 +52,18 @@ export class FileUploadDetailsandDeletionComponent implements OnInit {
   loadData(): void {
     console.log(this.filterForm.value, "depotDetails")
     this.isLoadingOne = true;
-    this.service.getInwardTableData({
-      "Start_Date": moment(this.filterForm.value.Start_End_Date[0]).format("YYYY-MM-DD"),
-      "End_Date": moment(this.filterForm.value.Start_End_Date[1]).format("YYYY-MM-DD"),
+    this.service.getFileUploadNewData({
+      "Start_Date": moment(this.filterForm.value.Start_End_Date).format("YYYY-MM-DD"),
       "Depot_Name": this.filterForm.value.depotDetails?.depot_name,
-      "Bag_Ton": "Ton",
       "Depot_Code": this.filterForm.value.depotDetails?.depot_code,
       limit: this.PAGE_LIMIT,
       page: this.PAGE_INDEX
-    }).then(async (res: any) => {
+    }).subscribe(async (res: any) => {
       this.isLoadingOne = false;
       this.TableData = res?.data;
       this.totalRecords = res?.totalCount
+    },(err)=>{
+       this.isLoadingOne = false;
     })
   }
 

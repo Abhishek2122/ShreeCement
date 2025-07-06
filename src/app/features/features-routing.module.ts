@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import { StockReportPageComponent } from './StockReport/stock-report-page/stock-report-page.component';
 import { FileUploadDetailsandDeletionComponent } from './file-upload-detailsand-deletion/file-upload-detailsand-deletion.component';
+import { AdminControllerPanelComponent } from './Admin/admin-controller-panel/admin-controller-panel.component';
+import { DamageReportInwardOutwardComponent } from './Report/damage-report-inward-outward/damage-report-inward-outward.component';
 
 const routes: Routes = [
     {
@@ -21,6 +23,18 @@ const routes: Routes = [
                 path: "FileUploadDeletionPanel", component: FileUploadDetailsandDeletionComponent,
                 data: {
                     title: "This is File Upload Sheet"
+                }
+            },
+            {
+                path: "AdminController", component: AdminControllerPanelComponent,
+                data: {
+                    title: "This is Super/Admin View Sheet"
+                }
+            },
+             {
+                path: "DamageReport", component: DamageReportInwardOutwardComponent,
+                data: {
+                    title: "This is Damage Report sheet : Select Options to navigate"
                 }
             },
         ]

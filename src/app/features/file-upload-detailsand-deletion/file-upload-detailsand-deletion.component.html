@@ -1,11 +1,8 @@
 <div class="card">
     <form class="form-card" [formGroup]="filterForm">
-        <nz-range-picker formControlName="Start_End_Date" ngModel></nz-range-picker>
+        <nz-date-picker formControlName="Start_End_Date" ngModel></nz-date-picker>
         <ng-select formControlName="depotDetails" required="true" style="height: auto !important;padding: 0;"
             name="depotCode" [items]="depots" bindLabel="label" ngModel [searchable]="true">
-        </ng-select>
-        <ng-select formControlName="BAGTON" required="true" style="height: auto !important;padding: 0;" name="depotCode"
-            [items]="BAGTONData" ngModel [searchable]="true">
         </ng-select>
         <button class="show-data-btn" [disabled]="filterForm.invalid" nz-button nzType="primary" (click)="loadData()"
             [nzLoading]="isLoadingOne">Show</button>
@@ -21,60 +18,27 @@
             <tr>
                 <!-- <th class="col1">Action</th> -->
                 <th class="col1">Sr.No.</th>
-                <th class="col1">Entry_Date</th>
-                <th class="col1">SourcePlant</th>
-                <th class="col1">PlantInvoiceNo</th>
-                <th class="col1">Invoice_Date</th>
-                <th class="col1">Arr.Dt.Truck</th>
-                <th class="col1">InvoiceQty</th>
-                <th class="col1">Grade</th>
-                <th class="col1">GoodStock</th>
-                <th class="col1">Cut&Torn</th>
-                <th class="col1">Shortage</th>
-                <th class="col1">Unloading</th>
-                <th class="col1">Transhipment</th>
-                <th class="col1">diversion</th>
-                <th class="col1">TransportC0mpany</th>
-                <th class="col1">VehicleNo.</th>
-                <th class="col1">Reason Delay</th>
-                <th class="col1">InTime</th>
-                <th class="col1">OutTime</th>
-                <th class="col1">HaltTime</th>
+                <th class="col1">Date</th>
+                <th class="col1">File Name</th>
+                <th class="col1">Table Name</th>
+                <th class="col1">File Id</th>
                 <th class="col1">Depot Code</th>
-                <th class="col1">Emp ID</th>
-                <th class="col1">Comments</th>
+                <th class="col1">Time</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let data of TableData;let i=index">
+            <tr *ngFor="let item of TableData;let i=index">
                 <!-- <td class="col1 color-black gap">
                     <a><i class="fa fa-edit" title="Edit of Table : row : "></i></a>
                     <a><i class="fa fa-trash" title="Delete of Table : row : "></i></a>
                 </td> -->
                 <td class="col1 color-black">{{(i+1)}}</td>
-                <td class="col1 color-black">{{(data['entryDate'])}}</td>
-                <td class="col1 color-black">{{(data['particulars'])}}</td>
-                <td class="col1 color-black">{{(data['invoiceNumber'])}}</td>
-                <td class="col1 color-black">{{(data['invoiceDate'])}}</td>
-                <td class="col1 color-black">{{(data['arrivalDateOfTruck'])}}</td>
-                <td class="col1 color-black">{{this.service.ParseFloat(data['invoiceQty'])}}</td>
-                <td class="col1 color-black">{{(data['grade'])}}</td>
-                <td class="col1 color-black">{{this.service.ParseFloat(data['goodStock'])}}</td>
-                <td class="col1 color-black">{{this.service.ParseFloat(data['cutAndTorn'])}}</td>
-                <td class="col1 color-black">{{this.service.ParseFloat(data['shortage'])}}</td>
-                <td class="col1 color-black">{{this.service.ParseFloat(data['unloading'])}}</td>
-                <td class="col1 color-black">{{this.service.ParseFloat(data['transphipment'])}}
-                </td>
-                <td class="col1 color-black">{{this.service.ParseFloat(data['diversion'])}}</td>
-                <td class="col1 color-black">{{(data['transporterCompany'])}}</td>
-                <td class="col1 color-black">{{(data['vehicleNumber'])}}</td>
-                <td class="col1 color-black">{{(data['reasonForDelay'])}}</td>
-                <td class="col1 color-black">{{(data['inTimeOfTruck'])}}</td>
-                <td class="col1 color-black">{{(data['outTimeOfTruck'])}}</td>
-                <td class="col1 color-black">{{(data['haltHour'])}}</td>
-                <td class="col1 color-black">{{(data['depot_code'])}}</td>
-                <td class="col1 color-black">{{(data['emp_id'])}}</td>
-                <td class="col1 color-black">{{(data['comments'])}}</td>
+               <td class="col1">{{item.Date}}</td>
+                  <td class="col1">{{item.Name}}</td>
+                  <td class="col1">{{item.TableName}}</td>
+                  <td class="col1">{{item.fileid}}</td>
+                  <td class="col1">{{item.DepotCode}}</td>
+                  <td class="col1">{{item.TimeStamp}}</td>
             </tr>
         </tbody>
     </nz-table>

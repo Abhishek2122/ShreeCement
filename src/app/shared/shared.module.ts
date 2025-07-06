@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -31,6 +31,7 @@ import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { ReactiveJsonFormsService, ReactiveJsonFormsModule } from 'reactive-forms-json';
 import { MaterialModule } from './material.module';
+import { ConfigService } from './common-services/common.services';
 
 const antDesignIcons = AllIcons as {
     [key: string]: IconDefinition;
@@ -95,6 +96,20 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         MaterialModule
     ],
     providers: [
+        {
+            provide: APP_INITIALIZER,
+            multi: true,
+            useFactory: (config: ConfigService) => {
+                return () => {
+                    console.log("APP_INITIALIZER")
+                    if (config.isToken) {
+                        config.loadCommonAPI();
+                    }
+                    return config;
+                };
+            },
+            deps: [ConfigService],
+        },
         ModalService,
         ReactiveJsonFormsService,
         {
@@ -102,7 +117,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
             useClass: LoaderInterceptor,
             multi: true,
         },
-        { provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons }
+        { provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons },
+
     ]
 })
 export class SharedModule { }

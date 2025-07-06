@@ -1,0 +1,20 @@
+.card {
+    display: flex;
+}
+
+.form-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.show-data-btn{
+    width: 100px;
+    margin: auto;
+    margin-right: 10px;
+}
+
+.ng-select .ng-select-container {
+    color: rgba(0, 0, 0, .87);
+    align-items: baseline;
+    min-height: auto !important;
+}

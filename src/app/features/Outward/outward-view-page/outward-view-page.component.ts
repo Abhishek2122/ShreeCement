@@ -3,6 +3,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { MainService } from '../../../core/services/service.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import moment from 'moment';
+import { JsonToExcelService } from '../../../core/services/json-to-excel.service';
+import { OutwardInvoice } from '../../../core/modal/Outward.modal';
 
 @Component({
   selector: 'app-outward-view-page',
@@ -28,12 +30,12 @@ export class OutwardViewPageComponent {
   PAGE_LIMIT: number = 10;
   PAGE_INDEX: number = 1;
 
-  constructor(public service: MainService) {
+  constructor(public service: MainService, private jsontoexcel: JsonToExcelService) {
     service.TITLE_OF_PAGE = "This is Inward Report sheet : Select Options to navigate"
   }
 
   ngOnInit(): void {
-    this.service.ALLDepotCode().then((res: any) => {
+    this.service.ALLDepotCode().subscribe((res: any) => {
       console.log(res);
       this.depots = res?.data?.map((items: any) => {
         return {
@@ -60,7 +62,6 @@ export class OutwardViewPageComponent {
       limit: this.PAGE_LIMIT,
       page: this.PAGE_INDEX
     }).then(async (res: any) => {
-      console.log(res, "asdasdasdsad")
       this.isLoadingOne = false;
       this.TableData = res?.data;
       this.totalRecords = res?.totalCount
@@ -68,8 +69,24 @@ export class OutwardViewPageComponent {
   }
 
   onChangeEvent(event: any) {
-    console.log(event, "onChangeEvent")
     this.PAGE_INDEX = event?.pageIndex + 1;
     this.loadData();
+  }
+
+  downloadCSV() {
+    this.service.getOutwardTableData({
+      "Start_Date": moment(this.filterForm.value.Start_End_Date[0]).format("YYYY-MM-DD"),
+      "End_Date": moment(this.filterForm.value.Start_End_Date[1]).format("YYYY-MM-DD"),
+      "Depot_Name": this.filterForm.value.depotDetails?.depot_name,
+      "Bag_Ton": "Ton",
+      "Depot_Code": this.filterForm.value.depotDetails?.depot_code,
+      limit: this.totalRecords,
+      page: this.PAGE_INDEX
+    }).then(async (res: any) => {
+      console.log(res, "asdasdasdsad")
+      this.isLoadingOne = false;
+      const data: OutwardInvoice[] = res?.data
+      this.jsontoexcel.exportJsonToExcel(data, "OutwardSheet")
+    })
   }
 }

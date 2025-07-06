@@ -4,10 +4,11 @@ import {
     HttpRequest,
     HttpHandler,
     HttpEvent,
-    HttpErrorResponse
+    HttpErrorResponse,
+    HttpResponse
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, last, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
@@ -40,6 +41,15 @@ export class AuthInterceptor implements HttpInterceptor {
         }
 
         return next.handle(authReq).pipe(
+            last(), // 👈 ensures we handle only the final event
+            tap((event) => {
+                if (event instanceof HttpResponse) {
+                    const newToken = event.headers.get('x-new-token');
+                    if (newToken) {
+                        localStorage.setItem('token', newToken);
+                    }
+                }
+            }),
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 401) {
                     // Clear token if needed
