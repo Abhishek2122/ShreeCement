@@ -21,7 +21,7 @@ export class UploadUIComponent implements OnInit, OnDestroy {
   @Output() eventCompleted: EventEmitter<any> = new EventEmitter();
   uploadUrl: string = ""
   constructor(public service: MainService) {
-    this.uploadUrl = service.environment.NewBaseUrl + "common/upload-xlsx"
+    this.uploadUrl = service.environment.NewBaseUrl + "admin/upload-xlsx"
   }
 
   completed(event: any): void {

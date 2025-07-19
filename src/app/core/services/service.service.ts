@@ -203,23 +203,23 @@ export class MainService {
   }
 
   getDamgeReportData(formdata: any): Observable<any> {
-    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getDamgeReportData'}`, formdata, { 'headers': this.headers });
+    return this.http.post<any>(`${environment.NewBaseUrl + 'admin/getDamgeReportData'}`, formdata, { 'headers': this.headers });
   }
 
   getFileUploadNewData(formdata: any): Observable<any> {
-    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getFileUpload'}`, formdata, { 'headers': this.headers });
+    return this.http.post<any>(`${environment.NewBaseUrl + 'admin/getFileUpload'}`, formdata, { 'headers': this.headers });
   }
 
   getEmpData(formdata: any): Observable<any> {
-    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getEmpData'}`, formdata, { 'headers': this.headers });
+    return this.http.post<any>(`${environment.NewBaseUrl + 'admin/getEmpData'}`, formdata, { 'headers': this.headers });
   }
 
   getDepotData(formdata: any): Observable<any> {
-    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getDepotData'}`, formdata, { 'headers': this.headers });
+    return this.http.post<any>(`${environment.NewBaseUrl + 'admin/getDepotData'}`, formdata, { 'headers': this.headers });
   }
 
   getGradeData(formdata: any): Observable<any> {
-    return this.http.post<any>(`${environment.NewBaseUrl + 'common/getGradeData'}`, formdata, { 'headers': this.headers });
+    return this.http.post<any>(`${environment.NewBaseUrl + 'admin/getGradeData'}`, formdata, { 'headers': this.headers });
   }
 
   getAllFileUploadData(formdata: any): Observable<any> {
@@ -406,7 +406,7 @@ export class MainService {
     this.animation_loader.LoadingAnimation();
     return new Promise((resolve, reject) => {
       if (DATA != null && DATA != '') {
-        this.http.post<any>(`${environment.NewBaseUrl + 'common/stock-report'}`, DATA, { 'headers': this.headers }).subscribe((res) => {
+        this.http.post<any>(`${environment.NewBaseUrl + 'admin/stock-report'}`, DATA, { 'headers': this.headers }).subscribe((res) => {
           if (res['Status'] == true) {
             this.STOCK_SHEET_DATA = { 'data': (res['data']) };
             resolve(res);
@@ -514,7 +514,7 @@ export class MainService {
   }
 
   Dealer_Details() {
-    return this.http.get<any>(`${environment.NewBaseUrl + 'common/DealerDetails'}`);
+    return this.http.get<any>(`${environment.NewBaseUrl + 'admin/DealerDetails'}`);
   }
 
   EmpList() {
@@ -584,7 +584,7 @@ export class MainService {
 
   getGradeListData() {
     return new Promise((resolve, reject) => {
-      this.http.get<any>(`${environment.NewBaseUrl + 'common/grade-details'}`).subscribe((res) => {
+      this.http.get<any>(`${environment.NewBaseUrl + 'admin/grade-details'}`).subscribe((res) => {
         resolve(res['data']);
       }, err => {
         this.notifyService.showError(err['message'], err['statusText']);

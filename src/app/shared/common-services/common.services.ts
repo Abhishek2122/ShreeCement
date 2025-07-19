@@ -43,11 +43,11 @@ export class ConfigService {
     }
 
     getGradeData(): Observable<any> {
-        return this.http.get<any>(`${environment.NewBaseUrl + 'common/grade-details'}`, { 'headers': this.headers });
+        return this.http.get<any>(`${environment.NewBaseUrl + 'admin/grade-details'}`, { 'headers': this.headers });
     }
 
     getDepotCode() {
-        return this.http.get<any>(`${environment.NewBaseUrl + 'common/depot'}`)
+        return this.http.get<any>(`${environment.NewBaseUrl + 'admin/depot'}`)
     }
 
 }

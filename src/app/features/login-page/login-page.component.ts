@@ -10,7 +10,7 @@ import { MainService } from '../../core/services/service.service';
 })
 export class LoginPageComponent {
   loginForm: FormGroup;
-  PasswordShowHide:boolean=false;
+  PasswordShowHide: boolean = false;
 
   constructor(
     public serviceService: MainService,
@@ -26,9 +26,9 @@ export class LoginPageComponent {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
       this.serviceService.LoginNewService({ Email_Id: username, Password: password }).subscribe((UserLoginInfo: any) => {
-        const token = UserLoginInfo?.token
         UserLoginInfo = UserLoginInfo['Login'];
         if (UserLoginInfo['status'] == true) {
+          const token = UserLoginInfo?.token
           localStorage.setItem("token", token);
           localStorage.setItem("UserData", JSON.stringify(UserLoginInfo))
           this.serviceService.USER_DATA.next(UserLoginInfo)
@@ -38,7 +38,7 @@ export class LoginPageComponent {
         }
       }, (err: any) => {
         console.log(err, "Asdasdsadasdasdasd")
-        this.serviceService.notifyService.showError(err?.error?.msg??JSON.stringify(this.loginForm.value), "Error Login")
+        this.serviceService.notifyService.showError(err?.error?.msg ?? JSON.stringify(this.loginForm.value), "Error Login")
       })
     } else {
       console.log('Form is invalid');
