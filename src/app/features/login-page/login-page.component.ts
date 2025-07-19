@@ -33,6 +33,7 @@ export class LoginPageComponent {
           localStorage.setItem("UserData", JSON.stringify(UserLoginInfo))
           this.serviceService.USER_DATA.next(UserLoginInfo)
           this.router.navigate(['/home']);
+          this.serviceService.commonService.loadCommonAPI();
         } else {
           this.serviceService.notifyService.showError('Email id & Password not matched...<br> Please Check again!', "Error Login")
         }
