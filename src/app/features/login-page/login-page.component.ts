@@ -35,7 +35,7 @@ export class LoginPageComponent {
           this.router.navigate(['/home']);
           this.serviceService.commonService.loadCommonAPI();
         } else {
-          this.serviceService.notifyService.showError('Email id & Password not matched...<br> Please Check again!', "Error Login")
+          this.serviceService.notifyService.showError('Email id & Password not matched...\n Please Check again!', "Error Login")
         }
       }, (err: any) => {
         console.log(err, "Asdasdsadasdasdasd")
