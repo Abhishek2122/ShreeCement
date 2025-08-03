@@ -1482,3 +1482,56 @@ span.text {
     height: calc(100vh - 121px);
     overflow: auto;
 }
+
+
+/* Titlebar container */
+.custom-titlebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    height: 65px;
+    color: #000;
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+/* Left section: icon and route path stacked vertically */
+.titlebar-left {
+    display: flex;
+    flex-direction: column;
+    /* Stack icon and text vertically */
+    align-items: flex-start;
+}
+
+/* Icon styling */
+.page-icon i {
+    font-size: 2.75rem;
+    color: #000;
+}
+
+/* Route info below icon */
+.page-info .route-path {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-top: 0.25rem;
+    color: #000;
+}
+
+/* Right section: user icon and name */
+.titlebar-right {
+    display: flex;
+    align-items: center;
+
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #000;
+}
+
+/* User icon */
+.titlebar-right i {
+    font-size: 1.5rem;
+    color: #000;
+}

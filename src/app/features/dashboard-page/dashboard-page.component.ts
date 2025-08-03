@@ -16,7 +16,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   previousUrl: string = '';
   selected: any = {};
   AppVersion: string = "v1.0.0"
-  menuList: any = [{
+  menuList: any = [
+    
+    {
     name: "Inward Sheet",
     route: "menulink2",
     subMenu: [

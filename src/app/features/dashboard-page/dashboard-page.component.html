@@ -63,7 +63,31 @@
             </mat-menu>
         </nav>
         <main>
-            <mat-toolbar color="primary">
+
+
+            <div class="custom-titlebar">
+             
+                <div class="titlebar-left">
+                    <div class="page-icon">
+                        <a href="/home">
+                            <i class="fa-solid fa-house fa-2x"></i>
+                        </a>
+                        
+                    </div>
+                    <div class="page-info">
+                        <div class="route-path">{{ router.url }}</div> 
+                    </div>
+                </div>
+            
+             
+                <div class="titlebar-right">
+                    <i class="fa-solid fa-user-circle"></i>
+                    <span class="logged-name">{{ SESSION_DATA?.emp_name }}</span>
+                </div>
+            </div> 
+            
+            
+            <!-- <mat-toolbar color="primary">
                 <div class="head-title">
                     <div class="left mx-4">
                         <span (click)="historyBack()"> <i class="fa-solid fa-arrow-left"></i></span>
@@ -75,7 +99,7 @@
                         <h4 class="logged-name"> {{this.SESSION_DATA?.emp_name}} </h4>
                     </div>
                 </div>
-            </mat-toolbar>
+            </mat-toolbar> -->
 
             <div class="item-container" *ngIf="this.router.url=='/home'">
                 <div class="col-12" *ngFor="let n of menuList">

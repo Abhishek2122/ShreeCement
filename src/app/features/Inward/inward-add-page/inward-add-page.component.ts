@@ -16,7 +16,7 @@ export class InwardAddPageComponent implements OnInit {
   SESSION_DATA: any = [];
   constructor(
     public form_service: ReactiveJsonFormsService,
-    public service: MainService,
+    public service: MainService,  
     public InwardService: InwwardServiceService,
     private notifyService: NotificationService,
     public modal: ModalService) { }
@@ -79,9 +79,12 @@ export class InwardAddPageComponent implements OnInit {
               label: "Plant Invoice No.",
               rules: {
                 required: true,
-              },
+              },  
               placeholderText: "Enter Plant Invoice No.",
+              ngClass: "customs-rounded-input",
             },
+
+
             InvoiceDate: {
               type: "date",
               value: "",
@@ -92,6 +95,9 @@ export class InwardAddPageComponent implements OnInit {
               placeholderText: "Select Plant Invoice Date",
               ngClass: "custom-rounded-input",
             },
+
+
+
             billingTimeOfPlant: {
               type: "time",
               value: "",
@@ -100,7 +106,7 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Enter Billing Time",
-              ngClass: "custom-rounded-input",
+              ngClass: "customs-rounded-input",
             },
             ArrivalDateOfTruck: {
               type: "date",
@@ -121,6 +127,7 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Enter Quantity (in Bags)",
+              ngClass: "customs-rounded-input",
             },
             Grade: {
               type: "SelectOptionObject",
@@ -131,17 +138,26 @@ export class InwardAddPageComponent implements OnInit {
               },
               items: gradeList,
               bindLabel: "Grade_Name",
+              placeholderText: "Enter Grade",
               ngClass: "field-lastname form-field"
             },
             CutAndTorn: {
               type: "number",
-              value: "",
+              value: null, // ← use null instead of "" to avoid defaulting to 0
               label: "Cut And Torn (in Bags)",
               rules: {
                 required: true,
+                min: 0, // optional: enforce positive numbers
+                pattern: "^[0-9]*$"
               },
               placeholderText: "Enter Cut & Torn Qty (in Bags)",
+              ngClass: "customs-rounded-input"
             },
+            
+            
+            
+
+
             Shortage: {
               type: "number",
               value: "",
@@ -150,6 +166,7 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Enter Shortage Qty (in Bags)",
+              ngClass: "customs-rounded-input",
             },
             GoodStock: {
               type: "number",
@@ -159,6 +176,7 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Enter Good Stock Qty (in Bags)",
+              ngClass: "customs-rounded-input",
             },
             Unloading: {
               type: "number",
@@ -168,6 +186,7 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Enter Unloading Qty (in Bags)",
+              ngClass: "customs-rounded-input",
             },
             Transphipment: {
               type: "number",
@@ -177,6 +196,7 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Is Transhipment (in Bags)",
+              ngClass: "customs-rounded-input",
             },
             Diversion: {
               type: "number",
@@ -187,6 +207,7 @@ export class InwardAddPageComponent implements OnInit {
               },
 
               placeholderText: "Is Diverted (in Bags)?",
+              ngClass: "customs-rounded-input",
             },
             TransporterCompany: {
               type: "SelectOption",
@@ -206,6 +227,7 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Enter Vehicle Number",
+              ngClass: "customs-rounded-input",
             },
             DriverName: {
               type: "text",
@@ -215,6 +237,7 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Enter Driver Name",
+              ngClass: "customs-rounded-input",
             },
             DriverMobileNumber: {
               type: "number",
@@ -224,6 +247,7 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Enter Vehicle Number",
+              ngClass: "customs-rounded-input",
             },
             InTimeOfTruck: {
               type: "time",
@@ -233,7 +257,7 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Enter In Time",
-              ngClass: "custom-rounded-input",
+              ngClass: "customs-rounded-input",
             },
             OutTimeOfTruck: {
               type: "time",
@@ -243,7 +267,7 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Enter Out Time",
-              ngClass: "custom-rounded-input",
+              ngClass: "customs-rounded-input",
             },
             cleared: {
               type: "MatCheckBox",
@@ -258,7 +282,7 @@ export class InwardAddPageComponent implements OnInit {
                 console.log(items, "asdaskdsajdksadhadjkh")
                 const FIELDS_DATA = this.form_service.FIELDS_DATA['newform'];
                 if (items?.value == "halting") {
-                  FIELDS_DATA[FIELDS_DATA.length - 1]['type'] = 'text';
+                  FIELDS_DATA[FIELDS_DATA.length - 1]['type'] = 'textarea';
                   FIELDS_DATA[FIELDS_DATA.length - 1]['value'] = 'NA'
                 } else {
                   FIELDS_DATA[FIELDS_DATA.length - 1]['type'] = 'time';
@@ -274,6 +298,8 @@ export class InwardAddPageComponent implements OnInit {
                 required: true,
               },
               placeholderText: "Mention delay reason if any",
+              ngClass: "customs-rounded-input",
+              
             },
           }, "newform").then((res: any) => {
           });
